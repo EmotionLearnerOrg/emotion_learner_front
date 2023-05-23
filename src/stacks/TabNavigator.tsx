@@ -29,7 +29,47 @@ const Tabs = () => {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color}) => (
-            <Icon name="account" size={30} color={color} />
+            <Icon name="vector-triangle" size={30} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Profile3"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color}) => (
+            <Icon name="plus-circle" size={30} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Profile4"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color}) => (
+            <Icon name="message-outline" size={30} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Profile5"
+        component={ProfileScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color}) => (
+            <Icon
+              name="label-variant-outline"
+              size={30}
+              color={color}
+              style={{
+                transform: [{rotate: '270deg'}],
+              }}
+            />
           ),
           headerShown: false,
         }}
