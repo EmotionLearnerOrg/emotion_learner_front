@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {HomeScreen, ProfileScreen} from '../screens';
+import {ProfileScreen} from '../screens';
 import {NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import HomeStack from './Homestack';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +15,7 @@ const Tabs = () => {
       screenOptions={{tabBarActiveTintColor: 'purple'}}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color}) => (
@@ -27,49 +28,9 @@ const Tabs = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
             <Icon name="vector-triangle" size={30} color={color} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Profile3"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({color}) => (
-            <Icon name="plus-circle" size={30} color={color} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Profile4"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({color}) => (
-            <Icon name="message-outline" size={30} color={color} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Profile5"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({color}) => (
-            <Icon
-              name="label-variant-outline"
-              size={30}
-              color={color}
-              style={{
-                transform: [{rotate: '270deg'}],
-              }}
-            />
           ),
           headerShown: false,
         }}

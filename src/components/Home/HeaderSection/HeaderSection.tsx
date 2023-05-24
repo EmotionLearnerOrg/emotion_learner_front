@@ -7,7 +7,7 @@ const HeaderSection = () => {
   const style = makeCalendarCardContainerStyles();
 
   return (
-    <View style={style.calendarCardContainer}>
+    <View style={style.headerContainer}>
       <View>
         <Text fontWeight="700" fontSize={32}>
           Hello
@@ -16,18 +16,8 @@ const HeaderSection = () => {
           Orlando Diggs
         </Text>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginLeft: 'auto',
-        }}>
-        <Icon
-          rounded="circle"
-          name="user"
-          // color="white"
-          fontFamily="Feather"
-          fontSize={64}
-        />
+      <View style={style.rightSide}>
+        <Icon rounded="circle" name="user" fontFamily="Feather" fontSize={64} />
         <Icon
           top={-16}
           name="cog"
