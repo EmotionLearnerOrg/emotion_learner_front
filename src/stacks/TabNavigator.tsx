@@ -28,7 +28,7 @@ const Tabs = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Profilee',
           tabBarIcon: ({color}) => (
             <Icon name="vector-triangle" size={30} color={color} />
           ),
