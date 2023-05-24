@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import TabsNavigation from './src/stacks/TabNavigator';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {ThemeProvider} from 'react-native-magnus';
+import {NavigationContainer} from '@react-navigation/native';
+import HomeStack from './src/stacks/Homestack';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -10,11 +9,9 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <ThemeProvider>
-      <SafeAreaView style={{flex: 1}}>
-        <TabsNavigation />
-      </SafeAreaView>
-    </ThemeProvider>
+    <NavigationContainer>
+      <HomeStack />
+    </NavigationContainer>
   );
 }
 
