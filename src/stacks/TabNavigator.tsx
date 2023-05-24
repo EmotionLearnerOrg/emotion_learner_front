@@ -1,21 +1,19 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {ProfileScreen} from '../screens';
-import {NavigationContainer} from '@react-navigation/native';
+import {HomeScreen, ProfileScreen} from '../screens';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import HomeStack from './Homestack';
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Home2"
       screenOptions={{tabBarActiveTintColor: 'purple'}}>
       <Tab.Screen
-        name="Home"
-        component={HomeStack}
+        name="Home2"
+        component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color}) => (
@@ -40,11 +38,7 @@ const Tabs = () => {
 };
 
 const TabsNavigation = () => {
-  return (
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
-  );
+  return <Tabs />;
 };
 
 export default TabsNavigation;

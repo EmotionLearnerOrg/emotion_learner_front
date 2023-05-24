@@ -1,14 +1,15 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen} from '../screens';
 import RuletaScreen from '../screens/RuletaScreen/RuletaScreen';
 import MirrorScreen from '../screens/MirrorScreen/MirrorScreen';
 import AsociationScreen from '../screens/AsociationScreen/AsociationScreen';
 import InsigniasScreen from '../screens/InsigniasScreen/InsigniasScreen';
 import CalendarScreen from '../screens/CalendarScreen/CalendarScreen';
+import HeaderCommon from '../components/HeaderCommon/HeaderCommon';
+import TabsNavigation from './TabNavigator';
 
 export enum HomeRoutes {
-  HOME_S = 'HomeS',
+  HOME_S = 'Home',
   RULETA = 'Ruleta',
   MIRROR = 'Mirror',
   ASOCIATION = 'Asociation',
@@ -31,10 +32,11 @@ const HomeStack = () => {
   return (
     <HomeStackNavigator.Navigator
       initialRouteName={HomeRoutes.HOME_S}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{headerShown: true, header: () => <HeaderCommon />}}>
       <HomeStackNavigator.Screen
         name={HomeRoutes.HOME_S}
-        component={HomeScreen}
+        component={TabsNavigation}
+        options={{headerShown: false}}
       />
       <HomeStackNavigator.Screen
         name={HomeRoutes.RULETA}
