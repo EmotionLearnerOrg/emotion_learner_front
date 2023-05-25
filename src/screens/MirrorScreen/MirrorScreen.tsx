@@ -2,9 +2,14 @@ import React from 'react';
 import {View} from 'react-native';
 import {makeMirrorScreenStyles} from './MirrorScreen.style';
 import {Button, Text} from 'react-native-magnus';
+import {HomeRoutes, HomeStackParamList} from '../../stacks/Homestack';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 const MirrorScreen = () => {
   const style = makeMirrorScreenStyles();
+  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+
   return (
     <View style={style.containerView}>
       <Text fontSize={32}>Espejo inteligente</Text>
@@ -26,7 +31,8 @@ const MirrorScreen = () => {
               rounded={8}
               style={style.buttonEmotion}
               bg="#ceecdb"
-              color="#524b6b">
+              color="#524b6b"
+              onPress={() => navigation.navigate(HomeRoutes.PERFORM_EMOTION)}>
               Felicidad/Alegria
             </Button>
             <Button

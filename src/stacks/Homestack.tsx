@@ -7,6 +7,7 @@ import InsigniasScreen from '../screens/InsigniasScreen/InsigniasScreen';
 import CalendarScreen from '../screens/CalendarScreen/CalendarScreen';
 import HeaderCommon from '../components/HeaderCommon/HeaderCommon';
 import TabsNavigation from './TabNavigator';
+import PerformEmotionScreen from '../screens/PerformEmotionScreen/PerformEmotionScreen';
 
 export enum HomeRoutes {
   HOME_S = 'Home',
@@ -15,6 +16,7 @@ export enum HomeRoutes {
   ASOCIATION = 'Asociation',
   INSIGNIAS = 'Insignias',
   CALENDAR = 'Calendar',
+  PERFORM_EMOTION = 'PerformEmotion',
 }
 
 export type HomeStackParamList = {
@@ -24,6 +26,7 @@ export type HomeStackParamList = {
   [HomeRoutes.ASOCIATION]: undefined;
   [HomeRoutes.INSIGNIAS]: undefined;
   [HomeRoutes.CALENDAR]: undefined;
+  [HomeRoutes.PERFORM_EMOTION]: undefined;
 };
 
 const HomeStackNavigator = createNativeStackNavigator<HomeStackParamList>();
@@ -57,6 +60,10 @@ const HomeStack = () => {
       <HomeStackNavigator.Screen
         name={HomeRoutes.CALENDAR}
         component={CalendarScreen}
+      />
+      <HomeStackNavigator.Screen
+        name={HomeRoutes.PERFORM_EMOTION}
+        component={PerformEmotionScreen}
       />
     </HomeStackNavigator.Navigator>
   );
