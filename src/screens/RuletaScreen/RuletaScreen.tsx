@@ -1,14 +1,12 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
-import {makeRuletaScreenStyles} from './RuletaScreen.style';
-import {Text} from 'react-native-magnus';
+import {View} from 'react-native';
+import Ruleta from './Ruleta';
 
 const RuletaScreen = () => {
-  const style = makeRuletaScreenStyles();
   return (
-    <ScrollView style={style.containerView}>
-      <Text>Ruleta</Text>
-    </ScrollView>
+    <View style={{flex: 1}}>
+      <Ruleta divisions={4} />
+    </View>
   );
 };
 
