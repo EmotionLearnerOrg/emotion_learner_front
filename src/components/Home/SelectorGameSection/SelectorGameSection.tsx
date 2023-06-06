@@ -4,13 +4,17 @@ import {makeSelectorGameStyles} from './SelectorGameSection.style';
 import Card from './Card/Card';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Text} from 'react-native-magnus';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {HomeRoutes, HomeStackParamList} from '../../../stacks/Homestack';
-import {useNavigation} from '@react-navigation/native';
 
-const SelectorGameSection = () => {
+const SelectorGameSection = ({
+  goToMirror,
+  goToAsociation,
+  goToRuleta,
+}: {
+  goToMirror: () => void;
+  goToRuleta: () => void;
+  goToAsociation: () => void;
+}) => {
   const style = makeSelectorGameStyles();
-  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
   return (
     <View style={style.selectorGameContainer}>
@@ -24,7 +28,7 @@ const SelectorGameSection = () => {
           <TouchableOpacity
             style={{flex: 1}}
             activeOpacity={0.4}
-            onPress={() => navigation.navigate(HomeRoutes.MIRROR)}>
+            onPress={goToMirror}>
             <Card
               style={{flex: 1}}
               color={'#AFECFE'}
@@ -37,7 +41,7 @@ const SelectorGameSection = () => {
           <TouchableOpacity
             style={{flex: 0.5}}
             activeOpacity={0.4}
-            onPress={() => navigation.navigate(HomeRoutes.RULETA)}>
+            onPress={goToRuleta}>
             <Card
               style={{flex: 1}}
               color={'#BEAFFE'}
@@ -48,7 +52,7 @@ const SelectorGameSection = () => {
           <TouchableOpacity
             style={{flex: 0.5}}
             activeOpacity={0.4}
-            onPress={() => navigation.navigate(HomeRoutes.ASOCIATION)}>
+            onPress={goToAsociation}>
             <Card
               style={{flex: 1}}
               color={'#FFD6AD'}

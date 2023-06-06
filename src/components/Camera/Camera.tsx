@@ -16,6 +16,7 @@ import {
 import 'react-native-reanimated';
 import {makeStyles} from './Camera.styles';
 import {Button, Text} from 'react-native-magnus';
+import {emocionType} from '../Ruleta/emociones';
 
 type CameraProps = {
   cameraPosition?: CameraPosition;
@@ -28,6 +29,7 @@ type CameraProps = {
   };
   isAuthorized?: boolean;
   requestCameraPermission?: any;
+  emotion: emocionType;
 };
 
 /**
@@ -36,7 +38,10 @@ type CameraProps = {
 export const CameraComponent: ForwardRefExoticComponent<
   CameraProps & RefAttributes<CameraBase>
 > = forwardRef<CameraBase, CameraProps>(
-  ({cameraPosition = 'back', isAuthorized, requestCameraPermission}, ref) => {
+  (
+    {cameraPosition = 'back', isAuthorized, requestCameraPermission, emotion},
+    ref,
+  ) => {
     const styles = makeStyles();
     const devices = useCameraDevices();
     const [currentDevice, setCurrentDevice] = useState<
@@ -82,8 +87,9 @@ export const CameraComponent: ForwardRefExoticComponent<
           isActive={true}
           device={currentDevice}
         />
+        <Text fontSize={32}>Emocion : {emotion.name}</Text>
         <View style={styles.containerButton}>
-          <Button style={styles.button} opacity={1} bg="green" rounded={16}>
+          <Button style={styles.button} opacity={0.5} bg="green" rounded={16}>
             <Text>Estoy listo</Text>
           </Button>
         </View>
