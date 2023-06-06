@@ -7,9 +7,17 @@ import {
   Easing,
   StyleSheet,
 } from 'react-native';
-import DividedCircle from './DividedCircle';
+import RuletaPintada from './RuletaPintada';
+import {Knop} from '../../../assets';
+import {EmocionesTypeNames, emocionType, emociones} from './emociones';
 
-const Ruleta = ({divisions}: {divisions: number}) => {
+const Ruleta = ({
+  divisions,
+  goToPerformEmotion,
+}: {
+  divisions: number;
+  goToPerformEmotion: (item: emocionType) => void;
+}) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const spinValue = useRef(new Animated.Value(0)).current;
   const inputRangeDin: number[] = [];
@@ -34,7 +42,9 @@ const Ruleta = ({divisions}: {divisions: number}) => {
         useNativeDriver: true,
       }).start(() => {
         setIsSpinning(false);
-        console.log('giramos ', outputRangeDin[fin], 'gano', fin);
+        goToPerformEmotion(
+          emociones[Object.keys(emociones)[fin] as EmocionesTypeNames],
+        );
       });
     });
   };
@@ -56,8 +66,12 @@ const Ruleta = ({divisions}: {divisions: number}) => {
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.wheel, {transform: [{rotate: spin}]}]}>
-        <DividedCircle divisions={divisions} radius={130} />
+        <RuletaPintada
+          // divisions={divisions}
+          radius={130}
+        />
       </Animated.View>
+      <Knop style={styles.knop} width={70} height={70} />
       <TouchableOpacity style={styles.button} onPress={startSpin}>
         <Text style={styles.buttonText}>
           {isSpinning ? 'Girando...' : 'Girar'}
@@ -70,14 +84,17 @@ const Ruleta = ({divisions}: {divisions: number}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    marginTop: 64,
     alignItems: 'center',
+  },
+  knop: {
+    top: -20,
+    position: 'absolute',
   },
   wheel: {
     width: 260,
     height: 260,
     borderRadius: 130,
-    backgroundColor: 'yellow',
     justifyContent: 'center',
     alignItems: 'center',
   },

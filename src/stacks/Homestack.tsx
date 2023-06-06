@@ -1,5 +1,4 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RuletaScreen from '../screens/RuletaScreen/RuletaScreen';
 import MirrorScreen from '../screens/MirrorScreen/MirrorScreen';
 import AsociationScreen from '../screens/AsociationScreen/AsociationScreen';
@@ -8,28 +7,9 @@ import CalendarScreen from '../screens/CalendarScreen/CalendarScreen';
 import HeaderCommon from '../components/HeaderCommon/HeaderCommon';
 import TabsNavigation from './TabNavigator';
 import PerformEmotionScreen from '../screens/PerformEmotionScreen/PerformEmotionScreen';
-
-export enum HomeRoutes {
-  HOME_S = 'Home',
-  RULETA = 'Ruleta',
-  MIRROR = 'Mirror',
-  ASOCIATION = 'Asociation',
-  INSIGNIAS = 'Insignias',
-  CALENDAR = 'Calendar',
-  PERFORM_EMOTION = 'PerformEmotion',
-}
-
-export type HomeStackParamList = {
-  [HomeRoutes.HOME_S]: undefined;
-  [HomeRoutes.RULETA]: undefined;
-  [HomeRoutes.MIRROR]: undefined;
-  [HomeRoutes.ASOCIATION]: undefined;
-  [HomeRoutes.INSIGNIAS]: undefined;
-  [HomeRoutes.CALENDAR]: undefined;
-  [HomeRoutes.PERFORM_EMOTION]: undefined;
-};
-
-const HomeStackNavigator = createNativeStackNavigator<HomeStackParamList>();
+import GuideFeelScreen from '../screens/GuideFeelScreen/GuideFeelScreen';
+import RealFeelScreen from '../screens/RealFeelScreen/RealFeelScreen';
+import {HomeRoutes, HomeStackNavigator} from './HomeParams';
 
 const HomeStack = () => {
   return (
@@ -64,6 +44,14 @@ const HomeStack = () => {
       <HomeStackNavigator.Screen
         name={HomeRoutes.PERFORM_EMOTION}
         component={PerformEmotionScreen}
+      />
+      <HomeStackNavigator.Screen
+        name={HomeRoutes.GUIDE_FEEL}
+        component={GuideFeelScreen}
+      />
+      <HomeStackNavigator.Screen
+        name={HomeRoutes.REAL_FEEL}
+        component={RealFeelScreen}
       />
     </HomeStackNavigator.Navigator>
   );

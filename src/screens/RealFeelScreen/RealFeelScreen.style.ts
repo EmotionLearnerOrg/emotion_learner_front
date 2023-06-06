@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export const makeMirrorScreenStyles = () =>
+export const makeRealFeelScreenStyles = () =>
   StyleSheet.create({
     containerView: {flex: 1, padding: 10},
     calendarCardContainer: {
@@ -10,6 +10,7 @@ export const makeMirrorScreenStyles = () =>
       elevation: 5,
       borderRadius: 8,
       backgroundColor: 'white',
+      alignSelf: 'center',
     },
     cardContainer: {
       marginTop: 20,

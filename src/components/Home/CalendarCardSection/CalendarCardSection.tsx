@@ -3,13 +3,9 @@ import {TouchableOpacity, View} from 'react-native';
 import {makeCalendarCardContainerStyles} from './CalendarCardSection.style';
 import {Button, Text} from 'react-native-magnus';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {HomeRoutes, HomeStackParamList} from '../../../stacks/Homestack';
 
-const CalendarCardSection = () => {
+const CalendarCardSection = ({goToCalendar}: {goToCalendar: () => void}) => {
   const style = makeCalendarCardContainerStyles();
-  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
   return (
     <View style={style.calendarCardContainer}>
@@ -52,7 +48,7 @@ const CalendarCardSection = () => {
           bg="#CFC3F9"
           color="#524b6b"
           style={style.buttonCalendar}
-          onPress={() => navigation.navigate(HomeRoutes.CALENDAR)}>
+          onPress={goToCalendar}>
           Acceder a calendario
         </Button>
       </View>

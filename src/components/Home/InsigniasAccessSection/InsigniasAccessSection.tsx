@@ -2,13 +2,13 @@ import React from 'react';
 import {View} from 'react-native';
 import {makeCalendarCardContainerStyles} from './InsigniasAccessSection.style';
 import {Button, Text} from 'react-native-magnus';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {HomeRoutes, HomeStackParamList} from '../../../stacks/Homestack';
 
-const InsigniasAccessSection = () => {
+const InsigniasAccessSection = ({
+  goToInsignias,
+}: {
+  goToInsignias: () => void;
+}) => {
   const style = makeCalendarCardContainerStyles();
-  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
 
   return (
     <View style={style.insigniasContainer}>
@@ -22,7 +22,7 @@ const InsigniasAccessSection = () => {
         bg="#F5CACC"
         color="#524b6b"
         style={style.button}
-        onPress={() => navigation.navigate(HomeRoutes.INSIGNIAS)}>
+        onPress={goToInsignias}>
         Acceder a Mis Insignias
       </Button>
     </View>

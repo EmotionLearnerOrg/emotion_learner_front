@@ -1,14 +1,35 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {FC} from 'react';
+import {FlatList, View} from 'react-native';
 import {makeMirrorScreenStyles} from './MirrorScreen.style';
 import {Button, Text} from 'react-native-magnus';
-import {HomeRoutes, HomeStackParamList} from '../../stacks/Homestack';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {emocionType, emociones} from '../../components/Ruleta/emociones';
+import {HomeRoutes, MirrorType} from '../../stacks/HomeParams';
 
-const MirrorScreen = () => {
+const prueba = Object.values(emociones);
+
+const ButtonItem = ({
+  item,
+  goToLearn,
+}: {
+  item: emocionType;
+  goToLearn: () => void;
+}) => {
+  return (
+    <Button
+      mb={4}
+      rounded={8}
+      style={{width: 120}}
+      bg={item.color}
+      color="#524b6b"
+      onPress={goToLearn}>
+      {item.name}
+    </Button>
+  );
+};
+
+const MirrorScreen: FC<MirrorType> = ({navigation}) => {
   const style = makeMirrorScreenStyles();
-  const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+  const gap = 16;
 
   return (
     <View style={style.containerView}>
@@ -17,14 +38,30 @@ const MirrorScreen = () => {
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
         dolor sit amet, consectetur adipisicing elit.
       </Text>
-
       <View style={style.calendarCardContainer}>
         <View>
           <Text fontWeight="700" fontSize={16}>
             Elegi una emocion
           </Text>
         </View>
-        <View style={style.cardContainer}>
+        {/* <View style={{padding: 16}}> */}
+        <FlatList
+          style={{alignSelf: 'center', marginTop: 16}}
+          data={prueba}
+          numColumns={2}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => (
+            <ButtonItem
+              item={item}
+              goToLearn={() =>
+                navigation.navigate(HomeRoutes.GUIDE_FEEL, {emotion: item})
+              }
+            />
+          )}
+          contentContainerStyle={{gap}}
+          columnWrapperStyle={{gap}}
+        />
+        {/* <View style={style.cardContainer}>
           <View style={{flexDirection: 'row', gap: 16}}>
             <Button
               mb={4}
@@ -62,7 +99,7 @@ const MirrorScreen = () => {
               Tristeza
             </Button>
           </View>
-        </View>
+        </View> */}
       </View>
     </View>
   );
