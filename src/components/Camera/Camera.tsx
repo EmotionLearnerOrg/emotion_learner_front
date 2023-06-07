@@ -1,9 +1,11 @@
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {
+  Dispatch,
   forwardRef,
   ForwardRefExoticComponent,
   ReactNode,
   RefAttributes,
+  SetStateAction,
   useEffect,
   useState,
 } from 'react';
@@ -30,6 +32,7 @@ type CameraProps = {
   isAuthorized?: boolean;
   requestCameraPermission?: any;
   emotion: emocionType;
+  setIsInitialized: Dispatch<SetStateAction<boolean>>;
 };
 
 /**
@@ -39,7 +42,13 @@ export const CameraComponent: ForwardRefExoticComponent<
   CameraProps & RefAttributes<CameraBase>
 > = forwardRef<CameraBase, CameraProps>(
   (
-    {cameraPosition = 'back', isAuthorized, requestCameraPermission, emotion},
+    {
+      cameraPosition = 'back',
+      isAuthorized,
+      requestCameraPermission,
+      emotion,
+      setIsInitialized,
+    },
     ref,
   ) => {
     const styles = makeStyles();
@@ -86,6 +95,7 @@ export const CameraComponent: ForwardRefExoticComponent<
           photo={true}
           isActive={true}
           device={currentDevice}
+          onInitialized={() => setIsInitialized(true)}
         />
         <Text fontSize={32}>Emocion : {emotion.name}</Text>
         <View style={styles.containerButton}>
