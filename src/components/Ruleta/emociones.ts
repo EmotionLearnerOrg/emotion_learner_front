@@ -1,10 +1,10 @@
 export enum emocionesEnum {
   FELIZ = 'feliz',
-  PAZ = 'paz',
   TRISTE = 'triste',
   ENOJADO = 'enojado',
-  MEDITANDO = 'meditando',
-  ENAMORADO = 'enamorado',
+  SORPRENDIDO = 'sorprendido',
+  NEUTRAL = 'neutral',
+  RANDOM = 'random', // este lo puse para que no explote la ruleta
 }
 
 export type EmocionesTypeNames = `${emocionesEnum}`;
@@ -16,18 +16,18 @@ export type emocionType = {
   pathGuia: any;
 };
 
-export const emociones: {[K in emocionesEnum]: emocionType} = {
+export const emociones: { [K in emocionesEnum]: emocionType } = {
   [emocionesEnum.FELIZ]: {
     color: '#FDFF49',
     name: emocionesEnum.FELIZ,
     pathGuia: require('./../../../assets/ilustraciones/feliz/guiaFelizCopy.png'),
     pathReal: require('./../../../assets/ilustraciones/feliz/guiaFelizCopy.png'),
   },
-  [emocionesEnum.PAZ]: {
-    color: '#60E743',
-    name: emocionesEnum.PAZ,
-    pathGuia: require('./../../../assets/ilustraciones/paz/guiaFelizCopy.png'),
-    pathReal: require('./../../../assets/ilustraciones/paz/guiaFelizCopy.png'),
+  [emocionesEnum.RANDOM]: {
+    color: '#FDFF49',
+    name: emocionesEnum.FELIZ,
+    pathGuia: require('./../../../assets/ilustraciones/feliz/guiaFelizCopy.png'),
+    pathReal: require('./../../../assets/ilustraciones/feliz/guiaFelizCopy.png'),
   },
   [emocionesEnum.TRISTE]: {
     color: '#B1B1B1',
@@ -41,15 +41,15 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: require('./../../../assets/ilustraciones/enojado/guiaFelizCopy.png'),
     pathReal: require('./../../../assets/ilustraciones/enojado/guiaFelizCopy.png'),
   },
-  [emocionesEnum.MEDITANDO]: {
+  [emocionesEnum.SORPRENDIDO]: {
     color: '#46A5FF',
-    name: emocionesEnum.MEDITANDO,
+    name: emocionesEnum.SORPRENDIDO,
     pathGuia: require('./../../../assets/ilustraciones/meditando/guiaFelizCopy.png'),
     pathReal: require('./../../../assets/ilustraciones/meditando/guiaFelizCopy.png'),
   },
-  [emocionesEnum.ENAMORADO]: {
+  [emocionesEnum.NEUTRAL]: {
     color: '#FF73FF',
-    name: emocionesEnum.ENAMORADO,
+    name: emocionesEnum.NEUTRAL,
     pathGuia: require('./../../../assets/ilustraciones/enamorado/guiaFelizCopy.png'),
     pathReal: require('./../../../assets/ilustraciones/enamorado/guiaFelizCopy.png'),
   },
