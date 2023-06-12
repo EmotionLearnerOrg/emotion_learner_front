@@ -1,18 +1,18 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { Text } from 'react-native-magnus';
-import { makeRuletaScreenStyles } from './PerformEmotionScreen.style';
-import { CameraComponent } from '../../components/Camera';
-import { Camera } from 'react-native-vision-camera';
-import { useAuthorizedCamera } from '../../components/Camera/useAuthorizedCamera';
-import { PerformEmotionType } from '../../stacks/HomeParams';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {View} from 'react-native';
+import {Text} from 'react-native-magnus';
+import {makeRuletaScreenStyles} from './PerformEmotionScreen.style';
+import {CameraComponent} from '../../components/Camera';
+import {Camera} from 'react-native-vision-camera';
+import {useAuthorizedCamera} from '../../components/Camera/useAuthorizedCamera';
+import {PerformEmotionType} from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
-  const { emotion } = route.params;
+const PerformEmotionScreen: FC<PerformEmotionType> = ({route}) => {
+  const {emotion} = route.params;
   const style = makeRuletaScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
+  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
   const [imageBase64, setImageBase64] = useState('');
   const [refresh, setRefresh] = useState(true);
   const [response, setResponse] = useState(Object);
@@ -63,13 +63,13 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
       console.log('Imagen Obtenida');
       detectEmotionsApi(imageBase64).then(predict => {
         const parsedJson = JSON.parse(JSON.stringify(predict));
-        const { emotions } = parsedJson;
+        const {emotions} = parsedJson;
         console.log(emotions);
         setResponse(emotions);
         setRefresh(!refresh);
       });
     }
-  }, [imageBase64]);
+  }, [imageBase64, refresh]);
 
   useEffect(() => {
     if (isInitialized) {
@@ -79,7 +79,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
 
   useEffect(() => {
     takePicture();
-  }, [refresh]);
+  }, [refresh, takePicture]);
 
   return (
     <View style={style.containerView}>
