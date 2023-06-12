@@ -10,6 +10,8 @@ import {
 import RuletaPintada from './RuletaPintada';
 import {Knop} from '../../../assets';
 import {EmocionesTypeNames, emocionType, emociones} from './emociones';
+import {Button} from 'react-native-magnus';
+import {Dialog} from '@rneui/themed';
 
 const Ruleta = ({
   divisions,
@@ -18,6 +20,8 @@ const Ruleta = ({
   divisions: number;
   goToPerformEmotion: (item: emocionType) => void;
 }) => {
+  const [emocion, setEmocion] = useState<emocionType>();
+  const [visible, setVisible] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
   const spinValue = useRef(new Animated.Value(0)).current;
   const inputRangeDin: number[] = [];
@@ -42,9 +46,10 @@ const Ruleta = ({
         useNativeDriver: true,
       }).start(() => {
         setIsSpinning(false);
-        goToPerformEmotion(
+        setEmocion(
           emociones[Object.keys(emociones)[fin] as EmocionesTypeNames],
         );
+        setVisible(true);
       });
     });
   };
@@ -77,6 +82,23 @@ const Ruleta = ({
           {isSpinning ? 'Girando...' : 'Girar'}
         </Text>
       </TouchableOpacity>
+      <Dialog isVisible={visible} onBackdropPress={() => setVisible(false)}>
+        <Dialog.Title
+          titleStyle={{
+            alignSelf: 'center',
+          }}
+          title={`Emocion ganadora : ${emocion?.name}!`}
+        />
+        <Button
+          block
+          m={10}
+          onPress={() => {
+            setVisible(false);
+            goToPerformEmotion(emocion!);
+          }}>
+          Realizar emocion
+        </Button>
+      </Dialog>
     </View>
   );
 };
