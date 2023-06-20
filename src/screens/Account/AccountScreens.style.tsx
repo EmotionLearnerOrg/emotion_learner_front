@@ -1,36 +1,38 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
-export const makeAccountScreensStyle = () => StyleSheet.create({
+export const makeAccountScreensStyle = () =>
+  StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F9F7F6',
-      },
-      title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        color: '#2C3E50',
-      },
-      input: {
-        width: '80%',
-        height: 40,
-        backgroundColor: '#ECF0F1',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        marginBottom: 10,
-        color: '#34495E',
-      },
-      button: {
-        backgroundColor: '#3498DB',
-        borderRadius: 5,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-      },
-      buttonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        fontWeight: 'bold',
-      },
-});
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F9F7F6',
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      color: '#2C3E50',
+    },
+    input: {
+      width: '80%',
+      height: 40,
+      backgroundColor: '#ECF0F1',
+      borderRadius: 5,
+      paddingHorizontal: 10,
+      marginBottom: 10,
+      color: '#34495E',
+    },
+    button: {
+      backgroundColor: '#3498DB',
+      borderRadius: 5,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      marginBottom: 24,
+    },
+    buttonText: {
+      color: '#FFFFFF',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+  });

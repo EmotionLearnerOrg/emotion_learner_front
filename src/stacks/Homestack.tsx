@@ -5,7 +5,7 @@ import AsociationScreen from '../screens/AsociationScreen/AsociationScreen';
 import InsigniasScreen from '../screens/InsigniasScreen/InsigniasScreen';
 import CalendarScreen from '../screens/CalendarScreen/CalendarScreen';
 import HeaderCommon from '../components/HeaderCommon/HeaderCommon';
-import TabsNavigation from './TabNavigator';
+import TabsStack from './TabStack';
 import PerformEmotionScreen from '../screens/PerformEmotionScreen/PerformEmotionScreen';
 import GuideFeelScreen from '../screens/GuideFeelScreen/GuideFeelScreen';
 import RealFeelScreen from '../screens/RealFeelScreen/RealFeelScreen';
@@ -18,7 +18,7 @@ const HomeStack = () => {
       screenOptions={{headerShown: true, header: () => <HeaderCommon />}}>
       <HomeStackNavigator.Screen
         name={HomeRoutes.HOME_S}
-        component={TabsNavigation}
+        component={TabsStack}
         options={{headerShown: false}}
       />
       <HomeStackNavigator.Screen

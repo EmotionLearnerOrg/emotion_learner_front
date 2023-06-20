@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {ScrollView} from 'react-native';
 import {makeAsociationScreenStyles} from './AsociationScreen.style';
 import {Text} from 'react-native-magnus';
 
-const AsociationScreen = () => {
+const AsociationScreen: FC<{}> = () => {
   const style = makeAsociationScreenStyles();
   return (
     <ScrollView style={style.containerView}>

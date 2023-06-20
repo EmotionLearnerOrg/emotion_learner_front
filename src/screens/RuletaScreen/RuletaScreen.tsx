@@ -5,6 +5,7 @@ import {Ruleta} from '../../components/Ruleta';
 import {Text} from 'react-native-magnus';
 import {HomeRoutes, RuletaType} from '../../stacks/HomeParams';
 import {emocionType} from '../../components/Ruleta/emociones';
+import useDataUser from '../../hooks/useDataUser';
 
 const RuletaScreen: FC<RuletaType> = ({navigation}) => {
   const style = makeRuletaScreenStyles();
@@ -14,6 +15,7 @@ const RuletaScreen: FC<RuletaType> = ({navigation}) => {
       emotion: emotion,
     });
   };
+  const {nickName} = useDataUser();
 
   return (
     <View style={style.container}>
