@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {ScrollView} from 'react-native';
 import {makeInsigniasScreenStyles} from './InsigniasScreen.style';
 import {Text} from 'react-native-magnus';
 
-const InsigniasScreen = () => {
+const InsigniasScreen: FC<{}> = () => {
   const style = makeInsigniasScreenStyles();
   return (
     <ScrollView style={style.containerView}>
