@@ -1,7 +1,7 @@
-import {RouteProp} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {emocionType} from '../components/Ruleta/emociones';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { emocionType } from '../components/Ruleta/emociones';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export enum HomeRoutes {
   HOME_S = 'Home',
@@ -13,6 +13,7 @@ export enum HomeRoutes {
   PERFORM_EMOTION = 'PerformEmotion',
   GUIDE_FEEL = 'GuideFeal',
   REAL_FEEL = 'RealFeel',
+  LOG_IN = 'RealFeel',
 }
 
 export type HomeStackParamList = {
@@ -22,9 +23,9 @@ export type HomeStackParamList = {
   [HomeRoutes.ASOCIATION]: undefined;
   [HomeRoutes.INSIGNIAS]: undefined;
   [HomeRoutes.CALENDAR]: undefined;
-  [HomeRoutes.PERFORM_EMOTION]: {emotion: emocionType};
-  [HomeRoutes.GUIDE_FEEL]: {emotion: emocionType};
-  [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
+  [HomeRoutes.PERFORM_EMOTION]: { emotion: emocionType };
+  [HomeRoutes.GUIDE_FEEL]: { emotion: emocionType };
+  [HomeRoutes.REAL_FEEL]: { emotion: emocionType };
 };
 
 export type HomeStackNavigationsProp = StackNavigationProp<HomeStackParamList>;
@@ -78,6 +79,16 @@ type PerformEmotionScreenRouteType = RouteProp<
 export type PerformEmotionType = {
   navigation: HomeStackNavigationsProp;
   route: PerformEmotionScreenRouteType;
+};
+
+type ProfileScreenRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.PERFORM_EMOTION
+>;
+
+export type ProfileType = {
+  navigation: HomeStackNavigationsProp;
+  route: ProfileScreenRouteType;
 };
 
 export const HomeStackNavigator =

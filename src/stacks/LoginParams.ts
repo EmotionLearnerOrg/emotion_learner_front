@@ -1,17 +1,16 @@
-import {RouteProp} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export enum LoginRoutes {
   HOME_LOGIN = 'HomeLogin',
-  HOME = 'Home',
-  // LOGIN = 'Login',
+  HOME_APP = 'HomeApp',
   REGISTER = 'Register',
 }
 
 export type LoginStackParamList = {
   [LoginRoutes.HOME_LOGIN]: undefined;
-  [LoginRoutes.HOME]: undefined;
+  [LoginRoutes.HOME_APP]: undefined;
   [LoginRoutes.REGISTER]: undefined;
 };
 

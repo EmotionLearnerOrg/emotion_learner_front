@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = () => {
+const TabsStack = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home2"
@@ -37,8 +37,4 @@ const Tabs = () => {
   );
 };
 
-const TabsNavigation = () => {
-  return <Tabs />;
-};
-
-export default TabsNavigation;
+export default TabsStack;

@@ -3,16 +3,15 @@ import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
 import {signUpWithEmailAndPassword} from '../../services/account/account.service';
 import {makeAccountScreensStyle} from './AccountScreens.style';
 import {LoginRoutes, RegisterType} from '../../stacks/LoginParams';
-import {Input} from '@rneui/themed';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import {Input} from '@rneui/base';
 
 const RegisterScreen: FC<RegisterType> = ({navigation}) => {
   const style = makeAccountScreensStyle();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nickName, setNickName] = useState('');
-  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleRegister = async () => {
     // Aquí puedes acceder a las variables 'email' y 'password' que contienen los valores ingresados
@@ -57,22 +56,6 @@ const RegisterScreen: FC<RegisterType> = ({navigation}) => {
         value={email}
       />
       <InputPassword setPassword={setPassword} password={password} />
-
-      {/* <Input
-        style={style.input}
-        placeholder="Contraseña"
-        placeholderTextColor="#AEB6BF"
-        secureTextEntry={!showPassword}
-        onChangeText={setPassword}
-        value={password}
-        rightIcon={
-          <TouchableOpacity
-            style={{backgroundColor: 'red'}}
-            onPress={() => setShowPassword(!showPassword)}>
-            <Icon name="label-variant-outline" size={34} />
-          </TouchableOpacity>
-        }
-      /> */}
 
       <TouchableOpacity style={style.button} onPress={handleRegister}>
         <Text style={style.buttonText}>Registrarse</Text>

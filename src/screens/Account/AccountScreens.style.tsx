@@ -28,6 +28,7 @@ export const makeAccountScreensStyle = () =>
       borderRadius: 5,
       paddingVertical: 10,
       paddingHorizontal: 20,
+      marginBottom: 24,
     },
     buttonText: {
       color: '#FFFFFF',

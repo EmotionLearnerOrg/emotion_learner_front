@@ -1,24 +1,26 @@
 import React, {FC, useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {loginWithEmailAndPassword} from '../../services/account/account.service';
 import {makeAccountScreensStyle} from './AccountScreens.style';
 import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
-import {Input} from '@rneui/themed';
 import InputPassword from '../../components/InputPassword/InputPassword';
+import {Input} from '@rneui/base';
 
 const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const style = makeAccountScreensStyle();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    // Aquí puedes acceder a las variables 'email' y 'password' que contienen los valores ingresados
-    console.log('Email: ', email);
-    console.log('Contraseña: ', password);
+  const cleanData = () => {
+    setEmail('');
+    setPassword('');
+  };
 
+  const handleLogin = async () => {
     try {
       const result = await loginWithEmailAndPassword(email, password);
       console.log('Inicio correcto: ', result);
+      cleanData();
       goToHome();
     } catch (error) {
       Alert.alert('Error', 'Usuario o contraseña incorrectos', [{text: 'OK'}]);
@@ -29,7 +31,7 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
     navigation.navigate(LoginRoutes.REGISTER);
   };
   const goToHome = () => {
-    navigation.navigate(LoginRoutes.HOME);
+    navigation.navigate(LoginRoutes.HOME_APP);
   };
 
   return (
