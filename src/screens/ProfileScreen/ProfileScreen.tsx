@@ -1,10 +1,9 @@
 import React, {FC, useState} from 'react';
 import {Alert, ScrollView} from 'react-native';
 import {makeProfileScreenStyles} from './ProfileScreen.style';
-import {Button, Text} from 'react-native-magnus';
-import {TouchableOpacity} from 'react-native';
+import {Button} from 'react-native-magnus';
 import {logout} from '../../services/account/account.service';
-import {ProfileType} from '../../stacks/HomeParams';
+import {HomeRoutes, ProfileType} from '../../stacks/HomeParams';
 import {Dialog} from '@rneui/themed';
 
 const ProfileScreen: FC<ProfileType> = ({navigation}) => {
@@ -22,14 +21,19 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
   };
 
   const goToHome = () => {
-    navigation.popToTop();
+    navigation.navigate(HomeRoutes.LOG_IN);
   };
 
   return (
     <ScrollView style={style.containerView}>
-      <TouchableOpacity onPress={() => setVisible(true)}>
-        <Text>Cerrar sesion</Text>
-      </TouchableOpacity>
+      <Button
+        block
+        m={10}
+        onPress={() => {
+          setVisible(true);
+        }}>
+        Cerrar sesion
+      </Button>
       <Dialog isVisible={visible}>
         <Dialog.Title
           titleStyle={{

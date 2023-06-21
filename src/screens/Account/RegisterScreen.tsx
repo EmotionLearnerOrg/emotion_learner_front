@@ -1,9 +1,8 @@
 import React, {FC, useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {signUpWithEmailAndPassword} from '../../services/account/account.service';
 import {makeAccountScreensStyle} from './AccountScreens.style';
 import {LoginRoutes, RegisterType} from '../../stacks/LoginParams';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import {Input} from '@rneui/base';
 

@@ -4,11 +4,12 @@ import RegisterScreen from '../screens/Account/RegisterScreen';
 import {LoginRoutes, LoginStackNavigator} from './LoginParams';
 import HomeStack from './Homestack';
 import HeaderBack from '../components/HeaderBack/HeaderBack';
+import LoadingScreen from '../screens/Account/LoadingScreen';
 
 const LoginStack = () => {
   return (
     <LoginStackNavigator.Navigator
-      initialRouteName={LoginRoutes.HOME_LOGIN}
+      initialRouteName={LoginRoutes.LOADING}
       screenOptions={{
         headerShown: false,
       }}>
@@ -20,6 +21,11 @@ const LoginStack = () => {
       <LoginStackNavigator.Screen
         name={LoginRoutes.HOME_APP}
         component={HomeStack}
+        options={{headerShown: false}}
+      />
+      <LoginStackNavigator.Screen
+        name={LoginRoutes.LOADING}
+        component={LoadingScreen}
         options={{headerShown: false}}
       />
       <LoginStackNavigator.Screen
