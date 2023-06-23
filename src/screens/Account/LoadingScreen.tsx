@@ -1,25 +1,29 @@
 import React, {FC, useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {makeAccountScreensStyle} from './AccountScreens.style';
-import useDataUser from '../../hooks/useDataUser';
 import {LoadingType, LoginRoutes} from '../../stacks/LoginParams';
 import {useFocusEffect} from '@react-navigation/native';
+import {useUserData} from '../../contexts/UserDataProvider';
 
 const LoadingScreen: FC<LoadingType> = ({navigation}) => {
   const style = makeAccountScreensStyle();
-  const {loggedIn} = useDataUser();
-  console.log('LoadingScreen', LoadingScreen);
+  const {initData, loggedIn} = useUserData();
 
   const checkWhereToGo = React.useCallback(() => {
-    console.log('loggedIn', loggedIn);
-
     if (loggedIn) {
       navigation.navigate(LoginRoutes.HOME_APP);
     } else if (loggedIn === false) {
-      console.log('viniste??');
       navigation.navigate(LoginRoutes.HOME_LOGIN);
     }
   }, [loggedIn, navigation]);
+
+  useEffect(() => {
+    initData();
+    return () => {
+      console.log('out of loading');
+    };
+  }, [initData]);
+
   useEffect(() => {
     checkWhereToGo();
   }, [checkWhereToGo, loggedIn, navigation]);

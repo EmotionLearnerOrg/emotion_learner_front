@@ -4,7 +4,6 @@ import {makeSelectorGameStyles} from './SelectorGameSection.style';
 import Card from './Card/Card';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Text} from 'react-native-magnus';
-import useDataUser from '../../../hooks/useDataUser';
 
 const SelectorGameSection = ({
   goToMirror,
@@ -16,7 +15,6 @@ const SelectorGameSection = ({
   goToAsociation: () => void;
 }) => {
   const style = makeSelectorGameStyles();
-  const {nickName} = useDataUser();
 
   return (
     <View style={style.selectorGameContainer}>

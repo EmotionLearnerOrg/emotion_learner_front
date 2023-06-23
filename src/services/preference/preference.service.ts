@@ -21,7 +21,7 @@ export const getNickName = async () => {
     } catch (e) { }
 };
 
-export const isLoggedIn = async () => {
+export const getIsLoggedIn = async () => {
     try {
         const isLoggedIn = await AsyncStorage.getItem('loggedIn');
         return isLoggedIn ? JSON.parse(isLoggedIn) : false;

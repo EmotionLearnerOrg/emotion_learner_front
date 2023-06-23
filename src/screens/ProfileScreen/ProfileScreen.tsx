@@ -5,15 +5,28 @@ import {Button} from 'react-native-magnus';
 import {logout} from '../../services/account/account.service';
 import {HomeRoutes, ProfileType} from '../../stacks/HomeParams';
 import {Dialog} from '@rneui/themed';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+import {useUserData} from '../../contexts/UserDataProvider';
 
 const ProfileScreen: FC<ProfileType> = ({navigation}) => {
   const [visible, setVisible] = useState(false);
-
+  const {getParent} = useNavigation();
   const style = makeProfileScreenStyles();
+  const {clearData} = useUserData();
 
   const handleLogout = async () => {
     try {
       await logout();
+      clearData();
+      const parent = getParent();
+      if (parent) {
+        parent.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: parent.getState().routeNames[0]}],
+          }),
+        );
+      }
       goToHome();
     } catch (error) {
       Alert.alert('Error', 'Usuario o contraseña incorrectos', [{text: 'OK'}]);

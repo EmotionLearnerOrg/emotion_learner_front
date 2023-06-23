@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getNickName, getUID, isLoggedIn } from '../services/preference/preference.service';
+import { getNickName, getUID, getIsLoggedIn } from '../services/preference/preference.service';
 
-const useDataUser = () => {
+const useUserDataStorage = () => {
     const [nickName, setNickname] = useState('');
     const [uid, setUid] = useState('');
     const [loggedIn, setIsLoggedIn] = useState(null);
@@ -13,12 +13,12 @@ const useDataUser = () => {
         getUID().then(dataUid => {
             setUid(dataUid!);
         });
-        isLoggedIn().then(dataLoggedIn => {
+        getIsLoggedIn().then(dataLoggedIn => {
             setIsLoggedIn(dataLoggedIn!);
         });
-    }, []);
+    }, [nickName]);
 
     return { nickName, uid, loggedIn };
 };
 
-export default useDataUser;
+export default useUserDataStorage;
