@@ -14,17 +14,9 @@ const RegisterScreen: FC<RegisterType> = ({navigation}) => {
 
   const handleRegister = async () => {
     // Aquí puedes acceder a las variables 'email' y 'password' que contienen los valores ingresados
-    console.log('Email: ', email);
-    console.log('Contraseña: ', password);
-    console.log('NickName: ', nickName);
 
     try {
-      const result = await signUpWithEmailAndPassword(
-        email,
-        password,
-        nickName,
-      );
-      console.log('Registro correcto: ', result);
+      await signUpWithEmailAndPassword(email, password, nickName);
       goToLogin();
     } catch (error) {
       Alert.alert('Error', 'Registro Incorrecto', [{text: 'OK'}]);

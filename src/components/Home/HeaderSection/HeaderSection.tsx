@@ -2,12 +2,11 @@ import React from 'react';
 import {View} from 'react-native';
 import {makeCalendarCardContainerStyles} from './HeaderSection.style';
 import {Icon, Text} from 'react-native-magnus';
-// import {getNickName} from '../../../services/preference/preference.service';
-import useDataUser from '../../../hooks/useDataUser';
+import {useUserData} from '../../../contexts/UserDataProvider';
 
 const HeaderSection = () => {
   const style = makeCalendarCardContainerStyles();
-  const {nickName} = useDataUser();
+  const {nickName} = useUserData();
 
   return (
     <View style={style.headerContainer}>

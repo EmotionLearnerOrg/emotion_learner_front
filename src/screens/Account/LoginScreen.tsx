@@ -5,11 +5,13 @@ import {makeAccountScreensStyle} from './AccountScreens.style';
 import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import {Input} from '@rneui/base';
+import {useUserData} from '../../contexts/UserDataProvider';
 
 const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const style = makeAccountScreensStyle();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {initData} = useUserData();
 
   const cleanData = () => {
     setEmail('');
@@ -18,8 +20,7 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
 
   const handleLogin = async () => {
     try {
-      const result = await loginWithEmailAndPassword(email, password);
-      console.log('Inicio correcto: ', result);
+      await loginWithEmailAndPassword(email, password).then(() => initData());
       cleanData();
       goToHome();
     } catch (error) {
