@@ -31,13 +31,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route}) => {
         },
         body: JSON.stringify(body),
       })
-        .then(response => response.json())
+        .then(responseApi => responseApi.json())
         .then(data => {
           resolve(data);
         })
         .catch(error => {
-          console.log('Error: ', error);
-          reject(null);
+          reject(error);
         });
     });
   };

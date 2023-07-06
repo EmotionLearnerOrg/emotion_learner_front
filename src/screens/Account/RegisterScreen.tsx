@@ -16,7 +16,7 @@ const RegisterScreen: FC<RegisterType> = ({navigation}) => {
     // Aquí puedes acceder a las variables 'email' y 'password' que contienen los valores ingresados
 
     try {
-      await signUpWithEmailAndPassword(email, password, nickName);
+      await signUpWithEmailAndPassword({email, password, nickName});
       goToLogin();
     } catch (error) {
       Alert.alert('Error', 'Registro Incorrecto', [{text: 'OK'}]);

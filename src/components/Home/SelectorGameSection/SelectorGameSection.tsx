@@ -24,42 +24,42 @@ const SelectorGameSection = ({
         </Text>
       </View>
       <View style={style.gamesGrid}>
-        <View style={{flex: 0.5}}>
+        <View style={style.leftSection}>
           <TouchableOpacity
-            style={{flex: 1}}
+            style={style.contFull}
             activeOpacity={0.4}
             onPress={goToMirror}>
             <Card
-              style={{flex: 1}}
+              style={style.contFull}
               color={'#AFECFE'}
               text={'Mirror'}
               icon={<Icon name="mirror" size={34} />}
             />
           </TouchableOpacity>
         </View>
-        <View style={{flex: 0.5, gap: 10}}>
+        <View style={style.rigthSection}>
           <TouchableOpacity
-            style={{flex: 0.5}}
+            style={style.contHalf}
             activeOpacity={0.4}
             onPress={goToRuleta}>
             <Card
-              style={{flex: 1}}
+              style={style.contFull}
               color={'#BEAFFE'}
               text={'Ruleta'}
               icon={<Icon name="emoticon-tongue-outline" size={34} />}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{flex: 0.5}}
+          {/* <TouchableOpacity
+            style={style.contHalf}
             activeOpacity={0.4}
             onPress={goToAsociation}>
             <Card
-              style={{flex: 1}}
+              style={style.contFull}
               color={'#FFD6AD'}
               text={'Asociacion'}
               icon={<Icon name="emoticon-tongue-outline" size={34} />}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </View>

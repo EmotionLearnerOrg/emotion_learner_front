@@ -21,4 +21,8 @@ export const makeGuideFeelScreenStyles = () =>
     buttonEmotion: {
       width: 120,
     },
+    image: {
+      alignSelf: 'center',
+      flex: 1,
+    },
   });

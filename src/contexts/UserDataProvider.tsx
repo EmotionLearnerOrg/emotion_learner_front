@@ -1,91 +1,114 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useCallback, useContext, useReducer} from 'react';
 import {
   getNickName,
   getUID,
   getIsLoggedIn,
 } from '../services/preference/preference.service';
+import {getAllInsigniasByUser} from '../services/insignia/insignia.service';
+import {
+  DEFAULT_STATE,
+  IUserDataContext,
+  UserDataActionKind,
+  userDataReducer,
+} from './UserData';
 
-interface UserDataState {
-  nickName: string;
-  uid: string;
-  loggedIn: any;
-  initData: () => void;
-  clearData: () => void;
-  updateNickname: ({nickNameProp}: {nickNameProp?: string | undefined}) => void;
-  updateUid: ({uidProp}: {uidProp?: string | undefined}) => void;
-  updateLoggedIn: ({loggedInProp}: {loggedInProp?: string | undefined}) => void;
-}
-
-const UserDataContext = createContext<UserDataState>({
+const UserDataContext = createContext<IUserDataContext>({
   nickName: '',
   uid: '',
   loggedIn: null,
+  insignias: [],
   initData: () => {},
   clearData: () => {},
   updateNickname: () => {},
   updateUid: () => {},
   updateLoggedIn: () => {},
+  updateInsignias: () => {},
 });
 
 export const UserDataProvider: React.FC<any> = ({children}) => {
-  const [nickName, setNickname] = useState('');
-  const [uid, setUid] = useState('');
-  const [loggedIn, setIsLoggedIn] = useState(null);
-
-  const initData = () => {
-    updateNickname({});
-    updateUid({});
-    updateLoggedIn({});
-  };
+  const [state, dispatch] = useReducer(userDataReducer, DEFAULT_STATE);
 
   const clearData = () => {
     updateNickname({});
     updateUid({});
     updateLoggedIn({});
+    updateInsignias({});
+    dispatch({
+      type: UserDataActionKind.CLEAR_DATA,
+    });
   };
 
-  const updateNickname = ({nickNameProp}: {nickNameProp?: string}) => {
-    nickNameProp
-      ? setNickname('')
-      : getNickName().then(dataNickname => {
-          setNickname(dataNickname!);
-        });
+  const updateNickname = async ({nickNameProp}: {nickNameProp?: string}) => {
+    let nickNamePayload = nickNameProp ?? (await getNickName());
+    dispatch({
+      type: UserDataActionKind.SET_NICKNAME,
+      nickName: nickNamePayload!,
+    });
   };
 
-  const updateUid = ({uidProp}: {uidProp?: string}) => {
-    uidProp
-      ? setUid('')
-      : getUID().then(dataUid => {
-          setUid(dataUid!);
-        });
+  const updateUid = async ({uidProp}: {uidProp?: string}) => {
+    let uidPayload = uidProp ?? (await getUID());
+    dispatch({
+      type: UserDataActionKind.SET_UID,
+      uid: uidPayload!,
+    });
   };
 
-  const updateLoggedIn = ({loggedInProp}: {loggedInProp?: any}) => {
-    loggedInProp
-      ? setIsLoggedIn(null)
-      : getIsLoggedIn().then(dataLoggedIn => {
-          setIsLoggedIn(dataLoggedIn!);
-        });
+  const updateLoggedIn = async ({loggedInProp}: {loggedInProp?: any}) => {
+    let loggedInPayload = loggedInProp ?? (await getIsLoggedIn());
+    dispatch({
+      type: UserDataActionKind.SET_LOGGED,
+      loggedIn: loggedInPayload,
+    });
   };
+
+  const updateInsignias = useCallback(
+    async ({insigniasProp}: {insigniasProp?: any}) => {
+      let insigniasPayload =
+        insigniasProp ?? (await getAllInsigniasByUser({uid: state.uid}));
+      dispatch({
+        type: UserDataActionKind.SET_INSIGNIAS,
+        insignias: Object.entries(insigniasPayload),
+      });
+    },
+    [state.uid],
+  );
+
+  const initData = useCallback(async () => {
+    let nickName = await getNickName();
+    let uid = await getUID();
+    let loggedIn = await getIsLoggedIn();
+    let insignias =
+      uid?.length === 0 ? [] : await getAllInsigniasByUser({uid: uid!});
+
+    dispatch({
+      type: UserDataActionKind.INIT_DATA,
+      state: {
+        nickName: nickName!,
+        uid: uid!,
+        loggedIn: loggedIn,
+        insignias: Object.entries(insignias),
+      },
+    });
+  }, []);
 
   return (
     <UserDataContext.Provider
       value={{
-        nickName,
-        uid,
-        loggedIn,
+        ...state,
         initData,
         clearData,
         updateNickname,
         updateUid,
         updateLoggedIn,
+        updateInsignias,
       }}>
       {children}
     </UserDataContext.Provider>
   );
 };
 
-export const useUserData = (): UserDataState => {
+export const useUserData = (): IUserDataContext => {
   const context = useContext(UserDataContext);
   if (context === undefined) {
     throw new Error('useUserData must be used inside UserDataProvider');

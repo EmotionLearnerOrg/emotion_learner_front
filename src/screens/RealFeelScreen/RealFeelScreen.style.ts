@@ -22,4 +22,8 @@ export const makeRealFeelScreenStyles = () =>
     buttonEmotion: {
       width: 120,
     },
+    image: {
+      alignSelf: 'center',
+      flex: 1,
+    },
   });

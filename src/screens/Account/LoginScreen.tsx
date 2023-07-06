@@ -20,7 +20,7 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
 
   const handleLogin = async () => {
     try {
-      await loginWithEmailAndPassword(email, password).then(() => initData());
+      await loginWithEmailAndPassword({email, password}).then(() => initData());
       cleanData();
       goToHome();
     } catch (error) {
@@ -38,7 +38,6 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   return (
     <View style={style.container}>
       <Text style={style.title}>Iniciar Sesión</Text>
-
       <Input
         style={style.input}
         placeholder="Correo"
@@ -47,7 +46,6 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
         value={email}
       />
       <InputPassword setPassword={setPassword} password={password} />
-
       <TouchableOpacity style={style.button} onPress={handleLogin}>
         <Text style={style.buttonText}>Ingresar</Text>
       </TouchableOpacity>
