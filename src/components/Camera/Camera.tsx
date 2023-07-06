@@ -1,4 +1,4 @@
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import React, {
   Dispatch,
   forwardRef,
@@ -16,9 +16,9 @@ import {
   useCameraDevices,
 } from 'react-native-vision-camera';
 import 'react-native-reanimated';
-import {makeStyles} from './Camera.styles';
-import {Button, Text} from 'react-native-magnus';
-import {emocionType} from '../Ruleta/emociones';
+import { makeStyles } from './Camera.styles';
+import { Text } from 'react-native-magnus';
+import { emocionType } from '../Ruleta/emociones';
 
 type CameraProps = {
   cameraPosition?: CameraPosition;
@@ -53,9 +53,8 @@ export const CameraComponent: ForwardRefExoticComponent<
   ) => {
     const styles = makeStyles();
     const devices = useCameraDevices();
-    const [currentDevice, setCurrentDevice] = useState<
-      CameraDevice | undefined
-    >();
+
+    const [currentDevice, setCurrentDevice] = useState<CameraDevice | undefined>();
 
     useEffect(() => {
       requestCameraPermission();
@@ -98,11 +97,6 @@ export const CameraComponent: ForwardRefExoticComponent<
           onInitialized={() => setIsInitialized(true)}
         />
         <Text fontSize={32}>Emocion : {emotion.name}</Text>
-        <View style={styles.containerButton}>
-          <Button style={styles.button} opacity={0.5} bg="green" rounded={16}>
-            <Text>Estoy listo</Text>
-          </Button>
-        </View>
       </>
     ) : (
       <TouchableOpacity
