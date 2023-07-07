@@ -1,4 +1,4 @@
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import React, {
   Dispatch,
   forwardRef,
@@ -16,9 +16,9 @@ import {
   useCameraDevices,
 } from 'react-native-vision-camera';
 import 'react-native-reanimated';
-import { makeStyles } from './Camera.styles';
-import { Text } from 'react-native-magnus';
-import { emocionType } from '../Ruleta/emociones';
+import {makeStyles} from './Camera.styles';
+import {Text} from 'react-native-magnus';
+import {emocionType} from '../Ruleta/emociones';
 
 type CameraProps = {
   cameraPosition?: CameraPosition;
@@ -32,7 +32,7 @@ type CameraProps = {
   isAuthorized?: boolean;
   requestCameraPermission?: any;
   emotion: emocionType;
-  setIsInitialized: Dispatch<SetStateAction<boolean>>;
+  setIsInitialized?: Dispatch<SetStateAction<boolean>>;
 };
 
 /**
@@ -54,7 +54,9 @@ export const CameraComponent: ForwardRefExoticComponent<
     const styles = makeStyles();
     const devices = useCameraDevices();
 
-    const [currentDevice, setCurrentDevice] = useState<CameraDevice | undefined>();
+    const [currentDevice, setCurrentDevice] = useState<
+      CameraDevice | undefined
+    >();
 
     useEffect(() => {
       requestCameraPermission();
@@ -94,7 +96,7 @@ export const CameraComponent: ForwardRefExoticComponent<
           photo={true}
           isActive={true}
           device={currentDevice}
-          onInitialized={() => setIsInitialized(true)}
+          onInitialized={() => setIsInitialized && setIsInitialized(true)}
         />
         <Text fontSize={32}>Emocion : {emotion.name}</Text>
       </>

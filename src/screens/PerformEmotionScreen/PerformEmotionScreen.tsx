@@ -1,28 +1,26 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-magnus';
-import { makeRuletaScreenStyles } from './PerformEmotionScreen.style';
-import { CameraComponent } from '../../components/Camera';
-import { Camera } from 'react-native-vision-camera';
-import { useAuthorizedCamera } from '../../components/Camera/useAuthorizedCamera';
-import { PerformEmotionType } from '../../stacks/HomeParams';
-import { makeStyles } from './../../components/Camera/Camera.styles';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {View} from 'react-native';
+import {Button, Text} from 'react-native-magnus';
+import {makeRuletaScreenStyles} from './PerformEmotionScreen.style';
+import {CameraComponent} from '../../components/Camera';
+import {Camera} from 'react-native-vision-camera';
+import {useAuthorizedCamera} from '../../components/Camera/useAuthorizedCamera';
+import {PerformEmotionType} from '../../stacks/HomeParams';
+import {makeStyles} from './../../components/Camera/Camera.styles';
 import RNFS from 'react-native-fs';
-import CountDown from 'react-native-countdown-component';
+import Countdown from './CountDown';
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
-  const { emotion } = route.params;
+const PerformEmotionScreen: FC<PerformEmotionType> = ({route}) => {
+  const {emotion} = route.params;
   const style = makeRuletaScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
+  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
   const [imageBase64, setImageBase64] = useState('');
   const [refresh, setRefresh] = useState(true);
   const [response, setResponse] = useState(Object);
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
-  const [visibleTimer, setVisibleTimer] = useState(false);
-  const [userReadyButtonPressed, setUserReadyButtonPressed] = useState(false);
+  const [finishedCountDown, setFinishedCountDown] = useState(false);
+  const [userReady, setUserReady] = useState(false);
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
-
 
   const detectEmotionsApi = (imageData: string) => {
     const url = 'http://192.168.0.99:3001/detect-emotion';
@@ -68,11 +66,9 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
 
   useEffect(() => {
     if (imageBase64 && imageBase64 !== '') {
-      // console.log('Imagen Obtenida');
       detectEmotionsApi(imageBase64).then(predict => {
         const parsedJson = JSON.parse(JSON.stringify(predict));
-        const { emotions } = parsedJson;
-        // console.log(emotions);
+        const {emotions} = parsedJson;
         setResponse(emotions);
         setRefresh(!refresh);
       });
@@ -89,25 +85,13 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
     takePicture();
   }, [refresh, takePicture]);
 
-  const handleReadyButtonPress = () => {
-    setVisibleTimer(true);
-  };
-
-  const handletimerFinished = () => {
-    setVisibleTimer(false);
-  };
-
   useEffect(() => {
-    if (visibleTimer) {
-      setUserReadyButtonPressed(!userReadyButtonPressed);
+    if (userReady && finishedCountDown) {
+      setStartDetectionEmotion(prev => {
+        return !prev;
+      });
     }
-  }, [visibleTimer]);
-
-  useEffect(() => {
-    if (userReadyButtonPressed) {
-      setStartDetectionEmotion(!startDetectionEmotion);
-    }
-  }, [userReadyButtonPressed]);
+  }, [finishedCountDown, userReady]);
 
   return (
     <View style={style.containerView}>
@@ -117,28 +101,32 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
         cameraPosition={'front'}
         isAuthorized={isAuthorized}
         requestCameraPermission={requestCameraPermission}
-        setIsInitialized={setIsInitialized}
       />
       <View style={styles.containerButton}>
-        {!userReadyButtonPressed ? (
+        {!userReady ? (
           <Button
             style={styles.button}
             opacity={0.5}
-            bg="green"
+            bg="white"
             rounded={16}
-            onPress={handleReadyButtonPress}
-          >
-            <Text>Estoy listo!</Text>
+            onPress={() => setUserReady(true)}>
+            <Text fontSize={32}>Estoy listo!</Text>
           </Button>
-        ) : (
-          <CountDown
-            until={3}
+        ) : !finishedCountDown ? (
+          <Countdown
+            duration={5}
             size={32}
-            timeToShow={visibleTimer ? ['S'] : []}
-            timeLabels={{ s: '' }}
-            onFinish={handletimerFinished} />)}
+            onFinished={() => setFinishedCountDown(true)}
+          />
+        ) : (
+          <Text fontSize={32}>Ya!</Text>
+        )}
       </View>
-      {response && (<Text fontSize={32} color="#ff00ff">{JSON.stringify(response)}</Text>)}
+      {response && (
+        <Text fontSize={32} color="#ff00ff">
+          {JSON.stringify(response)}
+        </Text>
+      )}
     </View>
   );
 };
