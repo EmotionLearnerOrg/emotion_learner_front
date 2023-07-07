@@ -33,7 +33,7 @@ const MirrorScreen: FC<MirrorType> = ({navigation}) => {
 
   return (
     <View style={style.containerView}>
-      <Text fontSize={32}>Espejo inteligente</Text>
+      <Text style={{alignSelf: 'center'}} fontSize={32}>Espejo inteligente</Text>
       <Text fontSize={16} textAlign="center" style={{marginTop: 20}}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
         dolor sit amet, consectetur adipisicing elit.
