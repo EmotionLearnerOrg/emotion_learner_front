@@ -1,20 +1,20 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View} from 'react-native';
-import {Button, Text} from 'react-native-magnus';
-import {makeRuletaScreenStyles} from './PerformEmotionScreen.style';
-import {CameraComponent} from '../../components/Camera';
-import {Camera} from 'react-native-vision-camera';
-import {useAuthorizedCamera} from '../../components/Camera/useAuthorizedCamera';
-import {PerformEmotionType} from '../../stacks/HomeParams';
-import {makeStyles} from './../../components/Camera/Camera.styles';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-magnus';
+import { makeRuletaScreenStyles } from './PerformEmotionScreen.style';
+import { CameraComponent } from '../../components/Camera';
+import { Camera } from 'react-native-vision-camera';
+import { useAuthorizedCamera } from '../../components/Camera/useAuthorizedCamera';
+import { PerformEmotionType } from '../../stacks/HomeParams';
+import { makeStyles } from './../../components/Camera/Camera.styles';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({route}) => {
-  const {emotion} = route.params;
+const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
+  const { emotion } = route.params;
   const style = makeRuletaScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
+  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
   const [imageBase64, setImageBase64] = useState('');
   const [refresh, setRefresh] = useState(true);
   const [response, setResponse] = useState(Object);
@@ -68,7 +68,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route}) => {
     if (imageBase64 && imageBase64 !== '') {
       detectEmotionsApi(imageBase64).then(predict => {
         const parsedJson = JSON.parse(JSON.stringify(predict));
-        const {emotions} = parsedJson;
+        const { emotions } = parsedJson;
         setResponse(emotions);
         setRefresh(!refresh);
       });
@@ -115,11 +115,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route}) => {
         ) : !finishedCountDown ? (
           <Countdown
             duration={5}
-            size={32}
+            size={40}
+            color='#ff00ff'
             onFinished={() => setFinishedCountDown(true)}
           />
         ) : (
-          <Text fontSize={32}>Ya!</Text>
+          <Text fontSize={32} color="#ff00ff">Ya!</Text>
         )}
       </View>
       {response && (

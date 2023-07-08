@@ -1,14 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {View} from 'react-native';
-import {Text} from 'react-native-magnus';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { Text } from 'react-native-magnus';
 
 const Countdown = ({
   duration,
   size,
+  color,
   onFinished,
 }: {
   duration: number;
   size?: number;
+  color?: string;
   onFinished: () => void;
 }) => {
   const [remainingTime, setRemainingTime] = useState<number>(duration);
@@ -31,9 +33,11 @@ const Countdown = ({
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes
-      .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${seconds.toString().padStart(2, '0')}`;
+    // Dejo comentado mostrar la hora:minuto:segundo
+    // return `${hours.toString().padStart(2, '0')}:${minutes
+    //   .toString()
+    //   .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -41,7 +45,7 @@ const Countdown = ({
       style={{
         alignItems: 'center',
       }}>
-      <Text fontSize={size}>{formatTime(remainingTime)}</Text>
+      <Text fontSize={size} color={color}>{formatTime(remainingTime)}</Text>
     </View>
   );
 };

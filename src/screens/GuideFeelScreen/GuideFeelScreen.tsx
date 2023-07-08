@@ -18,7 +18,9 @@ const GuideFeelScreen: FC<GuideFeelType> = ({route, navigation}) => {
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
         dolor sit amet.
       </Text>
-      <Image source={emotion.pathGuia} style={style.image} />
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+        <Image source={emotion.pathGuia} style={{ alignSelf: 'center', flex: 1, resizeMode: 'contain' }} />
+      </View>
       <View style={style.calendarCardContainer}>
         <Button
           onPress={() =>

@@ -37,13 +37,13 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
   [emocionesEnum.ENOJADO]: {
     color: '#FC4D4A',
     name: emocionesEnum.ENOJADO,
-    pathGuia: require('./../../../assets/ilustraciones/enojado/guiaFelizCopy.png'),
-    pathReal: require('./../../../assets/ilustraciones/enojado/guiaFelizCopy.png'),
+    pathGuia: require('./../../../assets/ilustraciones/enojado/instructivo/guia-enojado.png'),
+    pathReal: require('./../../../assets/ilustraciones/enojado/instructivo/guia-real.png'),
   },
   [emocionesEnum.NEUTRAL]: {
     color: '#88EA5A',
     name: emocionesEnum.NEUTRAL,
-    pathGuia: require('./../../../assets/ilustraciones/enamorado/guiaFelizCopy.png'),
-    pathReal: require('./../../../assets/ilustraciones/enamorado/guiaFelizCopy.png'),
+    pathGuia: require('./../../../assets/ilustraciones/neutral/instructivo/guia-neutral.png'),
+    pathReal: require('./../../../assets/ilustraciones/neutral/instructivo/guia-real.png'),
   },
 };
