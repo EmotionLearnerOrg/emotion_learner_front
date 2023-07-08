@@ -19,20 +19,20 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
   [emocionesEnum.FELIZ]: {
     color: '#FDFF49',
     name: emocionesEnum.FELIZ,
-    pathGuia: require('./../../../assets/ilustraciones/feliz/guiaFelizCopy.png'),
-    pathReal: require('./../../../assets/ilustraciones/feliz/guiaFelizCopy.png'),
+    pathGuia: require('./../../../assets/ilustraciones/feliz/instructivo/guia-feliz.png'),
+    pathReal: require('./../../../assets/ilustraciones/feliz/instructivo/guia-real.png'),
   },
   [emocionesEnum.TRISTE]: {
     color: '#65ADFC',
     name: emocionesEnum.TRISTE,
-    pathGuia: require('./../../../assets/ilustraciones/feliz/guiaFelizCopy.png'),
-    pathReal: require('./../../../assets/ilustraciones/feliz/guiaFelizCopy.png'),
+    pathGuia: require('./../../../assets/ilustraciones/triste/instructivo/guia-triste.png'),
+    pathReal: require('./../../../assets/ilustraciones/triste/instructivo/guia-real.png'),
   },
   [emocionesEnum.SORPRENDIDO]: {
     color: '#BBBBBB',
     name: emocionesEnum.SORPRENDIDO,
-    pathGuia: require('./../../../assets/ilustraciones/meditando/guiaFelizCopy.png'),
-    pathReal: require('./../../../assets/ilustraciones/meditando/guiaFelizCopy.png'),
+    pathGuia: require('./../../../assets/ilustraciones/sorpresa/instructivo/guia-sorpresa.png'),
+    pathReal: require('./../../../assets/ilustraciones/sorpresa/instructivo/guia-real.png'),
   },
   [emocionesEnum.ENOJADO]: {
     color: '#FC4D4A',
