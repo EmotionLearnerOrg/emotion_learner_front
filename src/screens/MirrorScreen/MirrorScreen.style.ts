@@ -21,4 +21,8 @@ export const makeMirrorScreenStyles = () =>
     buttonEmotion: {
       width: 120,
     },
+    list: {
+      alignSelf: 'center',
+      marginTop: 16,
+    },
   });

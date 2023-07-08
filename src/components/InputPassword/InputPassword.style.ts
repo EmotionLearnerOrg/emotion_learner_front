@@ -11,4 +11,7 @@ export const makeInputPasswordStyle = () =>
       marginBottom: 10,
       color: '#34495E',
     },
+    icon: {
+      justifyContent: 'center',
+    },
   });

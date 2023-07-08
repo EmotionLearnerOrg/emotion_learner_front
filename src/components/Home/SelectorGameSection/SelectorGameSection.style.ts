@@ -18,4 +18,17 @@ export const makeSelectorGameStyles = () =>
       gap: 10,
       height: 170,
     },
+    leftSection: {
+      flex: 0.5,
+    },
+    contFull: {
+      flex: 1,
+    },
+    contHalf: {
+      flex: 0.5,
+    },
+    rigthSection: {
+      flex: 0.5,
+      gap: 10,
+    },
   });

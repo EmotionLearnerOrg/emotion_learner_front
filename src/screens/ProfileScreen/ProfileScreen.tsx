@@ -49,9 +49,7 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
       </Button>
       <Dialog isVisible={visible}>
         <Dialog.Title
-          titleStyle={{
-            alignSelf: 'center',
-          }}
+          titleStyle={style.dialogTitle}
           title={'Seguro que deseas cerrar sesion?'}
         />
         <Button

@@ -1,17 +1,11 @@
 import React, {useState, useRef} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  Easing,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Animated, Easing} from 'react-native';
 import RuletaPintada from './RuletaPintada';
 import {Knop} from '../../../assets';
 import {EmocionesTypeNames, emocionType, emociones} from './emociones';
 import {Button} from 'react-native-magnus';
 import {Dialog} from '@rneui/themed';
+import {makeRuletaStyle} from './Ruleta.style';
 
 const Ruleta = ({
   divisions,
@@ -20,6 +14,7 @@ const Ruleta = ({
   divisions: number;
   goToPerformEmotion: (item: emocionType) => void;
 }) => {
+  const style = makeRuletaStyle();
   const [emocion, setEmocion] = useState<emocionType>();
   const [visible, setVisible] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -69,24 +64,19 @@ const Ruleta = ({
   });
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={[styles.wheel, {transform: [{rotate: spin}]}]}>
-        <RuletaPintada
-          // divisions={divisions}
-          radius={130}
-        />
+    <View style={style.container}>
+      <Animated.View style={[style.wheel, {transform: [{rotate: spin}]}]}>
+        <RuletaPintada radius={130} />
       </Animated.View>
-      <Knop style={styles.knop} width={70} height={70} />
-      <TouchableOpacity style={styles.button} onPress={startSpin}>
-        <Text style={styles.buttonText}>
+      <Knop style={style.knop} width={70} height={70} />
+      <TouchableOpacity style={style.button} onPress={startSpin}>
+        <Text style={style.buttonText}>
           {isSpinning ? 'Girando...' : 'Girar'}
         </Text>
       </TouchableOpacity>
       <Dialog isVisible={visible} onBackdropPress={() => setVisible(false)}>
         <Dialog.Title
-          titleStyle={{
-            alignSelf: 'center',
-          }}
+          titleStyle={style.dialogTitle}
           title={`Emocion ganadora : ${emocion?.name}!`}
         />
         <Button
@@ -102,41 +92,5 @@ const Ruleta = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 64,
-    alignItems: 'center',
-  },
-  knop: {
-    top: -20,
-    position: 'absolute',
-  },
-  wheel: {
-    width: 260,
-    height: 260,
-    borderRadius: 130,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  button: {
-    marginTop: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: 'blue',
-    borderRadius: 5,
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-});
 
 export default Ruleta;

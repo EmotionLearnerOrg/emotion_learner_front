@@ -27,7 +27,7 @@ const InputPassword = ({
           <Icon
             name={showPassword ? 'eye' : 'eye-off'}
             size={34}
-            style={{justifyContent: 'center'}}
+            style={style.icon}
           />
         </TouchableOpacity>
       }

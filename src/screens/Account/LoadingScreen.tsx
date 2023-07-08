@@ -19,9 +19,7 @@ const LoadingScreen: FC<LoadingType> = ({navigation}) => {
 
   useEffect(() => {
     initData();
-    return () => {
-      console.log('out of loading');
-    };
+    return () => {};
   }, [initData]);
 
   useEffect(() => {

@@ -17,14 +17,14 @@ const RuletaScreen: FC<RuletaType> = ({navigation}) => {
 
   return (
     <View style={style.container}>
-      <Text style={{alignSelf: 'center'}} fontSize={32}>
+      <Text textAlign="center" fontSize={32}>
         Gira la ruleta
       </Text>
-      <Text fontSize={16} textAlign="center" style={{marginTop: 20}}>
+      <Text fontSize={16} textAlign="center" mt={20}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
         dolor sit amet.
       </Text>
-      <Ruleta divisions={6} goToPerformEmotion={goToPerformEmotion} />
+      <Ruleta divisions={5} goToPerformEmotion={goToPerformEmotion} />
     </View>
   );
 };
