@@ -67,9 +67,8 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
   useEffect(() => {
     if (imageBase64 && imageBase64 !== '') {
       detectEmotionsApi(imageBase64).then(predict => {
-        const parsedJson = JSON.parse(JSON.stringify(predict));
-        const { emotions } = parsedJson;
-        setResponse(emotions);
+        const { emotion } = JSON.parse(JSON.stringify(predict));
+        setResponse(emotion);
         setRefresh(!refresh);
       });
     }
