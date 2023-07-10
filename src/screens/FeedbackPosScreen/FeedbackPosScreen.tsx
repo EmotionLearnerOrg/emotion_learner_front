@@ -15,8 +15,11 @@ const FeedbackPosScreen: FC<FeedbackPosType> = ({route, navigation}) => {
         ¡Felicitaciones!
       </Text>
       <Text fontSize={16} textAlign="center" mt={20}>
-        Hiciste la emoción {emotion.name} correctamente
+        Hiciste la emoción {emotion.name} correctamente y te ganaste una medalla:
       </Text>
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+        <Image source={require('./../../../assets/ilustraciones/insignia_demo.png')} style={{ alignSelf: 'center', flex: 1, resizeMode: 'center' }} />
+      </View>
       <View style={style.calendarCardContainer}>
         <Button
           onPress={() =>
