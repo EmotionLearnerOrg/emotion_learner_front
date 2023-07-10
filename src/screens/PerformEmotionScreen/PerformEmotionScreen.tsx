@@ -136,6 +136,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
           }>
           Feedback Positivo
         </Button>
+        <Button
+          onPress={() =>
+            navigation.navigate(HomeRoutes.FEEDBACK_NEG, {emotion})
+          }>
+          Feedback Negativo
+        </Button>
       </View>
     </View>
   );

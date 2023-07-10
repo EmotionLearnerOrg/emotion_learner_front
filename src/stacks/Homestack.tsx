@@ -10,6 +10,7 @@ import PerformEmotionScreen from '../screens/PerformEmotionScreen/PerformEmotion
 import GuideFeelScreen from '../screens/GuideFeelScreen/GuideFeelScreen';
 import RealFeelScreen from '../screens/RealFeelScreen/RealFeelScreen';
 import FeedbackPosScreen from '../screens/FeedbackPosScreen/FeedbackPosScreen';
+import FeedbackNegScreen from '../screens/FeedbackNegScreen/FeedbackNegScreen';
 import {HomeRoutes, HomeStackNavigator} from './HomeParams';
 
 const HomeStack = () => {
@@ -57,6 +58,10 @@ const HomeStack = () => {
       <HomeStackNavigator.Screen
         name={HomeRoutes.FEEDBACK_POS}
         component={FeedbackPosScreen}
+      />
+      <HomeStackNavigator.Screen
+        name={HomeRoutes.FEEDBACK_NEG}
+        component={FeedbackNegScreen}
       />
     </HomeStackNavigator.Navigator>
   );
