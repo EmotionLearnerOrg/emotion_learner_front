@@ -12,7 +12,10 @@ const FeedbackNegScreen: FC<FeedbackNegType> = ({route, navigation}) => {
   return (
     <View style={style.containerView}>
       <Text fontSize={18} textAlign="center" mt={20}>
-        No pudimos reconocer la expresión {emotion.name}, volvé a intentar:
+        No pudimos reconocer la expresión {emotion.name}, probá nuevamente!
+      </Text>
+      <Text fontSize={18} textAlign="center" mt={20}>
+        Sugerencias:
       </Text>
       <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
         <Image source={emotion.pathGuia} style={{ alignSelf: 'center', flex: 1, resizeMode: 'contain' }} />
@@ -20,9 +23,9 @@ const FeedbackNegScreen: FC<FeedbackNegType> = ({route, navigation}) => {
       <View style={style.calendarCardContainer}>
         <Button
           onPress={() =>
-            navigation.navigate(HomeRoutes.HOME_S)
+            navigation.navigate(HomeRoutes.REAL_FEEL, {emotion: emotion})
           }>
-          Menu Principal
+          Volver a intentar
         </Button>
       </View>
     </View>
