@@ -9,6 +9,7 @@ import TabsStack from './TabStack';
 import PerformEmotionScreen from '../screens/PerformEmotionScreen/PerformEmotionScreen';
 import GuideFeelScreen from '../screens/GuideFeelScreen/GuideFeelScreen';
 import RealFeelScreen from '../screens/RealFeelScreen/RealFeelScreen';
+import FeedbackPosScreen from '../screens/FeedbackPosScreen/FeedbackPosScreen';
 import {HomeRoutes, HomeStackNavigator} from './HomeParams';
 
 const HomeStack = () => {
@@ -52,6 +53,10 @@ const HomeStack = () => {
       <HomeStackNavigator.Screen
         name={HomeRoutes.REAL_FEEL}
         component={RealFeelScreen}
+      />
+      <HomeStackNavigator.Screen
+        name={HomeRoutes.FEEDBACK_POS}
+        component={FeedbackPosScreen}
       />
     </HomeStackNavigator.Navigator>
   );

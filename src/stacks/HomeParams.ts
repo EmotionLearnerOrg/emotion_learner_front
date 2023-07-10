@@ -13,6 +13,7 @@ export enum HomeRoutes {
   PERFORM_EMOTION = 'PerformEmotion',
   GUIDE_FEEL = 'GuideFeal',
   REAL_FEEL = 'RealFeel',
+  FEEDBACK_POS = 'FeedbackPos',
   LOG_IN = 'HomeLogin',
 }
 
@@ -26,6 +27,7 @@ export type HomeStackParamList = {
   [HomeRoutes.PERFORM_EMOTION]: { emotion: emocionType };
   [HomeRoutes.GUIDE_FEEL]: { emotion: emocionType };
   [HomeRoutes.REAL_FEEL]: { emotion: emocionType };
+  [HomeRoutes.FEEDBACK_POS]: { emotion: emocionType };
   [HomeRoutes.LOG_IN]: undefined;
 };
 
@@ -70,6 +72,16 @@ type RealFeelScreenRouteType = RouteProp<
 export type RealFeelType = {
   navigation: HomeStackNavigationsProp;
   route: RealFeelScreenRouteType;
+};
+
+type FeedbackPosScreenRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.FEEDBACK_POS
+>;
+
+export type FeedbackPosType = {
+  navigation: HomeStackNavigationsProp;
+  route: FeedbackPosScreenRouteType;
 };
 
 type PerformEmotionScreenRouteType = RouteProp<

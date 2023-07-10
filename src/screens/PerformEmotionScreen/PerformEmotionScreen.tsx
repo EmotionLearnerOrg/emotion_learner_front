@@ -5,12 +5,12 @@ import { makeRuletaScreenStyles } from './PerformEmotionScreen.style';
 import { CameraComponent } from '../../components/Camera';
 import { Camera } from 'react-native-vision-camera';
 import { useAuthorizedCamera } from '../../components/Camera/useAuthorizedCamera';
-import { PerformEmotionType } from '../../stacks/HomeParams';
+import { PerformEmotionType, HomeRoutes } from '../../stacks/HomeParams';
 import { makeStyles } from './../../components/Camera/Camera.styles';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
+const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => {
   const { emotion } = route.params;
   const style = makeRuletaScreenStyles();
   const cameraRef = useRef<Camera>(null);
@@ -128,6 +128,15 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
           {JSON.stringify(response)}
         </Text>
       )}
+      {/*Botones de prueba*/}
+      <View style={styles.containerButton}>
+        <Button
+          onPress={() =>
+            navigation.navigate(HomeRoutes.FEEDBACK_POS, {emotion})
+          }>
+          Feedback Positivo
+        </Button>
+      </View>
     </View>
   );
 };
