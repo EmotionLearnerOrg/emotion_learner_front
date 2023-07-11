@@ -8,14 +8,13 @@ import {
   SelectorGameSection,
 } from './../../components/Home';
 import {HomeRoutes, HomeType} from '../../stacks/HomeParams';
-import {saveInsigniaByUser} from '../../services/insignia/insignia.service';
 import {Button} from 'react-native-magnus';
+import {insigniasEnum} from '../../types/insignias';
 import {useUserData} from '../../contexts/UserDataProvider';
-import {InsigniasTypeNames} from '../../types/insignias';
 
 const HomeScreen: FC<HomeType> = ({navigation}) => {
   const style = makeHomeScreenStyles();
-  const {uid, updateInsignias} = useUserData();
+  const {updateInsignias, isLoadingPostInsignias} = useUserData();
 
   const goToMirror = () => {
     navigation.navigate(HomeRoutes.MIRROR);
@@ -37,49 +36,53 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
     navigation.navigate(HomeRoutes.CALENDAR);
   };
 
-  const pruebaDeMeterData = ({
-    idinsignia,
-  }: {
-    idinsignia: InsigniasTypeNames;
-  }) => {
-    saveInsigniaByUser({
-      uid: uid,
-      idInsignia: idinsignia,
-      updateProv: updateInsignias,
-    });
-  };
-
   return (
     <ScrollView style={style.containerView}>
       <HeaderSection />
       <Button
         bg="green"
         rounded={16}
-        onPress={() => pruebaDeMeterData({idinsignia: 'enojado'})}>
+        loading={isLoadingPostInsignias}
+        onPress={() => {
+          updateInsignias({idInsignia: insigniasEnum.SORPRENDIDO});
+        }}>
+        <Text>PRUEBA CON MUTATION</Text>
+      </Button>
+      <Button
+        bg="green"
+        rounded={16}
+        loading={isLoadingPostInsignias}
+        onPress={() => updateInsignias({idInsignia: insigniasEnum.ENOJADO})}>
         <Text>Estoy enojado</Text>
       </Button>
       <Button
         bg="green"
         rounded={16}
-        onPress={() => pruebaDeMeterData({idinsignia: 'feliz'})}>
+        loading={isLoadingPostInsignias}
+        onPress={() => updateInsignias({idInsignia: insigniasEnum.FELIZ})}>
         <Text>Estoy feliz</Text>
       </Button>
       <Button
         bg="green"
         rounded={16}
-        onPress={() => pruebaDeMeterData({idinsignia: 'neutral'})}>
+        loading={isLoadingPostInsignias}
+        onPress={() => updateInsignias({idInsignia: insigniasEnum.NEUTRAL})}>
         <Text>Estoy neutral</Text>
       </Button>
       <Button
         bg="green"
         rounded={16}
-        onPress={() => pruebaDeMeterData({idinsignia: 'sorprendido'})}>
+        loading={isLoadingPostInsignias}
+        onPress={() =>
+          updateInsignias({idInsignia: insigniasEnum.SORPRENDIDO})
+        }>
         <Text>Estoy sorprendido</Text>
       </Button>
       <Button
         bg="green"
         rounded={16}
-        onPress={() => pruebaDeMeterData({idinsignia: 'triste'})}>
+        loading={isLoadingPostInsignias}
+        onPress={() => updateInsignias({idInsignia: insigniasEnum.TRISTE})}>
         <Text>Estoy triste</Text>
       </Button>
       <SelectorGameSection

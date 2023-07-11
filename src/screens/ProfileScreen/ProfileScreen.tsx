@@ -2,11 +2,11 @@ import React, {FC, useState} from 'react';
 import {Alert, ScrollView} from 'react-native';
 import {makeProfileScreenStyles} from './ProfileScreen.style';
 import {Button} from 'react-native-magnus';
-import {logout} from '../../services/account/account.service';
 import {HomeRoutes, ProfileType} from '../../stacks/HomeParams';
 import {Dialog} from '@rneui/themed';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useUserData} from '../../contexts/UserDataProvider';
+import {logout} from '../../services';
 
 const ProfileScreen: FC<ProfileType> = ({navigation}) => {
   const [visible, setVisible] = useState(false);
