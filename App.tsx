@@ -4,6 +4,19 @@ import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
 import LoginStack from './src/stacks/LoginStack';
 import {UserDataProvider} from './src/contexts/UserDataProvider';
+import {
+  QueryClient,
+  QueryClientProvider as ReactQueryProvider,
+} from 'react-query';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -11,11 +24,13 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <NavigationContainer>
-      <UserDataProvider>
-        <LoginStack />
-      </UserDataProvider>
-    </NavigationContainer>
+    <ReactQueryProvider client={queryClient}>
+      <NavigationContainer>
+        <UserDataProvider>
+          <LoginStack />
+        </UserDataProvider>
+      </NavigationContainer>
+    </ReactQueryProvider>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react';
 import {View, Text, TouchableOpacity, Alert} from 'react-native';
-import {signUpWithEmailAndPassword} from '../../services/account/account.service';
+import {signUpWithEmailAndPassword} from '../../services';
 import {makeAccountScreensStyle} from './AccountScreens.style';
 import {LoginRoutes, RegisterType} from '../../stacks/LoginParams';
 import InputPassword from '../../components/InputPassword/InputPassword';

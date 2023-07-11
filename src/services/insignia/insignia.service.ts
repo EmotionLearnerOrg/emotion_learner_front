@@ -1,12 +1,5 @@
 import {db} from '../../configs/config.firebase';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore';
+import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
 import {insigniasDefault, typeInsignias} from '../../types/insignias';
 
 export const existsInsigniaByUser = async ({
@@ -32,46 +25,40 @@ export const getAllInsigniasByUser = async ({uid}: {uid: string}) => {
   if (docSnap.exists()) {
     insignias = docSnap.data().insignias;
   }
-  return insignias;
+  return insignias ?? insigniasDefault;
 };
 
 export const saveInsigniaByUser = async ({
   uid,
-  idInsignia,
-  updateProv,
+  nuevasInsignias,
 }: {
   uid: string;
-  idInsignia: string;
-  updateProv: any;
+  nuevasInsignias: typeInsignias;
 }) => {
-  const insigniasUsuario = await getAllInsigniasByUser({uid});
-  let nuevasInsignias: typeInsignias = insigniasUsuario;
-  if (insigniasUsuario) {
-    //caso en el que ya tenia alguna insignia
-    nuevasInsignias = {...insigniasUsuario, ...{[idInsignia]: true}};
-    await updateDoc(doc(db, 'users', uid), {
-      insignias: nuevasInsignias,
-    })
-      .then(
-        () => updateProv({insigniasProp: nuevasInsignias}), //esto es para actualizar el estado global, (provider)
-      )
-      .catch(dataerr => console.log('no se pudo saveInsigniaByUser', dataerr));
-  } else {
-    //caso en el que tenia 0 insignias
-    nuevasInsignias = {
-      ...insigniasDefault,
-      ...{[idInsignia]: true},
-    };
+  try {
     await setDoc(doc(db, 'users', uid), {
       insignias: nuevasInsignias,
     })
-      .then(() => updateProv({insigniasProp: nuevasInsignias})) //esto es para actualizar el estado global, (provider)
-      .catch(dataerr => console.log('no se pudo saveInsigniaByUser', dataerr));
+      .then()
+      .catch();
+  } catch (error) {
+    throw new Error('Error creating document: ' + error);
   }
 };
-
-export const saveData = async () => {
-  const querySnapshot = await getDocs(collection(db, 'users'));
-  console.log('querySnapshot: ', querySnapshot);
-  return;
+export const updateInsigniaByUser = async ({
+  uid,
+  nuevasInsignias,
+}: {
+  uid: string;
+  nuevasInsignias: typeInsignias;
+}) => {
+  try {
+    await updateDoc(doc(db, 'users', uid), {
+      insignias: nuevasInsignias,
+    })
+      .then()
+      .catch();
+  } catch (error) {
+    throw new Error('Error creating document: ' + error);
+  }
 };

@@ -7,6 +7,7 @@ export enum UserDataActionKind {
   SET_UID = 'SET_UID',
   SET_LOGGED = 'SET_LOGGED',
   CLEAR_DATA = 'CLEAR_DATA',
+  SET_UPDATING_INSIGNIAS = 'SET_UPDATING_INSIGNIAS',
 }
 
 export type UserDataAction =
@@ -32,4 +33,8 @@ export type UserDataAction =
     }
   | {
       type: UserDataActionKind.CLEAR_DATA;
+    }
+  | {
+      type: UserDataActionKind.SET_UPDATING_INSIGNIAS;
+      isLoadingPostInsignias: boolean;
     };

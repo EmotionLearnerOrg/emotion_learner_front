@@ -8,9 +8,11 @@ const {
   SET_UID,
   SET_LOGGED,
   CLEAR_DATA,
+  SET_UPDATING_INSIGNIAS,
 } = UserDataActionKind;
 
 export const DEFAULT_STATE: UserDataState = {
+  isLoadingPostInsignias: false,
   nickName: '',
   uid: '',
   loggedIn: null,
@@ -50,6 +52,11 @@ export const userDataReducer = (
     case CLEAR_DATA:
       return {
         ...DEFAULT_STATE,
+      };
+    case SET_UPDATING_INSIGNIAS:
+      return {
+        ...prevState,
+        isLoadingPostInsignias: action.isLoadingPostInsignias,
       };
     default:
       return prevState;

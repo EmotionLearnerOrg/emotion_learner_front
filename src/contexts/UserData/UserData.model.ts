@@ -1,6 +1,8 @@
+import {InsigniasTypeNames} from '../../types/insignias';
 import {UserDataAction} from './UserData.actions';
 
 export interface IUserDataContext {
+  isLoadingPostInsignias: boolean;
   nickName: string;
   uid: string;
   loggedIn: any;
@@ -8,13 +10,12 @@ export interface IUserDataContext {
   dispatch?: (value: UserDataAction) => void;
   initData: () => void;
   clearData: () => void;
-  updateNickname: ({nickNameProp}: {nickNameProp?: string | undefined}) => void;
-  updateUid: ({uidProp}: {uidProp?: string | undefined}) => void;
-  updateLoggedIn: ({loggedInProp}: {loggedInProp?: string | undefined}) => void;
-  updateInsignias: ({insigniasProp}: {insigniasProp?: any | undefined}) => void;
+  updateNickname: ({nickNameProp}: {nickNameProp: string}) => void;
+  updateInsignias: ({idInsignia}: {idInsignia: InsigniasTypeNames}) => void;
 }
 
 export interface UserDataState {
+  isLoadingPostInsignias: boolean;
   nickName: string;
   uid: string;
   loggedIn: any;
