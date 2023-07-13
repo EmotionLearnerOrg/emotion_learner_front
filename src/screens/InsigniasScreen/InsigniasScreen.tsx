@@ -3,7 +3,7 @@ import {FlatList, View} from 'react-native';
 import {makeInsigniasScreenStyles} from './InsigniasScreen.style';
 import {Text} from 'react-native-magnus';
 import SvgInsignia from '../../../assets/svgImages/Insignia';
-import InsigniaBloqueada from '../../../assets/svgImages/InsigniaBloqueada';
+import {InsigniaBloqueada} from '../../../assets';
 import {insigniasColor, insigniasEnum} from '../../types/insignias';
 import {useUserData} from '../../contexts';
 

@@ -1,10 +1,8 @@
 import React from 'react';
-import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import {LoginRoutes, LoginStackNavigator} from './LoginParams';
 import HomeStack from './Homestack';
-import HeaderBack from '../components/HeaderBack/HeaderBack';
-import LoadingScreen from '../screens/LoadingScreen/LoadingScreen';
-import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
+import {HeaderBack} from '../components';
+import {LoginScreen, LoadingScreen, RegisterScreen} from '../screens';
 
 const LoginStack = () => {
   return (

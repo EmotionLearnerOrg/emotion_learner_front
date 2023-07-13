@@ -1,16 +1,16 @@
 import React, {FC} from 'react';
 import {ScrollView, Text} from 'react-native';
 import {makeHomeScreenStyles} from './HomeScreen.style';
-import {
-  CalendarCardSection,
-  HeaderSection,
-  InsigniasAccessSection,
-  SelectorGameSection,
-} from './../../components/Home';
 import {HomeRoutes, HomeType} from '../../stacks/HomeParams';
 import {Button} from 'react-native-magnus';
 import {insigniasEnum} from '../../types/insignias';
 import {useUserData} from '../../contexts';
+import {
+  // CalendarCardSection,
+  HeaderSection,
+  SelectorGameSection,
+  InsigniasAccessSection,
+} from '../../components';
 
 const HomeScreen: FC<HomeType> = ({navigation}) => {
   const style = makeHomeScreenStyles();
@@ -32,9 +32,9 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
     navigation.navigate(HomeRoutes.INSIGNIAS);
   };
 
-  const goToCalendar = () => {
-    navigation.navigate(HomeRoutes.CALENDAR);
-  };
+  // const goToCalendar = () => {
+  //   navigation.navigate(HomeRoutes.CALENDAR);
+  // };
 
   return (
     <ScrollView style={style.containerView}>

@@ -1,20 +1,20 @@
 import React, {useState, useRef} from 'react';
 import {View, Text, TouchableOpacity, Animated, Easing} from 'react-native';
-import RuletaPintada from './RuletaPintada';
+import {Ruleta} from './Ruleta';
 import {Knop} from '../../../assets';
 import {EmocionesTypeNames, emocionType, emociones} from './emociones';
 import {Button} from 'react-native-magnus';
 import {Dialog} from '@rneui/themed';
-import {makeRuletaStyle} from './Ruleta.style';
+import {makeRuletaContainerStyle} from './RuletaContainer.style';
 
-const Ruleta = ({
+const RuletaContainer = ({
   divisions,
   goToPerformEmotion,
 }: {
   divisions: number;
   goToPerformEmotion: (item: emocionType) => void;
 }) => {
-  const style = makeRuletaStyle();
+  const style = makeRuletaContainerStyle();
   const [emocion, setEmocion] = useState<emocionType>();
   const [visible, setVisible] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -66,7 +66,7 @@ const Ruleta = ({
   return (
     <View style={style.container}>
       <Animated.View style={[style.wheel, {transform: [{rotate: spin}]}]}>
-        <RuletaPintada radius={130} />
+        <Ruleta radius={130} />
       </Animated.View>
       <Knop style={style.knop} width={70} height={70} />
       <TouchableOpacity style={style.button} onPress={startSpin}>
@@ -93,4 +93,4 @@ const Ruleta = ({
   );
 };
 
-export default Ruleta;
+export default RuletaContainer;

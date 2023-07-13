@@ -2,10 +2,10 @@ import React, {FC, useState} from 'react';
 import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {makeLoginScreenStyle} from './LoginScreen.style';
 import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
-import InputPassword from '../../components/InputPassword/InputPassword';
 import {Input} from '@rneui/base';
 import {useUserAuth} from '../../contexts';
 import {loginWithEmailAndPassword} from '../../services';
+import {InputPassword} from '../../components';
 
 const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const style = makeLoginScreenStyle();

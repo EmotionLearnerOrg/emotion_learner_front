@@ -2,7 +2,7 @@ import {db} from '../../configs/config.firebase';
 import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
 import {insigniasDefault, typeInsignias} from '../../types/insignias';
 
-export const getInsigniasByUser2 = async ({uid}: {uid: string}) => {
+export const getInsigniasByUser = async ({uid}: {uid: string}) => {
   const docRef = doc(db, 'users', uid!);
 
   return getDoc(docRef)
@@ -17,17 +17,6 @@ export const getInsigniasByUser2 = async ({uid}: {uid: string}) => {
     .catch(error => {
       throw error.parsedError;
     });
-};
-export const getInsigniasByUser = async ({uid}: {uid: string}) => {
-  const docRef = doc(db, 'users', uid);
-  const docSnap = await getDoc(docRef);
-  let insignias = [];
-
-  if (docSnap.exists()) {
-    insignias = docSnap.data().insignias;
-  }
-
-  return insignias ?? insigniasDefault;
 };
 
 export const createInsigniaByUser = async ({

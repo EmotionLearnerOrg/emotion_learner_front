@@ -18,7 +18,7 @@ import {
 import 'react-native-reanimated';
 import {makeCameraStyles} from './Camera.styles';
 import {Text} from 'react-native-magnus';
-import {emocionType} from '../Ruleta/emociones';
+import {emocionType} from '../RuletaContainer/emociones';
 
 type CameraProps = {
   cameraPosition?: CameraPosition;
@@ -38,7 +38,7 @@ type CameraProps = {
 /**
  * @protected
  */
-export const CameraComponent: ForwardRefExoticComponent<
+const CameraComponent: ForwardRefExoticComponent<
   CameraProps & RefAttributes<CameraBase>
 > = forwardRef<CameraBase, CameraProps>(
   (
@@ -107,3 +107,5 @@ export const CameraComponent: ForwardRefExoticComponent<
     );
   },
 );
+
+export default CameraComponent;

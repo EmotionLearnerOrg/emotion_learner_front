@@ -14,7 +14,7 @@ import {
   useCreateInsigniaByUser,
   useGetInsigniasByUser,
   useUpdateInsigniaByUser,
-} from '../../hooks/insignia';
+} from '../../hooks';
 import {IUserDataContext} from './UserData.model';
 import {DEFAULT_STATE_DATA, userInsigniasReducer} from './UserData.reducer';
 import {UserDataActionKind} from './UserData.actions';

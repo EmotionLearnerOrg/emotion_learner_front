@@ -2,8 +2,8 @@ import React, {FC} from 'react';
 import {FlatList, View} from 'react-native';
 import {makeMirrorScreenStyles} from './MirrorScreen.style';
 import {Button, Text} from 'react-native-magnus';
-import {emocionType, emociones} from '../../components/Ruleta/emociones';
 import {HomeRoutes, MirrorType} from '../../stacks/HomeParams';
+import {emociones, emocionType} from '../../components';
 
 const prueba = Object.values(emociones);
 
