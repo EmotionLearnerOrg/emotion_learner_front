@@ -2,12 +2,12 @@ import {useMutation, useQuery} from 'react-query';
 import {typeInsignias} from '../../types/insignias';
 import {createInsigniaByUser, updateInsigniaByUser} from '../../services';
 import {ResponseType} from '../../contexts';
-import {getInsigniasByUser2} from '../../services';
+import {getInsigniasByUser} from '../../services';
 
 export const useGetInsigniasByUser = (props: ResponseType & {uid: string}) => {
   return useQuery(
     'useGetInsigniasByUser',
-    () => getInsigniasByUser2({uid: props.uid}),
+    () => getInsigniasByUser({uid: props.uid}),
     {
       ...props,
     },

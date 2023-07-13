@@ -2,12 +2,12 @@ import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {View} from 'react-native';
 import {Button, Text} from 'react-native-magnus';
 import {makePerformEmotionScreenStyles} from './PerformEmotionScreen.style';
-import {CameraComponent} from '../../components/Camera';
 import {Camera} from 'react-native-vision-camera';
 import {useAuthorizedCamera} from '../../components/Camera/useAuthorizedCamera';
 import {PerformEmotionType} from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
+import {CameraComponent} from '../../components';
 
 const PerformEmotionScreen: FC<PerformEmotionType> = ({route}) => {
   const {emotion} = route.params;

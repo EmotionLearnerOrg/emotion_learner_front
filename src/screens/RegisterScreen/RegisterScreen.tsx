@@ -3,8 +3,8 @@ import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {signUpWithEmailAndPassword} from '../../services';
 import {makeRegisterScreenStyle} from './RegisterScreen.style';
 import {LoginRoutes, RegisterType} from '../../stacks/LoginParams';
-import InputPassword from '../../components/InputPassword/InputPassword';
 import {Input} from '@rneui/base';
+import {InputPassword} from '../../components';
 
 const RegisterScreen: FC<RegisterType> = ({navigation}) => {
   const style = makeRegisterScreenStyle();
@@ -47,7 +47,6 @@ const RegisterScreen: FC<RegisterType> = ({navigation}) => {
         value={email}
       />
       <InputPassword setPassword={setPassword} password={password} />
-
       <TouchableOpacity style={style.button} onPress={handleRegister}>
         <Text style={style.buttonText}>Registrarse</Text>
       </TouchableOpacity>

@@ -1,1 +1,2 @@
-export * from './Camera';
+export {default as CameraComponent} from './Camera';
+export * from './useAuthorizedCamera';

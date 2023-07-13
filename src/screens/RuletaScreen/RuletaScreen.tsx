@@ -1,10 +1,9 @@
 import React, {FC} from 'react';
 import {View} from 'react-native';
 import {makeRuletaScreenStyles} from './RuletaScreen.style';
-import {Ruleta} from '../../components/Ruleta';
 import {Text} from 'react-native-magnus';
 import {HomeRoutes, RuletaType} from '../../stacks/HomeParams';
-import {emocionType} from '../../components/Ruleta/emociones';
+import {RuletaContainer, emocionType} from '../../components';
 
 const RuletaScreen: FC<RuletaType> = ({navigation}) => {
   const style = makeRuletaScreenStyles();
@@ -24,7 +23,7 @@ const RuletaScreen: FC<RuletaType> = ({navigation}) => {
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
         dolor sit amet.
       </Text>
-      <Ruleta divisions={5} goToPerformEmotion={goToPerformEmotion} />
+      <RuletaContainer divisions={5} goToPerformEmotion={goToPerformEmotion} />
     </View>
   );
 };

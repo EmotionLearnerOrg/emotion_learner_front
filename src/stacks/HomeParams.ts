@@ -1,7 +1,7 @@
-import { RouteProp } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { emocionType } from '../components/Ruleta/emociones';
-import { StackNavigationProp } from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {emocionType} from '../components';
 
 export enum HomeRoutes {
   HOME_S = 'Home',
@@ -23,9 +23,9 @@ export type HomeStackParamList = {
   [HomeRoutes.ASOCIATION]: undefined;
   [HomeRoutes.INSIGNIAS]: undefined;
   [HomeRoutes.CALENDAR]: undefined;
-  [HomeRoutes.PERFORM_EMOTION]: { emotion: emocionType };
-  [HomeRoutes.GUIDE_FEEL]: { emotion: emocionType };
-  [HomeRoutes.REAL_FEEL]: { emotion: emocionType };
+  [HomeRoutes.PERFORM_EMOTION]: {emotion: emocionType};
+  [HomeRoutes.GUIDE_FEEL]: {emotion: emocionType};
+  [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
   [HomeRoutes.LOG_IN]: undefined;
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import {Svg, Circle} from 'react-native-svg';
-import {RuletaEmociones} from '../../../assets';
+import {RuletaEmociones} from '../../../../assets';
 
-const RuletaPintada = ({radius}: {radius: number}) => {
+const Ruleta = ({radius}: {radius: number}) => {
   return (
     <Svg rotation={(72 / 2) * 3} width={radius * 2} height={radius * 2}>
       <Circle cx={radius} cy={radius} r={radius} fill="transparent" />
@@ -11,4 +11,4 @@ const RuletaPintada = ({radius}: {radius: number}) => {
   );
 };
 
-export default RuletaPintada;
+export default Ruleta;

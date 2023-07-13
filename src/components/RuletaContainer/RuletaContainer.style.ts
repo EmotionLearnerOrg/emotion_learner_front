@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export const makeRuletaStyle = () =>
+export const makeRuletaContainerStyle = () =>
   StyleSheet.create({
     container: {
       flex: 1,

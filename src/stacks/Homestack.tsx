@@ -1,16 +1,18 @@
 import React from 'react';
-import RuletaScreen from '../screens/RuletaScreen/RuletaScreen';
-import MirrorScreen from '../screens/MirrorScreen/MirrorScreen';
-import AsociationScreen from '../screens/AsociationScreen/AsociationScreen';
-import InsigniasScreen from '../screens/InsigniasScreen/InsigniasScreen';
-import CalendarScreen from '../screens/CalendarScreen/CalendarScreen';
-import HeaderCommon from '../components/HeaderCommon/HeaderCommon';
 import TabsStack from './TabStack';
-import PerformEmotionScreen from '../screens/PerformEmotionScreen/PerformEmotionScreen';
-import GuideFeelScreen from '../screens/GuideFeelScreen/GuideFeelScreen';
-import RealFeelScreen from '../screens/RealFeelScreen/RealFeelScreen';
 import {HomeRoutes, HomeStackNavigator} from './HomeParams';
-import {UserDataProvider} from '../contexts/UserData/UserDataProvider';
+import {UserDataProvider} from '../contexts';
+import {
+  RuletaScreen,
+  MirrorScreen,
+  AsociationScreen,
+  InsigniasScreen,
+  CalendarScreen,
+  PerformEmotionScreen,
+  GuideFeelScreen,
+  RealFeelScreen,
+} from '../screens';
+import {HeaderCommon} from '../components';
 
 const HomeStack = () => {
   return (
