@@ -1,6 +1,6 @@
 export {
-  existsInsigniaByUser,
-  getAllInsigniasByUser,
-  saveInsigniaByUser,
+  getInsigniasByUser,
+  createInsigniaByUser,
   updateInsigniaByUser,
+  getInsigniasByUser2,
 } from './insignia.service';

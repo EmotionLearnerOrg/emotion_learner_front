@@ -18,7 +18,7 @@ const RealFeelScreen: FC<RealFeelType> = ({route, navigation}) => {
         dolor sit amet.
       </Text>
       <Image source={emotion.pathReal} style={style.image} />
-      <View style={style.calendarCardContainer}>
+      <View style={style.buttonContainer}>
         <Button
           onPress={() =>
             navigation.navigate(HomeRoutes.PERFORM_EMOTION, {emotion: emotion})

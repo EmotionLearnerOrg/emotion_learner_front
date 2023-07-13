@@ -1,10 +1,10 @@
 import React from 'react';
-import LoginScreen from '../screens/Account/LoginScreen';
-import RegisterScreen from '../screens/Account/RegisterScreen';
+import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import {LoginRoutes, LoginStackNavigator} from './LoginParams';
 import HomeStack from './Homestack';
 import HeaderBack from '../components/HeaderBack/HeaderBack';
-import LoadingScreen from '../screens/Account/LoadingScreen';
+import LoadingScreen from '../screens/LoadingScreen/LoadingScreen';
+import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
 
 const LoginStack = () => {
   return (

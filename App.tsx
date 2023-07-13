@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
 import LoginStack from './src/stacks/LoginStack';
-import {UserDataProvider} from './src/contexts/UserDataProvider';
+import {UserAuthProvider} from './src/contexts';
 import {
   QueryClient,
   QueryClientProvider as ReactQueryProvider,
@@ -11,10 +11,10 @@ import {
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: {
-      retry: false,
-      refetchOnWindowFocus: false,
-    },
+    // queries: {
+    //   retry: false,
+    //   refetchOnWindowFocus: false,
+    // },
   },
 });
 
@@ -26,9 +26,9 @@ function App(): JSX.Element {
   return (
     <ReactQueryProvider client={queryClient}>
       <NavigationContainer>
-        <UserDataProvider>
+        <UserAuthProvider>
           <LoginStack />
-        </UserDataProvider>
+        </UserAuthProvider>
       </NavigationContainer>
     </ReactQueryProvider>
   );

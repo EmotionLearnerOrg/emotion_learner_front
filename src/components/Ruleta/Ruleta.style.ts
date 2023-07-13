@@ -18,11 +18,6 @@ export const makeRuletaStyle = () =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    text: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: 'black',
-    },
     button: {
       marginTop: 20,
       paddingVertical: 10,

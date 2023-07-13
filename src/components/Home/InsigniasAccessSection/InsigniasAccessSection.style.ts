@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export const makeCalendarCardContainerStyles = () =>
+export const makeInsigniasAccessSectionStyles = () =>
   StyleSheet.create({
     insigniasContainer: {
       marginBottom: 10,

@@ -10,7 +10,7 @@ import {
 import {HomeRoutes, HomeType} from '../../stacks/HomeParams';
 import {Button} from 'react-native-magnus';
 import {insigniasEnum} from '../../types/insignias';
-import {useUserData} from '../../contexts/UserDataProvider';
+import {useUserData} from '../../contexts';
 
 const HomeScreen: FC<HomeType> = ({navigation}) => {
   const style = makeHomeScreenStyles();

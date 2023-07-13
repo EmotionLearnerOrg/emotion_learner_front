@@ -1,13 +1,13 @@
 import React, {FC, useState} from 'react';
 import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {signUpWithEmailAndPassword} from '../../services';
-import {makeAccountScreensStyle} from './AccountScreens.style';
+import {makeRegisterScreenStyle} from './RegisterScreen.style';
 import {LoginRoutes, RegisterType} from '../../stacks/LoginParams';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import {Input} from '@rneui/base';
 
 const RegisterScreen: FC<RegisterType> = ({navigation}) => {
-  const style = makeAccountScreensStyle();
+  const style = makeRegisterScreenStyle();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nickName, setNickName] = useState('');

@@ -16,7 +16,7 @@ import {
   useCameraDevices,
 } from 'react-native-vision-camera';
 import 'react-native-reanimated';
-import {makeStyles} from './Camera.styles';
+import {makeCameraStyles} from './Camera.styles';
 import {Text} from 'react-native-magnus';
 import {emocionType} from '../Ruleta/emociones';
 
@@ -51,7 +51,7 @@ export const CameraComponent: ForwardRefExoticComponent<
     },
     ref,
   ) => {
-    const styles = makeStyles();
+    const styles = makeCameraStyles();
     const devices = useCameraDevices();
 
     const [currentDevice, setCurrentDevice] = useState<
@@ -101,9 +101,7 @@ export const CameraComponent: ForwardRefExoticComponent<
         <Text fontSize={32}>Emocion : {emotion.name}</Text>
       </>
     ) : (
-      <TouchableOpacity
-        style={styles.allowButton}
-        onPress={requestCameraPermission}>
+      <TouchableOpacity style={styles.button} onPress={requestCameraPermission}>
         <Text>dale a los permisos</Text>
       </TouchableOpacity>
     );

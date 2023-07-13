@@ -1,13 +1,13 @@
 import {StyleSheet} from 'react-native';
 
-export const makeCalendarCardContainerStyles = () =>
+export const makeHeaderSectionStyles = () =>
   StyleSheet.create({
     headerContainer: {
       marginBottom: 10,
       paddingHorizontal: 10,
       flexDirection: 'row',
     },
-    rightSide: {
+    configContainer: {
       flexDirection: 'row',
       marginLeft: 'auto',
     },
