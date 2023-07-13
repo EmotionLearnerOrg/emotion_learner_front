@@ -1,17 +1,17 @@
 import React, {FC, useState} from 'react';
 import {View, Text, TouchableOpacity, Alert} from 'react-native';
-import {makeAccountScreensStyle} from './AccountScreens.style';
+import {makeLoginScreenStyle} from './LoginScreen.style';
 import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
 import InputPassword from '../../components/InputPassword/InputPassword';
 import {Input} from '@rneui/base';
-import {useUserData} from '../../contexts/UserDataProvider';
+import {useUserAuth} from '../../contexts';
 import {loginWithEmailAndPassword} from '../../services';
 
 const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
-  const style = makeAccountScreensStyle();
+  const style = makeLoginScreenStyle();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {initData} = useUserData();
+  const {initData} = useUserAuth();
 
   const cleanData = () => {
     setEmail('');

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export const makeSelectorGameStyles = () =>
+export const makeSelectorGameSectionStyles = () =>
   StyleSheet.create({
     selectorGameContainer: {
       height: 220,

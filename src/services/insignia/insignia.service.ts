@@ -2,33 +2,35 @@ import {db} from '../../configs/config.firebase';
 import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
 import {insigniasDefault, typeInsignias} from '../../types/insignias';
 
-export const existsInsigniaByUser = async ({
-  uid,
-  idInsignia,
-}: {
-  uid: string;
-  idInsignia: string;
-}) => {
-  const docRef = doc(db, 'users', uid);
-  const docSnap = await getDoc(docRef);
-  let existsInsignia = false;
-  if (docSnap.exists()) {
-    existsInsignia = docSnap.data().insignias.includes(idInsignia);
-  }
-  return existsInsignia;
-};
+export const getInsigniasByUser2 = async ({uid}: {uid: string}) => {
+  const docRef = doc(db, 'users', uid!);
 
-export const getAllInsigniasByUser = async ({uid}: {uid: string}) => {
+  return getDoc(docRef)
+    .then(docSnap => {
+      let insignias = [];
+      if (docSnap.exists()) {
+        insignias = docSnap.data().insignias;
+      }
+
+      return insignias ?? insigniasDefault;
+    })
+    .catch(error => {
+      throw error.parsedError;
+    });
+};
+export const getInsigniasByUser = async ({uid}: {uid: string}) => {
   const docRef = doc(db, 'users', uid);
   const docSnap = await getDoc(docRef);
   let insignias = [];
+
   if (docSnap.exists()) {
     insignias = docSnap.data().insignias;
   }
+
   return insignias ?? insigniasDefault;
 };
 
-export const saveInsigniaByUser = async ({
+export const createInsigniaByUser = async ({
   uid,
   nuevasInsignias,
 }: {
@@ -45,6 +47,7 @@ export const saveInsigniaByUser = async ({
     throw new Error('Error creating document: ' + error);
   }
 };
+
 export const updateInsigniaByUser = async ({
   uid,
   nuevasInsignias,

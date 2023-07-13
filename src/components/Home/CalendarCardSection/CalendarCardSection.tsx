@@ -1,11 +1,11 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {makeCalendarCardContainerStyles} from './CalendarCardSection.style';
+import {makeCalendarCardSectionStyles} from './CalendarCardSection.style';
 import {Button, Text} from 'react-native-magnus';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CalendarCardSection = ({goToCalendar}: {goToCalendar: () => void}) => {
-  const style = makeCalendarCardContainerStyles();
+  const style = makeCalendarCardSectionStyles();
 
   return (
     <View style={style.calendarCardContainer}>

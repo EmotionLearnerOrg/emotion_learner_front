@@ -6,26 +6,23 @@ import React, {
   useReducer,
 } from 'react';
 import {
-  getNickName,
-  getUID,
-  getIsLoggedIn,
-  getAllInsigniasByUser,
-} from '../services';
-import {
-  DEFAULT_STATE,
-  IUserDataContext,
-  UserDataActionKind,
-  userDataReducer,
-} from './UserData';
-import {
   InsigniasTypeNames,
   insigniasDefault,
   typeInsignias,
-} from '../types/insignias';
+} from '../../types/insignias';
 import {
-  useCreateInsigniasMutation,
-  useUpdateInsigniasMutation,
-} from '../hooks/insignia';
+  useCreateInsigniaByUser,
+  useGetInsigniasByUser,
+  useUpdateInsigniaByUser,
+} from '../../hooks/insignia';
+import {IUserDataContext} from './UserData.model';
+import {DEFAULT_STATE_DATA, userInsigniasReducer} from './UserData.reducer';
+import {UserDataActionKind} from './UserData.actions';
+import {useUserAuth} from '../UserAuth';
+
+type objectInsignias = {
+  [key: string]: boolean;
+};
 
 export type ResponseType<T = Record<string, unknown>> = {
   onSuccess?: (data?: T) => void;
@@ -34,31 +31,47 @@ export type ResponseType<T = Record<string, unknown>> = {
 
 const UserDataContext = createContext<IUserDataContext>({
   isLoadingPostInsignias: false,
-  nickName: '',
-  uid: '',
-  loggedIn: null,
   insignias: [],
   initData: () => {},
   clearData: () => {},
-  updateNickname: () => {},
   updateInsignias: () => {},
 });
 
 export const UserDataProvider: React.FC<any> = ({children}) => {
-  const [state, dispatch] = useReducer(userDataReducer, DEFAULT_STATE);
+  const [state, dispatch] = useReducer(
+    userInsigniasReducer,
+    DEFAULT_STATE_DATA,
+  );
+  const {uid} = useUserAuth();
 
   const {
     mutateAsync: mutateCreateInsignias,
     isLoading: isLoadingCreateInsignias,
-  } = useCreateInsigniasMutation({
-    uid: state.uid,
+  } = useCreateInsigniaByUser({
+    uid: uid,
   });
+
   const {
     mutateAsync: mutateUpdateInsignias,
     isLoading: isLoadingUpdateInsignias,
-  } = useUpdateInsigniasMutation({
-    uid: state.uid,
+  } = useUpdateInsigniaByUser({
+    uid: uid,
   });
+
+  const {
+    data: dataInsignias,
+    isLoading,
+    isRefetching,
+  } = useGetInsigniasByUser({uid: uid});
+
+  useEffect(() => {
+    if (!isLoading && dataInsignias && !isRefetching) {
+      dispatch({
+        type: UserDataActionKind.SET_INSIGNIAS,
+        insignias: Object.entries(dataInsignias),
+      });
+    }
+  }, [dataInsignias, isLoading, isRefetching]);
 
   useEffect(() => {
     if (!isLoadingCreateInsignias && !isLoadingUpdateInsignias) {
@@ -75,27 +88,29 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
     });
   };
 
-  const updateNickname = async ({nickNameProp}: {nickNameProp: string}) => {
-    //pegarle a bdd de firebase para actualizar nickname
-    dispatch({
-      type: UserDataActionKind.SET_NICKNAME,
-      nickName: nickNameProp!,
-    });
-  };
-
   const updateInsignias = async ({
     idInsignia,
   }: {
     idInsignia: InsigniasTypeNames;
   }) => {
-    const insigniasUsuario = await getAllInsigniasByUser({uid: state.uid});
-    let nuevasInsignias: typeInsignias = insigniasUsuario;
+    let nuevasInsignias: typeInsignias = state.insignias!.reduce(
+      (obj: objectInsignias, [key, value]) => {
+        obj[key] = value as boolean;
+        return obj;
+      },
+      {},
+    ) as typeInsignias;
     dispatch({
       type: UserDataActionKind.SET_UPDATING_INSIGNIAS,
       isLoadingPostInsignias: true,
     });
-    if (insigniasUsuario) {
-      nuevasInsignias = {...insigniasUsuario, ...{[idInsignia]: true}};
+
+    if (nuevasInsignias) {
+      ///actualizar
+      nuevasInsignias = {
+        ...(nuevasInsignias as typeInsignias),
+        ...{[idInsignia]: true},
+      };
       mutateUpdateInsignias({nuevasInsignias: nuevasInsignias}).then(() => {
         dispatch({
           type: UserDataActionKind.SET_INSIGNIAS,
@@ -103,6 +118,7 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
         });
       });
     } else {
+      ///guardar
       nuevasInsignias = {
         ...insigniasDefault,
         ...{[idInsignia]: true},
@@ -116,26 +132,7 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
     }
   };
 
-  const initData = useCallback(async () => {
-    let nickName = await getNickName();
-    let uid = await getUID();
-    let loggedIn = await getIsLoggedIn();
-    let insignias =
-      uid?.length === 0
-        ? insigniasDefault
-        : await getAllInsigniasByUser({uid: uid!});
-
-    dispatch({
-      type: UserDataActionKind.INIT_DATA,
-      state: {
-        isLoadingPostInsignias: false,
-        nickName: nickName!,
-        uid: uid!,
-        loggedIn: loggedIn,
-        insignias: Object.entries(insignias),
-      },
-    });
-  }, []);
+  const initData = useCallback(async () => {}, []);
 
   return (
     <UserDataContext.Provider
@@ -143,7 +140,6 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
         ...state,
         initData,
         clearData,
-        updateNickname,
         updateInsignias,
       }}>
       {children}

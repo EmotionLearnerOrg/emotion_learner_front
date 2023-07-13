@@ -2,11 +2,11 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {makeHeaderContainerStyles} from './HeaderBack.style';
+import {makeHeaderBackStyles} from './HeaderBack.style';
 
 const HeaderBack = () => {
   const navigation = useNavigation();
-  const style = makeHeaderContainerStyles();
+  const style = makeHeaderBackStyles();
 
   return (
     <View style={style.headerContainer}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {makeCalendarCardContainerStyles} from './InsigniasAccessSection.style';
+import {makeInsigniasAccessSectionStyles} from './InsigniasAccessSection.style';
 import {Button, Text} from 'react-native-magnus';
 
 const InsigniasAccessSection = ({
@@ -8,7 +8,7 @@ const InsigniasAccessSection = ({
 }: {
   goToInsignias: () => void;
 }) => {
-  const style = makeCalendarCardContainerStyles();
+  const style = makeInsigniasAccessSectionStyles();
 
   return (
     <View style={style.insigniasContainer}>

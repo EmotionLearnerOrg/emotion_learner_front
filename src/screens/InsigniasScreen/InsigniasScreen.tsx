@@ -2,10 +2,10 @@ import React, {FC} from 'react';
 import {FlatList, View} from 'react-native';
 import {makeInsigniasScreenStyles} from './InsigniasScreen.style';
 import {Text} from 'react-native-magnus';
-import {useUserData} from '../../contexts/UserDataProvider';
 import SvgInsignia from '../../../assets/svgImages/Insignia';
 import InsigniaBloqueada from '../../../assets/svgImages/InsigniaBloqueada';
 import {insigniasColor, insigniasEnum} from '../../types/insignias';
+import {useUserData} from '../../contexts';
 
 const InsigniaItem = ({style, item}: {style: any; item: any}) => {
   return (

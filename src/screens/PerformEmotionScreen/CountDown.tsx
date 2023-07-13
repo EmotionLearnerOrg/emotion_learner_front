@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { Text } from 'react-native-magnus';
+import React, {useEffect, useState} from 'react';
+import {View} from 'react-native';
+import {Text} from 'react-native-magnus';
 
 const Countdown = ({
   duration,
@@ -30,8 +30,8 @@ const Countdown = ({
   }, [finAlcanzado, onFinished, remainingTime]);
 
   const formatTime = (time: number) => {
-    const hours = Math.floor(time / 3600);
-    const minutes = Math.floor((time % 3600) / 60);
+    // const hours = Math.floor(time / 3600);
+    // const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
     return `${seconds.toString().padStart(2, '0')}`;
     // Dejo comentado mostrar la hora:minuto:segundo
@@ -45,7 +45,9 @@ const Countdown = ({
       style={{
         alignItems: 'center',
       }}>
-      <Text fontSize={size} color={color}>{formatTime(remainingTime)}</Text>
+      <Text fontSize={size} color={color}>
+        {formatTime(remainingTime)}
+      </Text>
     </View>
   );
 };

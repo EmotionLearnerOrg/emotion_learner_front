@@ -1,20 +1,19 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-magnus';
-import { makeRuletaScreenStyles } from './PerformEmotionScreen.style';
-import { CameraComponent } from '../../components/Camera';
-import { Camera } from 'react-native-vision-camera';
-import { useAuthorizedCamera } from '../../components/Camera/useAuthorizedCamera';
-import { PerformEmotionType } from '../../stacks/HomeParams';
-import { makeStyles } from './../../components/Camera/Camera.styles';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {View} from 'react-native';
+import {Button, Text} from 'react-native-magnus';
+import {makePerformEmotionScreenStyles} from './PerformEmotionScreen.style';
+import {CameraComponent} from '../../components/Camera';
+import {Camera} from 'react-native-vision-camera';
+import {useAuthorizedCamera} from '../../components/Camera/useAuthorizedCamera';
+import {PerformEmotionType} from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
-  const { emotion } = route.params;
-  const style = makeRuletaScreenStyles();
+const PerformEmotionScreen: FC<PerformEmotionType> = ({route}) => {
+  const {emotion} = route.params;
+  const style = makePerformEmotionScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
+  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
   const [imageBase64, setImageBase64] = useState('');
   const [refresh, setRefresh] = useState(true);
   const [response, setResponse] = useState(Object);
@@ -62,13 +61,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
       console.error(e);
     }
   }, [isAuthorized]);
-  const styles = makeStyles();
 
   useEffect(() => {
     if (imageBase64 && imageBase64 !== '') {
       detectEmotionsApi(imageBase64).then(predict => {
-        const { emotion } = JSON.parse(JSON.stringify(predict));
-        setResponse(emotion);
+        const {emotionApi} = JSON.parse(JSON.stringify(predict));
+        setResponse(emotionApi);
         setRefresh(!refresh);
       });
     }
@@ -101,10 +99,10 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
         isAuthorized={isAuthorized}
         requestCameraPermission={requestCameraPermission}
       />
-      <View style={styles.containerButton}>
+      <View style={style.containerButton}>
         {!userReady ? (
           <Button
-            style={styles.button}
+            style={style.button}
             opacity={0.5}
             bg="white"
             rounded={16}
@@ -115,11 +113,13 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
           <Countdown
             duration={5}
             size={40}
-            color='#ff00ff'
+            color="#ff00ff"
             onFinished={() => setFinishedCountDown(true)}
           />
         ) : (
-          <Text fontSize={32} color="#ff00ff">Ya!</Text>
+          <Text fontSize={32} color="#ff00ff">
+            Ya!
+          </Text>
         )}
       </View>
       {response && (

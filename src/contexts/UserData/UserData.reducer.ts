@@ -1,57 +1,26 @@
 import {UserDataState} from './UserData.model';
 import {UserDataAction, UserDataActionKind} from './UserData.actions';
 
-const {
-  INIT_DATA,
-  SET_INSIGNIAS,
-  SET_NICKNAME,
-  SET_UID,
-  SET_LOGGED,
-  CLEAR_DATA,
-  SET_UPDATING_INSIGNIAS,
-} = UserDataActionKind;
+const {SET_INSIGNIAS, CLEAR_DATA, SET_UPDATING_INSIGNIAS} = UserDataActionKind;
 
-export const DEFAULT_STATE: UserDataState = {
+export const DEFAULT_STATE_DATA: UserDataState = {
   isLoadingPostInsignias: false,
-  nickName: '',
-  uid: '',
-  loggedIn: null,
   insignias: [],
 };
 
-export const userDataReducer = (
+export const userInsigniasReducer = (
   prevState: UserDataState,
   action: UserDataAction,
 ): UserDataState => {
   switch (action.type) {
-    case INIT_DATA:
-      return {
-        ...prevState,
-        ...action.state,
-      };
     case SET_INSIGNIAS:
       return {
         ...prevState,
         insignias: action.insignias,
       };
-    case SET_LOGGED:
-      return {
-        ...prevState,
-        loggedIn: action.loggedIn,
-      };
-    case SET_NICKNAME:
-      return {
-        ...prevState,
-        nickName: action.nickName,
-      };
-    case SET_UID:
-      return {
-        ...prevState,
-        uid: action.uid,
-      };
     case CLEAR_DATA:
       return {
-        ...DEFAULT_STATE,
+        ...DEFAULT_STATE_DATA,
       };
     case SET_UPDATING_INSIGNIAS:
       return {

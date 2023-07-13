@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export const makeAccountScreensStyle = () =>
+export const makeLoginScreenStyle = () =>
   StyleSheet.create({
     container: {
       flex: 1,

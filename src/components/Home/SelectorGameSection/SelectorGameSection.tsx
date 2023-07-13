@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {makeSelectorGameStyles} from './SelectorGameSection.style';
+import {makeSelectorGameSectionStyles} from './SelectorGameSection.style';
 import Card from './Card/Card';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Text} from 'react-native-magnus';
@@ -14,7 +14,7 @@ const SelectorGameSection = ({
   goToRuleta: () => void;
   goToAsociation: () => void;
 }) => {
-  const style = makeSelectorGameStyles();
+  const style = makeSelectorGameSectionStyles();
 
   return (
     <View style={style.selectorGameContainer}>

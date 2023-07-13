@@ -1,26 +1,49 @@
-import {useMutation} from 'react-query';
+import {useMutation, useQuery} from 'react-query';
 import {typeInsignias} from '../../types/insignias';
-import {saveInsigniaByUser, updateInsigniaByUser} from '../../services';
-import {ResponseType} from '../../contexts/UserDataProvider';
+import {createInsigniaByUser, updateInsigniaByUser} from '../../services';
+import {ResponseType} from '../../contexts';
+import {getInsigniasByUser2} from '../../services';
 
-export const useCreateInsigniasMutation = (
-  props: ResponseType & {uid: string},
-) => {
-  return useMutation('prueba', (data: {nuevasInsignias: typeInsignias}) =>
-    saveInsigniaByUser({
-      uid: props.uid,
-      nuevasInsignias: data.nuevasInsignias,
-    }),
+export const useGetInsigniasByUser = (props: ResponseType & {uid: string}) => {
+  return useQuery(
+    'useGetInsigniasByUser',
+    () => getInsigniasByUser2({uid: props.uid}),
+    {
+      ...props,
+    },
   );
 };
 
-export const useUpdateInsigniasMutation = (
+export const useCreateInsigniaByUser = (
   props: ResponseType & {uid: string},
 ) => {
-  return useMutation('prueba', (data: {nuevasInsignias: typeInsignias}) =>
-    updateInsigniaByUser({
-      uid: props.uid,
-      nuevasInsignias: data.nuevasInsignias,
-    }),
+  return useMutation(
+    'useCreateInsigniaByUser',
+    (data: {nuevasInsignias: typeInsignias}) =>
+      createInsigniaByUser({
+        uid: props.uid,
+        nuevasInsignias: data.nuevasInsignias,
+      }),
+    {
+      onSuccess: () => props.onSuccess && props.onSuccess(),
+      onError: () => props.onError && props.onError(),
+    },
+  );
+};
+
+export const useUpdateInsigniaByUser = (
+  props: ResponseType & {uid: string},
+) => {
+  return useMutation(
+    'useUpdateInsigniaByUser',
+    (data: {nuevasInsignias: typeInsignias}) =>
+      updateInsigniaByUser({
+        uid: props.uid,
+        nuevasInsignias: data.nuevasInsignias,
+      }),
+    {
+      onSuccess: () => props.onSuccess && props.onSuccess(),
+      onError: () => props.onError && props.onError(),
+    },
   );
 };

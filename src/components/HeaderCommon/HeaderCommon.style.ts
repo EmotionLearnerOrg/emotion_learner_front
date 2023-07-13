@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export const makeHeaderContainerStyles = () =>
+export const makeHeaderCommonStyles = () =>
   StyleSheet.create({
     headerContainer: {
       flexDirection: 'row',
