@@ -1,7 +1,7 @@
-import {RouteProp} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {emocionType} from '../components';
+import { RouteProp } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { emocionType } from '../components';
 
 export enum HomeRoutes {
   HOME_S = 'Home',
@@ -10,6 +10,7 @@ export enum HomeRoutes {
   ASOCIATION = 'Asociation',
   INSIGNIAS = 'Insignias',
   CALENDAR = 'Calendar',
+  REGISTEREMOTIONCALENDAR = 'RegisterEmotionCalendar',
   PERFORM_EMOTION = 'PerformEmotion',
   GUIDE_FEEL = 'GuideFeal',
   REAL_FEEL = 'RealFeel',
@@ -27,6 +28,7 @@ export type HomeStackParamList = {
   [HomeRoutes.GUIDE_FEEL]: {emotion: emocionType};
   [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
   [HomeRoutes.LOG_IN]: undefined;
+  [HomeRoutes.REGISTEREMOTIONCALENDAR]: undefined;
 };
 
 export type HomeStackNavigationsProp = StackNavigationProp<HomeStackParamList>;
@@ -53,6 +55,13 @@ type GuideFeelScreenRouteType = RouteProp<
 export type GuideFeelType = {
   navigation: HomeStackNavigationsProp;
   route: GuideFeelScreenRouteType;
+};
+
+type RegisterEmotionCalendarRouteType = RouteProp<HomeStackParamList, HomeRoutes.REGISTEREMOTIONCALENDAR>;
+
+export type RegisterEmotionCalendarType = {
+  navigation: HomeStackNavigationsProp;
+  route: RegisterEmotionCalendarRouteType;
 };
 
 type MirrorScreenRouteType = RouteProp<HomeStackParamList, HomeRoutes.MIRROR>;
@@ -92,5 +101,4 @@ export type ProfileType = {
   route: ProfileScreenRouteType;
 };
 
-export const HomeStackNavigator =
-  createNativeStackNavigator<HomeStackParamList>();
+export const HomeStackNavigator = createNativeStackNavigator<HomeStackParamList>();

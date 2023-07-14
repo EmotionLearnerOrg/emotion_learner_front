@@ -1,7 +1,7 @@
 import React from 'react';
 import TabsStack from './TabStack';
-import {HomeRoutes, HomeStackNavigator} from './HomeParams';
-import {UserDataProvider} from '../contexts';
+import { HomeRoutes, HomeStackNavigator } from './HomeParams';
+import { UserDataProvider } from '../contexts';
 import {
   RuletaScreen,
   MirrorScreen,
@@ -11,19 +11,20 @@ import {
   PerformEmotionScreen,
   GuideFeelScreen,
   RealFeelScreen,
+  CalendarRegisterScreen
 } from '../screens';
-import {HeaderCommon} from '../components';
+import { HeaderCommon } from '../components';
 
 const HomeStack = () => {
   return (
     <UserDataProvider>
       <HomeStackNavigator.Navigator
         initialRouteName={HomeRoutes.HOME_S}
-        screenOptions={{headerShown: true, header: () => <HeaderCommon />}}>
+        screenOptions={{ headerShown: true, header: () => <HeaderCommon /> }}>
         <HomeStackNavigator.Screen
           name={HomeRoutes.HOME_S}
           component={TabsStack}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <HomeStackNavigator.Screen
           name={HomeRoutes.RULETA}
@@ -56,6 +57,10 @@ const HomeStack = () => {
         <HomeStackNavigator.Screen
           name={HomeRoutes.REAL_FEEL}
           component={RealFeelScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.REGISTEREMOTIONCALENDAR}
+          component={CalendarRegisterScreen}
         />
       </HomeStackNavigator.Navigator>
     </UserDataProvider>
