@@ -1,4 +1,4 @@
-import {auth} from '../../configs/config.firebase';
+import { auth } from '../../configs/config.firebase';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -32,10 +32,15 @@ export const signUpWithEmailAndPassword = async ({
   nickName: string;
 }) => {
   const response = await createUserWithEmailAndPassword(auth, email, password);
-  await updateProfile(auth.currentUser!!, {displayName: nickName});
+  await updateProfile(auth.currentUser!!, { displayName: nickName });
   await savePreferenceData(nickName, response.user.uid);
   return response.user.uid;
 };
+
+export const updateDisplayName = async (nickName: string) => {
+  await updateProfile(auth.currentUser!!, { displayName: nickName });
+  return nickName;
+}
 
 export const logout = async () => {
   await clearPreferenceData();
