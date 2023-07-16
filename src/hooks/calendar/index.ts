@@ -1,50 +1,36 @@
 import { useMutation, useQuery } from 'react-query';
 import { ResponseType } from '../../contexts';
-import { createEmotionTodayByUser, getCalendarByUser, getEmotionsTodayByUser, updateEmotionTodayByUser } from '../../services/calendar';
-import { CalendarioItemType } from '../../types/calendario';
+import { getCalendarByUser, updateCalendarByUser } from '../../services/calendar';
+import { CalendarioType, defaultCalendar } from '../../types/calendario';
 
-export const useGetCalendarByUser = (props: ResponseType & { uid: string }) => {
-    return useQuery(
+export const useGetCalendarByUser = (props: ResponseType<CalendarioType> & { uid: string }) => {
+    return useQuery<CalendarioType>(
         'useGetCalendarByUser',
         () => getCalendarByUser({ uid: props.uid }),
         {
             ...props,
-        },
-    );
-};
-
-export const useGetEmotionsTodayByUser = (props: ResponseType & { uid: string }) => {
-    return useQuery(
-        'useGetEmotionsTodayByUser',
-        () => getEmotionsTodayByUser({ uid: props.uid }),
-        {
-            ...props,
-        },
-    );
-};
-
-export const useCreateEmotionTodayByUser = (props: ResponseType & { uid: string }) => {
-    return useMutation(
-        'useCreateEmotionTodayByUser',
-        (data: { nuevoItem: CalendarioItemType }) =>
-            createEmotionTodayByUser({
-                uid: props.uid,
-                nuevoItem: data.nuevoItem,
-            }),
-        {
-            onSuccess: () => props.onSuccess && props.onSuccess(),
-            onError: () => props.onError && props.onError(),
-        },
+            initialData: defaultCalendar, // Agregar el valor inicial aquí
+            onSuccess: (data: CalendarioType) => {
+                if (props.onSuccess) {
+                    props.onSuccess(data);
+                }
+            },
+            onError: (err: any) => {
+                if (props.onError) {
+                    props.onError(err);
+                }
+            },
+        }
     );
 };
 
 export const useUpdateEmotionTodayByUser = (props: ResponseType & { uid: string }) => {
     return useMutation(
-        'useUpdateEmotionTodayByUser',
-        (data: { itemActualizar: CalendarioItemType }) =>
-            updateEmotionTodayByUser({
+        'updateCalendarByUser',
+        (data: { calendario: CalendarioType }) =>
+            updateCalendarByUser({
                 uid: props.uid,
-                itemActualizar: data.itemActualizar,
+                agenda: data.calendario,
             }),
         {
             onSuccess: () => props.onSuccess && props.onSuccess(),

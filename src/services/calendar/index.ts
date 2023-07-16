@@ -1,6 +1,4 @@
 export {
-  createEmotionTodayByUser,
   getCalendarByUser,
-  getEmotionsTodayByUser,
-  updateEmotionTodayByUser
+  updateCalendarByUser
 } from './calendar.service';
