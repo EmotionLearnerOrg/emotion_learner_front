@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import { Button, Text } from 'react-native-magnus';
 import { emocionType, emociones } from '../../components/RuletaContainer/emociones';
-import { RegisterEmotionCalendarType } from '../../stacks/HomeParams';
+import { HomeRoutes, RegisterEmotionCalendarType } from '../../stacks/HomeParams';
 import { makeMirrorScreenStyles } from '../MirrorScreen/MirrorScreen.style';
 import { HorarioType, horarios } from '../../types/horarios';
 import { makeCalendarCardContainerStyles } from '../../components/Home/CalendarCardSection/CalendarCardSection.style';
@@ -30,7 +30,6 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation })
       [timeSelected]: { emocion: emotionSelected },
     },
   };
-
 
   const ButtonEmotionItem = ({ item, updateEmotionTime, }: { item: emocionType; updateEmotionTime: () => void; }) => {
     return (
@@ -61,6 +60,9 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation })
     );
   };
 
+  const goToCalendar = () => {
+    navigation.replace(HomeRoutes.CALENDAR);
+  };
   // Obtengo las emosiones de la fecha, en caso de ser la primera del dia, traigo defaultCalendarItemType
   const getCurrentDateItem = (calendar: CalendarioType): CalendarItemType | undefined => {
     const currentDate = new Date().toISOString().split('T')[0];
@@ -84,7 +86,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation })
   }
 
   const handlerRegisterNewItemCalendar = () => {
-    console.log(JSON.stringify(calendar));
+    // console.log(JSON.stringify(calendar));
     if (calendar) {
       if (validateItemsSelected()) {
         const currentDateItems: CalendarItemType = getCurrentDateItem(calendar) ?? {};
@@ -100,7 +102,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation })
         }
 
         // Actualizo la agenda del usuario completa
-        console.log("Calendario -->> ", JSON.stringify(calendar));
+        // console.log("Calendario -->> ", JSON.stringify(calendar));
         const updatedCalendar = calendar.map(item => {
           const dateKey = Object.keys(item)[0];
           if (dateKey === getCurrentDate()) {
@@ -164,7 +166,15 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation })
         </View>
       </View>
       <View style={{ alignSelf: 'center' }}>
-        <Button mb={4} rounded={8} style={{ width: 120 }} color="#000000" bg="#ee3964" onPress={handlerRegisterNewItemCalendar}>
+        <Button style={{ width: 120 }}
+          mb={4}
+          rounded={8}
+          color="#000000"
+          bg="#ee3964"
+          onPress={() => {
+            handlerRegisterNewItemCalendar();
+            goToCalendar();
+          }}>
           Aceptar
         </Button>
       </View>

@@ -1,5 +1,20 @@
-import { AgendaEntry, AgendaSchedule } from "react-native-calendars/src/types";
 import { HorarioEnum } from "./horarios";
+import { EventItem } from "@howljs/calendar-kit";
+
+const horarioConfig: Record<HorarioEnum, { start: string, end: string, order: number }> = {
+    [HorarioEnum.MANIANA]: { start: '12:00:00', end: '15:00:00', order: 1 },
+    [HorarioEnum.MEDIODIA]: { start: '15:00:00', end: '18:00:00', order: 2 },
+    [HorarioEnum.TARDE]: { start: '18:00:00', end: '21:00:00', order: 3 },
+    [HorarioEnum.NOCHE]: { start: '21:00:00', end: '24:00:00', order: 4 },
+};
+
+const colorMapping: { [key: string]: string } = {
+    feliz: '#FDFF49',
+    triste: '#65ADFC',
+    enojado: '#FC4D4A',
+    sorprendido: '#BBBBBB',
+    neutral: '#88EA5A',
+};
 
 export function getCurrentDate(): string {
     return new Date().toISOString().split('T')[0];
@@ -17,38 +32,31 @@ export const defaultCalendar: CalendarioType = [
     },
 ];
 
-export const convertToAgendaSchedule = (calendar: CalendarioType): AgendaSchedule => {
-    const agendaSchedule: AgendaSchedule = {};
-
-    const horarioOrder: Record<HorarioEnum, number> = {
-        [HorarioEnum.MANIANA]: 1,
-        [HorarioEnum.MEDIODIA]: 2,
-        [HorarioEnum.TARDE]: 3,
-        [HorarioEnum.NOCHE]: 4,
-    };
+export const convertToEventItems = (calendar: CalendarioType): EventItem[] => {
+    const eventItems: EventItem[] = [];
 
     for (const calendarItem of calendar) {
         const fecha = Object.keys(calendarItem)[0];
         const calendarData = calendarItem[fecha];
-        const agendaEntries: AgendaEntry[] = [];
 
-        const orderedHorarios = Object.keys(calendarData).sort((a, b) => {
-            return horarioOrder[a as HorarioEnum] - horarioOrder[b as HorarioEnum];
-        });
+        for (const horario in calendarData) {
+            if (Object.prototype.hasOwnProperty.call(calendarData, horario)) {
+                const emocion = calendarData[horario].emocion;
+                const horarioTime = horarioConfig[horario as HorarioEnum];
+                const color = colorMapping[emocion.toLowerCase()];
 
-        for (const horario of orderedHorarios) {
-            const emocion = calendarData[horario].emocion;
-            const agendaEntry: AgendaEntry = {
-                name: emocion,
-                height: 10, // Asigna el valor adecuado según tu lógica
-                day: horario,
-            };
+                const eventItem: EventItem = {
+                    id: `${fecha}-${horario}`,
+                    start: `${fecha}T${horarioTime.start}Z`,
+                    end: `${fecha}T${horarioTime.end}Z`,
+                    title: emocion,
+                    color: color,
+                };
 
-            agendaEntries.push(agendaEntry);
+                eventItems.push(eventItem);
+            }
         }
-
-        agendaSchedule[fecha] = agendaEntries;
     }
 
-    return agendaSchedule;
+    return eventItems;
 };

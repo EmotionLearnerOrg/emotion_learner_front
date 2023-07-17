@@ -64,6 +64,13 @@ export type RegisterEmotionCalendarType = {
   route: RegisterEmotionCalendarRouteType;
 };
 
+type CalendarRouteType = RouteProp<HomeStackParamList, HomeRoutes.CALENDAR>;
+
+export type CalendarType = {
+  navigation: HomeStackNavigationsProp;
+  route: CalendarRouteType;
+};
+
 type MirrorScreenRouteType = RouteProp<HomeStackParamList, HomeRoutes.MIRROR>;
 
 export type MirrorType = {
