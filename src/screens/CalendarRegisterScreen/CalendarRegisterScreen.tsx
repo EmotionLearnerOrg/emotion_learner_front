@@ -1,13 +1,13 @@
 import React, { FC, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { Alert, FlatList, View } from 'react-native';
 import { Button, Text } from 'react-native-magnus';
 import { emocionType, emociones } from '../../components/RuletaContainer/emociones';
 import { HomeRoutes, RegisterEmotionCalendarType } from '../../stacks/HomeParams';
 import { makeMirrorScreenStyles } from '../MirrorScreen/MirrorScreen.style';
-import { HorarioType, horarios } from '../../types/horarios';
+import { HorarioEnum, HorarioType, horarios } from '../../types/horarios';
 import { makeCalendarCardContainerStyles } from '../../components/Home/CalendarCardSection/CalendarCardSection.style';
 import { useGetCalendarByUser, useUpdateEmotionTodayByUser } from '../../hooks/calendar';
-import { CalendarItemType, CalendarioType, getCurrentDate } from '../../types/calendario';
+import { CalendarItemType, CalendarioType, getCurrentDate, getCurrentHorarioEnum, horarioConfigUTC } from '../../types/calendario';
 import { useUserAuth } from '../../contexts';
 
 const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation }) => {
@@ -29,6 +29,84 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation })
     [getCurrentDate()]: {
       [timeSelected]: { emocion: emotionSelected },
     },
+  };
+
+  // Obtengo las emosiones de la fecha, en caso de ser la primera del dia, traigo defaultCalendarItemType
+  const getCurrentDateItem = (calendar: CalendarioType): CalendarItemType | undefined => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    return calendar.find(item => Object.keys(item)[0] === currentDate) ?? defaultCalendarItemType;
+  };
+
+  const validateItemsSelected = (): boolean => {
+    if (timeSelected === '' && emotionSelected === '') {
+      alertMessageAccept('Error', 'debe seleccionar el horario y emocion');
+      return false;
+    }
+    if (timeSelected === '') {
+      alertMessageAccept('Error', 'Debe seleccionar el horario');
+      return false;
+    }
+    if (emotionSelected === '') {
+      alertMessageAccept('Error', 'debe seleccionar la emocion');
+      return false;
+    }
+
+    let selectedTime = horarioConfigUTC[timeSelected as HorarioEnum];
+    let timeNow = horarioConfigUTC[getCurrentHorarioEnum() as HorarioEnum];
+
+    if (selectedTime && timeNow && timeNow.order < selectedTime.order) {
+      alertMessageAccept('Error', 'El horario seleccionado está fuera del rango actual.');
+      return false;
+    }
+    return true;
+  }
+
+  const handlerRegisterNewItemCalendar = () => {
+    if (calendar) {
+      if (validateItemsSelected()) {
+        const currentDateItems: CalendarItemType = getCurrentDateItem(calendar) ?? {};
+        let emotions = currentDateItems[getCurrentDate()] || [];
+
+        // Actualizo la lista de las emociones del dia
+        const existingEmotion = emotions[timeSelected];
+        if (existingEmotion) {
+          existingEmotion.emocion = emotionSelected;
+        } else {
+          emotions[timeSelected] = { emocion: emotionSelected };
+        }
+
+        // Actualizo la agenda del usuario completa
+        const updatedCalendar = calendar.map(item => {
+          const dateKey = Object.keys(item)[0];
+          if (dateKey === getCurrentDate()) {
+            return {
+              [dateKey]: emotions,
+            };
+          }
+          return item;
+        });
+
+        // Agrego nuevo dia del calendario
+        if (calendar.findIndex(item => Object.keys(item)[0] === getCurrentDate()) === -1) {
+          updatedCalendar.push({
+            [getCurrentDate()]: emotions,
+          });
+        }
+
+        updateCalendar({ calendario: updatedCalendar });
+        goToCalendar();
+      }
+    }
+  }
+
+  const alertMessageAccept = (title: string, message: string) => {
+    Alert.alert(title, message, [
+      { text: 'Aceptar', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
+
+  const goToCalendar = () => {
+    navigation.replace(HomeRoutes.CALENDAR);
   };
 
   const ButtonEmotionItem = ({ item, updateEmotionTime, }: { item: emocionType; updateEmotionTime: () => void; }) => {
@@ -59,72 +137,6 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation })
       </Button>
     );
   };
-
-  const goToCalendar = () => {
-    navigation.replace(HomeRoutes.CALENDAR);
-  };
-  // Obtengo las emosiones de la fecha, en caso de ser la primera del dia, traigo defaultCalendarItemType
-  const getCurrentDateItem = (calendar: CalendarioType): CalendarItemType | undefined => {
-    const currentDate = new Date().toISOString().split('T')[0];
-    return calendar.find(item => Object.keys(item)[0] === currentDate) ?? defaultCalendarItemType;
-  };
-
-  function validateItemsSelected(): boolean {
-    if (timeSelected === '' && emotionSelected === '') {
-      console.error('Error, debe seleccionar el horario y emocion');
-      return false;
-    }
-    if (timeSelected === '') {
-      console.error('Error, debe seleccionar el horario');
-      return false;
-    }
-    if (emotionSelected === '') {
-      console.error('Error, debe seleccionar la emocion');
-      return false;
-    }
-    return true;
-  }
-
-  const handlerRegisterNewItemCalendar = () => {
-    // console.log(JSON.stringify(calendar));
-    if (calendar) {
-      if (validateItemsSelected()) {
-        const currentDateItems: CalendarItemType = getCurrentDateItem(calendar) ?? {};
-        console.log("currentDateItems-> ", currentDateItems);
-        let emotions = currentDateItems[getCurrentDate()] || [];
-
-        // Actualizo la lista de las emociones del dia
-        const existingEmotion = emotions[timeSelected];
-        if (existingEmotion) {
-          existingEmotion.emocion = emotionSelected;
-        } else {
-          emotions[timeSelected] = { emocion: emotionSelected };
-        }
-
-        // Actualizo la agenda del usuario completa
-        // console.log("Calendario -->> ", JSON.stringify(calendar));
-        const updatedCalendar = calendar.map(item => {
-          const dateKey = Object.keys(item)[0];
-          if (dateKey === getCurrentDate()) {
-            return {
-              [dateKey]: emotions,
-            };
-          }
-          return item;
-        });
-
-        // Agrego nuevo dia del calendario
-        if (calendar.findIndex(item => Object.keys(item)[0] === getCurrentDate()) === -1) {
-          updatedCalendar.push({
-            [getCurrentDate()]: emotions,
-          });
-        }
-
-        console.log("Calendario actualizado-->> ", JSON.stringify(updatedCalendar));
-        updateCalendar({ calendario: updatedCalendar });
-      }
-    }
-  }
 
   return (
     <>
@@ -173,7 +185,6 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({ navigation })
           bg="#ee3964"
           onPress={() => {
             handlerRegisterNewItemCalendar();
-            goToCalendar();
           }}>
           Aceptar
         </Button>
