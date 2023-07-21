@@ -1542,6 +1542,14 @@
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.9.11.tgz#9ce96e7746625a89239f68ca57c4f654264c17ef"
   integrity sha512-bA3aZ79UgcHj7tFV7RlgThzwSSHZgvfbt2wprldRkYBcMopdMvHyO17Wwp/twcJasNFischFfS7oz8Katz8DdQ==
 
+"@howljs/calendar-kit@^1.13.2":
+  version "1.13.2"
+  resolved "https://registry.npmjs.org/@howljs/calendar-kit/-/calendar-kit-1.13.2.tgz"
+  integrity sha512-b999N+5w5ETxlbWlXzj1ckKCMAAErjBinUWQxzCZVT+9X3+xmrBu4eMTKJjyE29WFRtNZjjR6uqKA6KQYnB73w==
+  dependencies:
+    lodash "^4.17.21"
+    moment-timezone "^0.5.40"
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.8.tgz"
