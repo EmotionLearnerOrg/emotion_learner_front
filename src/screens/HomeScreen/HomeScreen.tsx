@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {ScrollView, Text} from 'react-native';
 import {makeHomeScreenStyles} from './HomeScreen.style';
 import {HomeRoutes, HomeType} from '../../stacks/HomeParams';
@@ -6,7 +6,7 @@ import {Button} from 'react-native-magnus';
 import {insigniasEnum} from '../../types/insignias';
 import {useUserData} from '../../contexts';
 import {
-  // CalendarCardSection,
+  CalendarCardSection,
   HeaderSection,
   SelectorGameSection,
   InsigniasAccessSection,
@@ -32,10 +32,13 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
     navigation.navigate(HomeRoutes.INSIGNIAS);
   };
 
-  // const goToCalendar = () => {
-  //   navigation.navigate(HomeRoutes.CALENDAR);
-  // };
+  const goToCalendar = () => {
+    navigation.navigate(HomeRoutes.CALENDAR);
+  };
 
+  const goToRegisterEmotionCalendar = () => {
+    navigation.navigate(HomeRoutes.REGISTEREMOTIONCALENDAR);
+  };
   return (
     <ScrollView style={style.containerView}>
       <HeaderSection />
@@ -90,7 +93,7 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
         goToRuleta={goToRuleta}
         goToAsociation={goToAsociation}
       />
-      {/* <CalendarCardSection goToCalendar={goToCalendar} /> */}
+      {/* <CalendarCardSection goToCalendar={goToCalendar} goToRegisterEmotionCalendar={goToRegisterEmotionCalendar} /> */}
       <InsigniasAccessSection goToInsignias={goToInsignias} />
     </ScrollView>
   );

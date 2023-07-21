@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-export const makeCalendarCardSectionStyles = () =>
+export const makeCalendarCardContainerStyles = () =>
   StyleSheet.create({
     calendarCardContainer: {
       height: 285,
@@ -15,7 +15,7 @@ export const makeCalendarCardSectionStyles = () =>
       position: 'absolute',
       right: 24,
       top: 20,
-      transform: [{rotate: '270deg'}],
+      transform: [{ rotate: '270deg' }],
     },
     cardContainer: {
       height: 210,
@@ -29,12 +29,12 @@ export const makeCalendarCardSectionStyles = () =>
       alignSelf: 'center',
       marginBottom: 16,
     },
-    // shadowContainer: {
-    //   shadowColor: '#171717',
-    //   shadowOffset: {width: 0, height: 3},
-    //   shadowOpacity: 0.4,
-    //   shadowRadius: 2,
-    // },
+    shadowContainer: {
+      shadowColor: '#171717',
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.4,
+      shadowRadius: 2,
+    },
     buttonEmotion: {
       width: 100,
     },
