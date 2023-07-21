@@ -1,45 +1,45 @@
-import { AgendaSchedule } from "react-native-calendars";
+import { emocionesEnum } from "../../components/RuletaContainer/emociones";
+import { CalendarItemType } from "../../types/calendario";
+import { HorarioEnum } from "../../types/horarios";
 
-export const itemsCalendarMocks: AgendaSchedule = {
-  '2023-07-09': [
-    {
-      name: 'Feliz',
-      height: 50,
-      day: '2023-07-09',
-    },
-    {
-      name: 'Triste',
-      height: 50,
-      day: '2023-07-09',
-    },
-    {
-      name: 'Enojado',
-      height: 50,
-      day: '2023-07-09',
-    },
-    {
-      name: 'Enojado',
-      height: 50,
-      day: '2023-07-09',
-    }
-  ],
-  '2023-07-10': [
-    {
-      name: 'Enojado',
-      height: 50,
-      day: '2023-07-10',
-    },
-  ],
-  '2023-07-11': [
-    {
-      name: 'Sorpresivo',
-      height: 50,
-      day: '2023-07-11',
-    },
-    {
-      name: 'Feliz',
-      height: 50,
-      day: '2023-07-11',
-    },
-  ],
+type emocionType = {
+  emocion: string;
 };
+
+export const generateRandomCalendario: () => CalendarItemType[] = () => {
+  const calendario: CalendarItemType[] = [];
+
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate()); // Restar 1 día para no incluir hoy
+  const today = currentDate.toISOString().split('T')[0];
+
+  for (let i = 0; i < 90; i++) {
+    currentDate.setDate(currentDate.getDate() - 1);
+    const currentDateFormatted = currentDate.toISOString().split('T')[0];
+
+    const emociones: Record<HorarioEnum, emocionType> = {
+      [HorarioEnum.MANIANA]: { emocion: getRandomEmocion() },
+      [HorarioEnum.MEDIODIA]: { emocion: getRandomEmocion() },
+      [HorarioEnum.TARDE]: { emocion: getRandomEmocion() },
+      [HorarioEnum.NOCHE]: { emocion: getRandomEmocion() },
+    };
+
+    const calendarioItem: CalendarItemType = {
+      [currentDateFormatted]: emociones,
+    };
+
+    calendario.push(calendarioItem);
+
+    if (currentDateFormatted === today) {
+      break;
+    }
+  }
+
+  return calendario;
+};
+
+function getRandomEmocion() {
+  const emociones = Object.values(emocionesEnum);
+  const randomIndex = Math.floor(Math.random() * emociones.length);
+  return emociones[randomIndex];
+}
