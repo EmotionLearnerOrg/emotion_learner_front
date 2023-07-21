@@ -31,7 +31,7 @@ export const UserAuthProvider: React.FC<any> = ({children}) => {
     //pegarle a bdd de firebase para actualizar nickname
     dispatch({
       type: UserAuthActionKind.SET_NICKNAME,
-      nickName: nickNameProp!,
+      nickName: nickNameProp,
     });
   };
 

@@ -5,7 +5,7 @@ import {Button} from 'react-native-magnus';
 import {HomeRoutes, ProfileType} from '../../stacks/HomeParams';
 import {Dialog} from '@rneui/themed';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {useUserAuth} from '../../contexts';
+import {useUserAuth, useUserData} from '../../contexts';
 import {logout} from '../../services';
 
 const ProfileScreen: FC<ProfileType> = ({navigation}) => {
@@ -13,11 +13,13 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
   const {getParent} = useNavigation();
   const style = makeProfileScreenStyles();
   const {clearData} = useUserAuth();
+  const {clearData: clearUserData} = useUserData();
 
   const handleLogout = async () => {
     try {
       await logout();
       clearData();
+      clearUserData();
       const parent = getParent();
       if (parent) {
         parent.dispatch(

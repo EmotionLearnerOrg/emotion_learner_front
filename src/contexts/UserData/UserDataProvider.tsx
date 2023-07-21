@@ -35,6 +35,7 @@ const UserDataContext = createContext<IUserDataContext>({
   initData: () => {},
   clearData: () => {},
   updateInsignias: () => {},
+  refetch: () => {},
 });
 
 export const UserDataProvider: React.FC<any> = ({children}) => {
@@ -62,6 +63,7 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
     data: dataInsignias,
     isLoading,
     isRefetching,
+    refetch,
   } = useGetInsigniasByUser({uid: uid});
 
   useEffect(() => {
@@ -141,6 +143,7 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
         initData,
         clearData,
         updateInsignias,
+        refetch,
       }}>
       {children}
     </UserDataContext.Provider>
