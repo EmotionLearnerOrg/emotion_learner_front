@@ -1,40 +1,57 @@
-import React, {FC, useState} from 'react';
-import {View, Text, TouchableOpacity, Alert} from 'react-native';
+import React, {FC} from 'react';
+import {View} from 'react-native';
 import {makeLoginScreenStyle} from './LoginScreen.style';
 import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
-import {Input} from '@rneui/base';
 import {useUserAuth} from '../../contexts';
-import {loginWithEmailAndPassword} from '../../services';
-import {InputPassword} from '../../components';
 import {useLoginWithEmailAndPassword} from '../../hooks/account';
+import {Button, Text} from 'react-native-magnus';
+import {Control, FieldValues, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import {SchemaOf} from 'yup';
+import {validations} from '../../utils/formValidations/validations';
+import {FormInput} from '../../components';
+
+export type LoginForm = {
+  email: string;
+  password: string;
+};
 
 const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const style = makeLoginScreenStyle();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const {initData} = useUserAuth();
-  useLoginWithEmailAndPassword();
+  const cleanData = () => {
+    reset();
+  };
+  const handleLogin = () => {
+    initData();
+    cleanData();
+    goToHome();
+  };
   const {
     mutateAsync: mutateLoginWithEmailAndPassword,
     isLoading: isLoadingLoginWithEmailAndPassword,
-  } = useLoginWithEmailAndPassword();
+  } = useLoginWithEmailAndPassword({onSuccess: handleLogin});
 
-  const cleanData = () => {
-    setEmail('');
-    setPassword('');
-  };
+  const schema: SchemaOf<LoginForm> = yup.object().shape({
+    email: validations().email.required(),
+    password: validations().string.required(),
+  });
 
-  const handleLogin = async () => {
-    mutateLoginWithEmailAndPassword({email, password});
-    // try {
-    //   await loginWithEmailAndPassword({email, password}).then(() => initData());
-    //   cleanData();
-    //   goToHome();
-    // } catch (error) {
-    //   Alert.alert('Error', 'Usuario o contraseña incorrectos', [{text: 'OK'}]);
-    // }
-  };
-  // a
+  const {
+    control,
+    formState: {isValid, errors},
+    getValues,
+    reset,
+  } = useForm<LoginForm>({
+    mode: 'onChange',
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
   const goToRegister = () => {
     navigation.navigate(LoginRoutes.REGISTER);
   };
@@ -42,23 +59,61 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
     navigation.navigate(LoginRoutes.HOME_APP);
   };
 
+  const controlMsgErrors = (errMsg: string) => {
+    switch (errMsg) {
+      case 'email':
+        return errors.email;
+      case 'password':
+        return errors.password;
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <View style={style.container}>
       <Text style={style.title}>Iniciar Sesión</Text>
-      <Input
-        style={style.input}
-        placeholder="Correo"
-        placeholderTextColor="#AEB6BF"
-        onChangeText={setEmail}
-        value={email}
+      <FormInput
+        name={'email'}
+        control={control as unknown as Control<FieldValues>}
+        error={controlMsgErrors('email')}
+        placeholder="Email"
+        label="Email"
       />
-      <InputPassword setPassword={setPassword} password={password} />
-      <TouchableOpacity style={style.button} onPress={handleLogin}>
+      <FormInput
+        name={'password'}
+        control={control as unknown as Control<FieldValues>}
+        error={controlMsgErrors('password')}
+        passwordInput
+        placeholder="Contraseña"
+        label="Contraseña"
+      />
+      <Button
+        style={style.button}
+        alignSelf="center"
+        bg="#FCCDCE"
+        mx={10}
+        mb={12}
+        rounded={16}
+        disabled={!isValid}
+        loading={isLoadingLoginWithEmailAndPassword}
+        onPress={() => {
+          mutateLoginWithEmailAndPassword({
+            email: getValues('email'),
+            password: getValues('password'),
+          });
+        }}>
         <Text style={style.buttonText}>Ingresar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={style.button} onPress={goToRegister}>
+      </Button>
+      <Button
+        style={style.button}
+        alignSelf="center"
+        bg="#FCCDCE"
+        mx={10}
+        rounded={16}
+        onPress={goToRegister}>
         <Text style={style.buttonText}>Registrarse</Text>
-      </TouchableOpacity>
+      </Button>
     </View>
   );
 };

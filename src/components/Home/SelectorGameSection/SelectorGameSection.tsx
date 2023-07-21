@@ -32,7 +32,7 @@ const SelectorGameSection = ({
             <Card
               style={style.contFull}
               color={'#AFECFE'}
-              text={'Mirror'}
+              text={'Espejo Inteligente'}
               icon={<Icon name="mirror" size={34} />}
             />
           </TouchableOpacity>
@@ -56,7 +56,18 @@ const SelectorGameSection = ({
             <Card
               style={style.contFull}
               color={'#FFD6AD'}
-              text={'Asociacion'}
+              text={'Asociacion de Emociones'}
+              icon={<Icon name="emoticon-tongue-outline" size={34} />}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={style.contHalf}
+            activeOpacity={0.4}
+            onPress={goToAsociation}>
+            <Card
+              style={style.contFull}
+              color={'#FEAFB0'}
+              text={'Modo Arcade'}
               icon={<Icon name="emoticon-tongue-outline" size={34} />}
             />
           </TouchableOpacity> */}

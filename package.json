@@ -40,7 +40,10 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-vision-camera": "^2.15.4",
     "react-query": "^3.39.3",
-    "update": "^0.7.4"
+    "update": "^0.7.4",
+    "yup": "^0.32.9",
+    "react-hook-form": "^7.5.2",
+    "@hookform/resolvers": "^2.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

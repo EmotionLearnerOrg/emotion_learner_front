@@ -20,7 +20,7 @@ const Card = ({
     <View
       style={{...styleCustom, ...style.cardContainer, backgroundColor: color}}>
       {icon}
-      <Text fontWeight="400" fontSize={14}>
+      <Text textAlign="center" fontWeight="400" fontSize={14}>
         {text}
       </Text>
     </View>

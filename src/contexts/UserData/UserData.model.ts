@@ -7,6 +7,7 @@ export interface IUserDataContext {
   dispatch?: (value: UserDataAction) => void;
   initData: () => void;
   clearData: () => void;
+  refetch: () => void;
   updateInsignias: ({idInsignia}: {idInsignia: InsigniasTypeNames}) => void;
 }
 

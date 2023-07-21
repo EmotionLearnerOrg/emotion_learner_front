@@ -7,9 +7,11 @@ import {makeInputPasswordStyle} from './InputPassword.style';
 const InputPassword = ({
   setPassword,
   password,
+  placeholder = 'Contraseña',
 }: {
   setPassword: React.Dispatch<React.SetStateAction<string>>;
   password: string;
+  placeholder?: string;
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const style = makeInputPasswordStyle();
@@ -17,7 +19,7 @@ const InputPassword = ({
   return (
     <Input
       style={style.input}
-      placeholder="Contraseña"
+      placeholder={placeholder}
       placeholderTextColor="#AEB6BF"
       secureTextEntry={!showPassword}
       onChangeText={text => setPassword(text)}

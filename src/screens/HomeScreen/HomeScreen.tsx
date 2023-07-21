@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {ScrollView, Text} from 'react-native';
 import {makeHomeScreenStyles} from './HomeScreen.style';
 import {HomeRoutes, HomeType} from '../../stacks/HomeParams';
