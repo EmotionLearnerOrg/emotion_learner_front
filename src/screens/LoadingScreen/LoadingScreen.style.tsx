@@ -9,9 +9,10 @@ export const makeLoadingScreenStyle = () =>
       backgroundColor: '#F9F7F6',
     },
     title: {
-      fontSize: 24,
+      fontSize: 44,
       fontWeight: 'bold',
       marginBottom: 20,
-      color: '#2C3E50',
+      color: '#FCA34D',
+      textDecorationLine: 'underline',
     },
   });

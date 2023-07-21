@@ -24,8 +24,8 @@ export type EmocionesTypeNames = `${emocionesEnum}`;
 export type emocionType = {
   color: string;
   name: string;
-  pathReal: NodeRequire;
-  pathGuia: NodeRequire;
+  pathReal: any;
+  pathGuia: any;
 };
 
 export const emociones: {[K in emocionesEnum]: emocionType} = {

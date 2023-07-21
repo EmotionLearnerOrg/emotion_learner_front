@@ -6,12 +6,18 @@ import {Input} from '@rneui/base';
 import {useUserAuth} from '../../contexts';
 import {loginWithEmailAndPassword} from '../../services';
 import {InputPassword} from '../../components';
+import {useLoginWithEmailAndPassword} from '../../hooks/account';
 
 const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const style = makeLoginScreenStyle();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {initData} = useUserAuth();
+  useLoginWithEmailAndPassword();
+  const {
+    mutateAsync: mutateLoginWithEmailAndPassword,
+    isLoading: isLoadingLoginWithEmailAndPassword,
+  } = useLoginWithEmailAndPassword();
 
   const cleanData = () => {
     setEmail('');
@@ -19,15 +25,16 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   };
 
   const handleLogin = async () => {
-    try {
-      await loginWithEmailAndPassword({email, password}).then(() => initData());
-      cleanData();
-      goToHome();
-    } catch (error) {
-      Alert.alert('Error', 'Usuario o contraseña incorrectos', [{text: 'OK'}]);
-    }
+    mutateLoginWithEmailAndPassword({email, password});
+    // try {
+    //   await loginWithEmailAndPassword({email, password}).then(() => initData());
+    //   cleanData();
+    //   goToHome();
+    // } catch (error) {
+    //   Alert.alert('Error', 'Usuario o contraseña incorrectos', [{text: 'OK'}]);
+    // }
   };
-
+  // a
   const goToRegister = () => {
     navigation.navigate(LoginRoutes.REGISTER);
   };
