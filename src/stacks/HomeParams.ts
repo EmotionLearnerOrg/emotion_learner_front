@@ -15,6 +15,8 @@ export enum HomeRoutes {
   GUIDE_FEEL = 'GuideFeal',
   REAL_FEEL = 'RealFeel',
   LOG_IN = 'HomeLogin',
+  FEEDBACK_POS = 'FeedbackPos',
+  FEEDBACK_NEG = 'FeedbackNeg',
 }
 
 export type HomeStackParamList = {
@@ -24,11 +26,13 @@ export type HomeStackParamList = {
   [HomeRoutes.ASOCIATION]: undefined;
   [HomeRoutes.INSIGNIAS]: undefined;
   [HomeRoutes.CALENDAR]: undefined;
-  [HomeRoutes.PERFORM_EMOTION]: {emotion: emocionType};
-  [HomeRoutes.GUIDE_FEEL]: {emotion: emocionType};
-  [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
+  [HomeRoutes.PERFORM_EMOTION]: { emotion: emocionType };
+  [HomeRoutes.GUIDE_FEEL]: { emotion: emocionType };
+  [HomeRoutes.REAL_FEEL]: { emotion: emocionType };
   [HomeRoutes.LOG_IN]: undefined;
   [HomeRoutes.REGISTEREMOTIONCALENDAR]: undefined;
+  [HomeRoutes.FEEDBACK_POS]: { emotion: emocionType };
+  [HomeRoutes.FEEDBACK_NEG]: { emotion: emocionType };
 };
 
 export type HomeStackNavigationsProp = StackNavigationProp<HomeStackParamList>;
@@ -106,6 +110,26 @@ type ProfileScreenRouteType = RouteProp<
 export type ProfileType = {
   navigation: HomeStackNavigationsProp;
   route: ProfileScreenRouteType;
+};
+
+type FeedbackPosScreenRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.FEEDBACK_POS
+>;
+
+export type FeedbackPosType = {
+  navigation: HomeStackNavigationsProp;
+  route: FeedbackPosScreenRouteType;
+};
+
+type FeedbackNegScreenRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.FEEDBACK_NEG
+>;
+
+export type FeedbackNegType = {
+  navigation: HomeStackNavigationsProp;
+  route: FeedbackNegScreenRouteType;
 };
 
 export const HomeStackNavigator = createNativeStackNavigator<HomeStackParamList>();

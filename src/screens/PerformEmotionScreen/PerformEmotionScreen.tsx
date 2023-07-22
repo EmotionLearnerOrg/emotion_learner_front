@@ -1,10 +1,10 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { Button, Text } from 'react-native-magnus';
 import { makePerformEmotionScreenStyles } from './PerformEmotionScreen.style';
 import { Camera } from 'react-native-vision-camera';
 import { useAuthorizedCamera } from '../../components/Camera/useAuthorizedCamera';
-import { PerformEmotionType } from '../../stacks/HomeParams';
+import { HomeRoutes, PerformEmotionType } from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
 import { CameraComponent } from '../../components/Camera';
@@ -13,7 +13,7 @@ interface Prediction {
   emocion: string;
 }
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
+const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => {
   const { emotion } = route.params;
   const style = makePerformEmotionScreenStyles();
   const cameraRef = useRef<Camera>(null);
@@ -34,7 +34,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
 
     const emotionSelected = emotion.name;
     const percentage = 70;
-    const requiredConsecutiveEmotions = 8;
+    const requiredConsecutiveEmotions = 6;
     let numberOfHits = 0;
     let consecutiveEmotions = 0;
 
@@ -60,7 +60,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
             break;
           }
         } else {
-          consecutiveEmotions = 0; // Reinicia el contador si la emoción no coincide
+          consecutiveEmotions = 0;
         }
       } else {
         console.log('ERROR: Prediccion no detectada', prediction.emocion);
@@ -68,11 +68,9 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
     }
 
     if (percentageEmotions >= percentage || consecutiveEmotions >= requiredConsecutiveEmotions) {
-      Alert.alert('Resultado', 'Expresion correcta', [{ text: 'OK' }]);
-      // Navegar a pantalla recompensa
+      navigation.navigate(HomeRoutes.FEEDBACK_POS, { emotion })
     } else {
-      Alert.alert('Resultado', 'Expresion incorrecta', [{ text: 'OK' }]);
-      // Navegar a pantalla con recomendaciones
+      navigation.navigate(HomeRoutes.FEEDBACK_NEG, { emotion })
     }
   };
 
@@ -121,6 +119,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route }) => {
     if (imageBase64 && imageBase64 !== '') {
       detectEmotionsApi(imageBase64).then(predict => {
 
+        // TODO: Revisar cuando emotion es undefined para que tome otra imagen, esto sucede porque la api no reconoce una cara (creo)
         const { emotion } = JSON.parse(JSON.stringify(predict));
         setPredictions(prevPredictions => [
           ...prevPredictions,
