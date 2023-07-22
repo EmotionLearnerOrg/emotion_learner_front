@@ -39,9 +39,14 @@ const HomeScreen: FC<HomeType> = ({ navigation }) => {
   const goToRegisterEmotionCalendar = () => {
     navigation.navigate(HomeRoutes.REGISTEREMOTIONCALENDAR);
   };
+
+  const goToProfile = () => {
+    navigation.navigate(HomeRoutes.PROFILE);
+  };
+
   return (
     <ScrollView style={style.containerView}>
-      <HeaderSection />
+      <HeaderSection goToProfile={goToProfile} />
       <Button
         bg="green"
         rounded={16}

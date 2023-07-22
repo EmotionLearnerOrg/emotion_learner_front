@@ -4,7 +4,11 @@ import { makeHeaderSectionStyles } from './HeaderSection.style';
 import { Icon, Text } from 'react-native-magnus';
 import { useUserAuth } from '../../../contexts';
 
-const HeaderSection = () => {
+const HeaderSection = ({
+  goToProfile
+}: {
+  goToProfile: () => void;
+}) => {
   const style = makeHeaderSectionStyles();
   const { nickName } = useUserAuth();
 
@@ -19,13 +23,13 @@ const HeaderSection = () => {
         </Text>
       </View>
       <View style={style.configContainer}>
-        {/* <Icon rounded="circle" name="user" fontFamily="Feather" fontSize={64} /> */}
-        <TouchableOpacity onPress={() => console.log("Apreto el icono")}>
+        <Icon rounded="circle" name="user" fontFamily="Feather" top={-15} fontSize={40} />
+        <TouchableOpacity onPress={goToProfile}>
           <Icon
-            top={5}
+            top={10}
             name="cog"
             color="black"
-            fontSize={50}
+            fontSize={40}
             fontFamily="FontAwesome"
           />
         </TouchableOpacity>

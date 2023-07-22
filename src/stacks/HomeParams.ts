@@ -15,6 +15,7 @@ export enum HomeRoutes {
   GUIDE_FEEL = 'GuideFeal',
   REAL_FEEL = 'RealFeel',
   LOG_IN = 'HomeLogin',
+  PROFILE = 'Profile'
 }
 
 export type HomeStackParamList = {
@@ -29,6 +30,7 @@ export type HomeStackParamList = {
   [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
   [HomeRoutes.LOG_IN]: undefined;
   [HomeRoutes.REGISTEREMOTIONCALENDAR]: undefined;
+  [HomeRoutes.PROFILE]: undefined;
 };
 
 export type HomeStackNavigationsProp = StackNavigationProp<HomeStackParamList>;
@@ -93,7 +95,7 @@ export type PerformEmotionType = {
 
 type ProfileScreenRouteType = RouteProp<
   HomeStackParamList,
-  HomeRoutes.PERFORM_EMOTION
+  HomeRoutes.PROFILE
 >;
 
 export type ProfileType = {

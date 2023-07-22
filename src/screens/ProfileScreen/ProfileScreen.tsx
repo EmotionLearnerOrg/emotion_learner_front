@@ -5,6 +5,8 @@ import { Button } from 'react-native-magnus';
 import { HomeRoutes, ProfileType } from '../../stacks/HomeParams';
 import { Dialog } from '@rneui/themed';
 import { CommonActions, useNavigation } from '@react-navigation/native';
+import { HeaderCommon } from '../../components';
+import { Input } from '@rneui/base';
 import { useUserAuth } from '../../contexts';
 import { logout } from '../../services';
 
@@ -13,6 +15,20 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
   const { getParent } = useNavigation();
   const style = makeProfileScreenStyles();
   const { nickName, updateNickname, clearData } = useUserAuth();
+  const [newNickname, setNewNickName] = useState(nickName);
+
+  const cleanData = () => {
+    setNewNickName('');
+  };
+
+  const handleNewNickname = async () => {
+    try {
+      updateNickname({ nickNameProp: newNickname });
+      cleanData();
+    } catch (error) {
+      Alert.alert('Error', 'Error al guardar el nuevo nickName', [{ text: 'OK' }]);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -40,7 +56,25 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
   return (
     <ScrollView style={style.containerView}>
       <View style={style.cardProfile}>
-        <Text style={style.nickname}>{nickName}</Text>
+        <View style={style.cardProfileHeader}>
+          <Text style={style.nickname}>{nickName}</Text>
+          <HeaderCommon />
+        </View>
+        <Text style={style.subtitle}>Editá tu perfil</Text>
+        <View style={style.cardEditProfile}>
+          <Text style={style.subtitle}>Nombre y Apellido</Text>
+          <Input
+            style={style.input}
+            placeholder={nickName}
+            placeholderTextColor="#AEB6BF"
+            onChangeText={setNewNickName}
+            value={newNickname}
+          />
+          <Button
+            onPress={handleNewNickname}>
+            Guardar nuevo nickname
+          </Button>
+        </View>
       </View>
       <View style={style.cardPayment}>
         <Text>Tu subscripción actual es:</Text>
