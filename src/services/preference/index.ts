@@ -4,4 +4,5 @@ export {
   getNickName,
   getUID,
   savePreferenceData,
+  setNickName
 } from './preference.service';

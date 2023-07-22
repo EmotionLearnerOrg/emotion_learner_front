@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useReducer } from 'react';
-import { updateDisplayName, getNickName, getUID, getIsLoggedIn } from '../../services';
+import { setNickName, updateDisplayName, getNickName, getUID, getIsLoggedIn } from '../../services';
 import { IUserAuthContext } from './UserAuth.model';
 import { DEFAULT_STATE_AUTH, UserAuthReducer } from './UserAuth.reducer';
 import { UserAuthActionKind } from './UserAuth.actions';
@@ -29,6 +29,7 @@ export const UserAuthProvider: React.FC<any> = ({ children }) => {
 
   const updateNickname = async ({ nickNameProp }: { nickNameProp: string }) => {
     updateDisplayName(nickNameProp!);
+    setNickName(nickNameProp!);
     dispatch({
       type: UserAuthActionKind.SET_NICKNAME,
       nickName: nickNameProp!,
