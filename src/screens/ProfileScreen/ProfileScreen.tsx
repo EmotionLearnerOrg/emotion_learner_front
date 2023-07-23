@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react';
 import { Alert, ScrollView, Text, View } from 'react-native';
 import { makeProfileScreenStyles } from './ProfileScreen.style';
-import { Button } from 'react-native-magnus';
+import { Button, Icon } from 'react-native-magnus';
 import { HomeRoutes, ProfileType } from '../../stacks/HomeParams';
 import { Dialog } from '@rneui/themed';
 import { CommonActions, useNavigation } from '@react-navigation/native';
-import { HeaderCommon } from '../../components';
+import { HeaderCommon, PaymentSection } from '../../components';
 import { Input } from '@rneui/base';
 import { useUserAuth } from '../../contexts';
 import { logout } from '../../services';
@@ -57,6 +57,7 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
     <ScrollView style={style.containerView}>
       <View style={style.cardProfile}>
         <View style={style.cardProfileHeader}>
+          <Icon style={style.nickname} rounded="circle" name="user" fontFamily="Feather" fontSize={40} />
           <Text style={style.nickname}>{nickName}</Text>
           <HeaderCommon />
         </View>
@@ -76,22 +77,7 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
           </Button>
         </View>
       </View>
-      <View style={style.cardPayment}>
-        <Text>Tu subscripción actual es:</Text>
-        <View style={style.line} />
-        <Text>Prueba gratis por 30 días</Text>
-      </View>
-      <View style={style.cardPayment}>
-        <Text>Premium anual -  30 u$s / año</Text>
-        <View style={style.line} />
-        <Text>Premium mensual - 2,5 u$s / mes</Text>
-        <Button
-          m={10}
-          block
-          onPress={() => { }}>
-          Continuar con el pago
-        </Button>
-      </View>
+      {/* <PaymentSection /> */}
       <Button
         block
         m={10}

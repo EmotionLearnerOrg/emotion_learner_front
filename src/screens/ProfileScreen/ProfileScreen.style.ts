@@ -7,7 +7,7 @@ export const makeProfileScreenStyles = () =>
       alignSelf: 'center',
     },
     cardProfile: {
-      backgroundColor: '#A951FF',
+      backgroundColor: '#7551FF',
       borderRadius: 20,
       marginBottom: 20
     },
@@ -19,32 +19,24 @@ export const makeProfileScreenStyles = () =>
       alignItems: 'center', // Centra los elementos verticalmente en el contenedor
       marginEnd: 20
     },
-    cardPayment: {
-      backgroundColor: 'white',
-      borderRadius: 20,
-      padding: 16,
-      marginBottom: 20,
-      marginStart: 17,
-      marginEnd: 17
-    },
     nickname: {
       fontSize: 22,
       color: 'white',
-      start: 28,
+      marginStart: 20,
       fontWeight: 'bold',
     },
     subtitle: {
       fontSize: 14,
       color: 'white',
-      start: 28,
-      marginTop: 10,
+      marginStart: 20,
+      marginTop: 20,
       marginBottom: 5,
       fontWeight: 'bold',
     },
     text: {
       fontSize: 12,
       color: 'white',
-      start: 28,
+      marginStart: 20,
       marginTop: 5,
       marginBottom: 5
     },
@@ -62,9 +54,5 @@ export const makeProfileScreenStyles = () =>
       borderRadius: 5,
       paddingHorizontal: 10,
       color: 'white',
-    },
-    line: {
-      borderBottomColor: '#DEE1E7',
-      borderBottomWidth: 1,
     }
   });
