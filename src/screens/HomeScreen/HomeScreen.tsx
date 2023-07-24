@@ -42,43 +42,7 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
   return (
     <ScrollView style={style.containerView}>
       <HeaderSection />
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() =>
-          updateInsignias({idInsignia: insigniasEnum.ARCADE_ENOJADO})
-        }>
-        <Text>Estoy arcade enojado</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() =>
-          updateInsignias({idInsignia: insigniasEnum.MIRROR_NEUTRAL})
-        }>
-        <Text>Estoy mirror neutral</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() =>
-          updateInsignias({idInsignia: insigniasEnum.MIRROR_TRISTE})
-        }>
-        <Text>Estoy mirror triste</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() =>
-          updateInsignias({idInsignia: insigniasEnum.RULETA_FELIZ})
-        }>
-        <Text>Estoy ruleta feliz</Text>
-      </Button>
-      <Button
+      {/* <Button
         bg="green"
         rounded={16}
         loading={isLoadingPostInsignias}
@@ -86,13 +50,16 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
           updateInsignias({idInsignia: insigniasEnum.RULETA_TRISTE})
         }>
         <Text>Estoy ruleta triste</Text>
-      </Button>
+      </Button> */}
       <SelectorGameSection
         goToMirror={goToMirror}
         goToRuleta={goToRuleta}
         goToAsociation={goToAsociation}
       />
-      {/* <CalendarCardSection goToCalendar={goToCalendar} goToRegisterEmotionCalendar={goToRegisterEmotionCalendar} /> */}
+      <CalendarCardSection
+        goToCalendar={goToCalendar}
+        goToRegisterEmotionCalendar={goToRegisterEmotionCalendar}
+      />
       <InsigniasAccessSection goToInsignias={goToInsignias} />
     </ScrollView>
   );

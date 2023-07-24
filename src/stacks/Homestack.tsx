@@ -11,7 +11,9 @@ import {
   PerformEmotionScreen,
   GuideFeelScreen,
   RealFeelScreen,
-  CalendarRegisterScreen
+  CalendarRegisterScreen,
+  FeedbackPosScreen,
+  FeedbackNegScreen
 } from '../screens';
 import { HeaderCommon } from '../components';
 
@@ -61,6 +63,14 @@ const HomeStack = () => {
         <HomeStackNavigator.Screen
           name={HomeRoutes.REGISTEREMOTIONCALENDAR}
           component={CalendarRegisterScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.FEEDBACK_POS}
+          component={FeedbackPosScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.FEEDBACK_NEG}
+          component={FeedbackNegScreen}
         />
       </HomeStackNavigator.Navigator>
     </UserDataProvider>

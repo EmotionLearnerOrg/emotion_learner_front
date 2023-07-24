@@ -12,3 +12,5 @@ export {default as RealFeelScreen} from './RealFeelScreen/RealFeelScreen';
 export {default as RegisterScreen} from './RegisterScreen/RegisterScreen';
 export {default as RuletaScreen} from './RuletaScreen/RuletaScreen';
 export {default as CalendarRegisterScreen} from './CalendarRegisterScreen/CalendarRegisterScreen';
+export {default as FeedbackPosScreen} from './FeedbackPosScreen/FeedbackPosScreen';
+export {default as FeedbackNegScreen} from './FeedbackNegScreen/FeedbackNegScreen';
