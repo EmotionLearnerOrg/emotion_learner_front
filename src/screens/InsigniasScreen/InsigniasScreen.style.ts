@@ -2,13 +2,24 @@ import {StyleSheet} from 'react-native';
 
 export const makeInsigniasScreenStyles = () =>
   StyleSheet.create({
-    containerView: {flex: 1},
-    list: {
-      alignSelf: 'center',
-      marginTop: 16,
+    sectionContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      marginBottom: 24,
     },
-    gapList: {
-      gap: 16,
+    titleSection: {
+      width: '100%',
     },
-    insigniaItem: {flexDirection: 'column', alignItems: 'center'},
+    insignia: {
+      alignItems: 'center',
+    },
+    item: {
+      marginHorizontal: '5%',
+      width: '40%', // Adjust the width based on your design
+      height: 100, // Adjust the height based on your design
+      marginBottom: 10,
+      padding: 10,
+      alignItems: 'center',
+    },
   });

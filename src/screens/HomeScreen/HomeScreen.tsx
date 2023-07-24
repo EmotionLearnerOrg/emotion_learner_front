@@ -46,47 +46,46 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
         bg="green"
         rounded={16}
         loading={isLoadingPostInsignias}
-        onPress={() => {
-          updateInsignias({idInsignia: insigniasEnum.SORPRENDIDO});
-        }}>
-        <Text>PRUEBA CON MUTATION</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() => updateInsignias({idInsignia: insigniasEnum.ENOJADO})}>
-        <Text>Estoy enojado</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() => updateInsignias({idInsignia: insigniasEnum.FELIZ})}>
-        <Text>Estoy feliz</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() => updateInsignias({idInsignia: insigniasEnum.NEUTRAL})}>
-        <Text>Estoy neutral</Text>
+        onPress={() =>
+          updateInsignias({idInsignia: insigniasEnum.ARCADE_ENOJADO})
+        }>
+        <Text>Estoy arcade enojado</Text>
       </Button>
       <Button
         bg="green"
         rounded={16}
         loading={isLoadingPostInsignias}
         onPress={() =>
-          updateInsignias({idInsignia: insigniasEnum.SORPRENDIDO})
+          updateInsignias({idInsignia: insigniasEnum.MIRROR_NEUTRAL})
         }>
-        <Text>Estoy sorprendido</Text>
+        <Text>Estoy mirror neutral</Text>
       </Button>
       <Button
         bg="green"
         rounded={16}
         loading={isLoadingPostInsignias}
-        onPress={() => updateInsignias({idInsignia: insigniasEnum.TRISTE})}>
-        <Text>Estoy triste</Text>
+        onPress={() =>
+          updateInsignias({idInsignia: insigniasEnum.MIRROR_TRISTE})
+        }>
+        <Text>Estoy mirror triste</Text>
+      </Button>
+      <Button
+        bg="green"
+        rounded={16}
+        loading={isLoadingPostInsignias}
+        onPress={() =>
+          updateInsignias({idInsignia: insigniasEnum.RULETA_FELIZ})
+        }>
+        <Text>Estoy ruleta feliz</Text>
+      </Button>
+      <Button
+        bg="green"
+        rounded={16}
+        loading={isLoadingPostInsignias}
+        onPress={() =>
+          updateInsignias({idInsignia: insigniasEnum.RULETA_TRISTE})
+        }>
+        <Text>Estoy ruleta triste</Text>
       </Button>
       <SelectorGameSection
         goToMirror={goToMirror}
