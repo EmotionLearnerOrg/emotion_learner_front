@@ -21,6 +21,13 @@ export const getNickName = async () => {
     } catch (e) { }
 };
 
+export const setNickName = async (nickName: string) => {
+    try {
+        await AsyncStorage.setItem('nickName', nickName);
+        return nickName || '';
+    } catch (e) { }
+};
+
 export const getIsLoggedIn = async () => {
     try {
         const isLoggedIn = await AsyncStorage.getItem('loggedIn');

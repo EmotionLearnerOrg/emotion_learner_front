@@ -1,5 +1,4 @@
 import React from 'react';
-import TabsStack from './TabStack';
 import { HomeRoutes, HomeStackNavigator } from './HomeParams';
 import { UserDataProvider } from '../contexts';
 import {
@@ -12,8 +11,8 @@ import {
   GuideFeelScreen,
   RealFeelScreen,
   CalendarRegisterScreen,
-  FeedbackPosScreen,
-  FeedbackNegScreen
+  HomeScreen,
+  ProfileScreen
 } from '../screens';
 import { HeaderCommon } from '../components';
 
@@ -25,7 +24,7 @@ const HomeStack = () => {
         screenOptions={{ headerShown: true, header: () => <HeaderCommon /> }}>
         <HomeStackNavigator.Screen
           name={HomeRoutes.HOME_S}
-          component={TabsStack}
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
         <HomeStackNavigator.Screen
@@ -65,12 +64,9 @@ const HomeStack = () => {
           component={CalendarRegisterScreen}
         />
         <HomeStackNavigator.Screen
-          name={HomeRoutes.FEEDBACK_POS}
-          component={FeedbackPosScreen}
-        />
-        <HomeStackNavigator.Screen
-          name={HomeRoutes.FEEDBACK_NEG}
-          component={FeedbackNegScreen}
+          name={HomeRoutes.PROFILE}
+          component={ProfileScreen}
+          options={{ headerShown: false }}
         />
       </HomeStackNavigator.Navigator>
     </UserDataProvider>
