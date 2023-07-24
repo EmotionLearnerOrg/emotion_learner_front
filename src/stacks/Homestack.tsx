@@ -12,7 +12,9 @@ import {
   RealFeelScreen,
   CalendarRegisterScreen,
   HomeScreen,
-  ProfileScreen
+  ProfileScreen,
+  FeedbackPosScreen,
+  FeedbackNegScreen
 } from '../screens';
 import { HeaderCommon } from '../components';
 
@@ -67,6 +69,14 @@ const HomeStack = () => {
           name={HomeRoutes.PROFILE}
           component={ProfileScreen}
           options={{ headerShown: false }}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.FEEDBACK_POS}
+          component={FeedbackPosScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.FEEDBACK_NEG}
+          component={FeedbackNegScreen}
         />
       </HomeStackNavigator.Navigator>
     </UserDataProvider>
