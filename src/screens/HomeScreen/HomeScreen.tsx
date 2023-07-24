@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import { ScrollView, Text } from 'react-native';
-import { makeHomeScreenStyles } from './HomeScreen.style';
-import { HomeRoutes, HomeType } from '../../stacks/HomeParams';
-import { Button } from 'react-native-magnus';
-import { insigniasEnum } from '../../types/insignias';
-import { useUserData } from '../../contexts';
+import React, {FC} from 'react';
+import {ScrollView, Text} from 'react-native';
+import {makeHomeScreenStyles} from './HomeScreen.style';
+import {HomeRoutes, HomeType} from '../../stacks/HomeParams';
+import {Button} from 'react-native-magnus';
+import {insigniasEnum} from '../../types/insignias';
+import {useUserData} from '../../contexts';
 import {
   CalendarCardSection,
   HeaderSection,
@@ -12,9 +12,9 @@ import {
   InsigniasAccessSection,
 } from '../../components';
 
-const HomeScreen: FC<HomeType> = ({ navigation }) => {
+const HomeScreen: FC<HomeType> = ({navigation}) => {
   const style = makeHomeScreenStyles();
-  const { updateInsignias, isLoadingPostInsignias } = useUserData();
+  const {updateInsignias, isLoadingPostInsignias} = useUserData();
 
   const goToMirror = () => {
     navigation.navigate(HomeRoutes.MIRROR);
@@ -46,61 +46,26 @@ const HomeScreen: FC<HomeType> = ({ navigation }) => {
 
   return (
     <ScrollView style={style.containerView}>
-      <HeaderSection goToProfile={goToProfile} />
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() => {
-          updateInsignias({ idInsignia: insigniasEnum.SORPRENDIDO });
-        }}>
-        <Text>PRUEBA CON MUTATION</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() => updateInsignias({ idInsignia: insigniasEnum.ENOJADO })}>
-        <Text>Estoy enojado</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() => updateInsignias({ idInsignia: insigniasEnum.FELIZ })}>
-        <Text>Estoy feliz</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() => updateInsignias({ idInsignia: insigniasEnum.NEUTRAL })}>
-        <Text>Estoy neutral</Text>
-      </Button>
-      <Button
+      <HeaderSection goToProfile={goToProfile}/>
+      {/* <Button
         bg="green"
         rounded={16}
         loading={isLoadingPostInsignias}
         onPress={() =>
-          updateInsignias({ idInsignia: insigniasEnum.SORPRENDIDO })
+          updateInsignias({idInsignia: insigniasEnum.RULETA_TRISTE})
         }>
-        <Text>Estoy sorprendido</Text>
-      </Button>
-      <Button
-        bg="green"
-        rounded={16}
-        loading={isLoadingPostInsignias}
-        onPress={() => updateInsignias({ idInsignia: insigniasEnum.TRISTE })}>
-        <Text>Estoy triste</Text>
-      </Button>
+        <Text>Estoy ruleta triste</Text>
+      </Button> */}
       <SelectorGameSection
         goToMirror={goToMirror}
         goToRuleta={goToRuleta}
         goToAsociation={goToAsociation}
       />
+      <CalendarCardSection
+        goToCalendar={goToCalendar}
+        goToRegisterEmotionCalendar={goToRegisterEmotionCalendar}
+      />
       <InsigniasAccessSection goToInsignias={goToInsignias} />
-      {/* Lo paso abajo solo por comodidad del desarrollo de las insigniasLo paso abajo solo por comodidad del desarrollo de las insignias */}
-      <CalendarCardSection goToCalendar={goToCalendar} goToRegisterEmotionCalendar={goToRegisterEmotionCalendar} />
     </ScrollView>
   );
 };

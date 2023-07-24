@@ -35,8 +35,9 @@ export const loginWithEmailAndPassword2 = async ({
 }) => {
   try {
     await signInWithEmailAndPassword(auth, email, password)
-      .then(response => {
-        savePreferenceData(auth.currentUser?.displayName!!, response.user.uid);
+      .then(async response => {
+        const nickName = await getDisplayName(response.user.uid);
+        savePreferenceData(nickName, response.user.uid);
         return response.user.uid;
       })
       .catch();
