@@ -15,12 +15,9 @@ export enum HomeRoutes {
   GUIDE_FEEL = 'GuideFeal',
   REAL_FEEL = 'RealFeel',
   LOG_IN = 'HomeLogin',
-<<<<<<< HEAD
-  PROFILE = 'Profile'
-=======
+  PROFILE = 'Profile',
   FEEDBACK_POS = 'FeedbackPos',
   FEEDBACK_NEG = 'FeedbackNeg',
->>>>>>> main
 }
 
 export type HomeStackParamList = {
@@ -35,12 +32,9 @@ export type HomeStackParamList = {
   [HomeRoutes.REAL_FEEL]: { emotion: emocionType };
   [HomeRoutes.LOG_IN]: undefined;
   [HomeRoutes.REGISTEREMOTIONCALENDAR]: undefined;
-<<<<<<< HEAD
   [HomeRoutes.PROFILE]: undefined;
-=======
   [HomeRoutes.FEEDBACK_POS]: { emotion: emocionType };
   [HomeRoutes.FEEDBACK_NEG]: { emotion: emocionType };
->>>>>>> main
 };
 
 export type HomeStackNavigationsProp = StackNavigationProp<HomeStackParamList>;
