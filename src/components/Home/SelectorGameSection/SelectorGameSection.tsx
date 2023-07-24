@@ -49,7 +49,7 @@ const SelectorGameSection = ({
               icon={<Icon name="emoticon-tongue-outline" size={34} />}
             />
           </TouchableOpacity>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             style={style.contHalf}
             activeOpacity={0.4}
             onPress={goToAsociation}>
@@ -70,7 +70,7 @@ const SelectorGameSection = ({
               text={'Modo Arcade'}
               icon={<Icon name="emoticon-tongue-outline" size={34} />}
             />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </View>
     </View>

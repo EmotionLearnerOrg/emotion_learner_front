@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const makeCalendarCardContainerStyles = () =>
   StyleSheet.create({
     calendarCardContainer: {
-      height: 285,
+      height: 190,
       margin: 10,
       marginBottom: 10,
       padding: 10,
@@ -15,11 +15,13 @@ export const makeCalendarCardContainerStyles = () =>
       position: 'absolute',
       right: 24,
       top: 20,
-      transform: [{ rotate: '270deg' }],
+      transform: [{rotate: '270deg'}],
     },
     cardContainer: {
-      height: 210,
-      marginTop: 20,
+      gap: 10,
+      flexDirection: 'row',
+      height: 120,
+      marginTop: 25,
       rowGap: 4,
       alignSelf: 'center',
       borderRadius: 20,
@@ -31,7 +33,7 @@ export const makeCalendarCardContainerStyles = () =>
     },
     shadowContainer: {
       shadowColor: '#171717',
-      shadowOffset: { width: 0, height: 3 },
+      shadowOffset: {width: 0, height: 3},
       shadowOpacity: 0.4,
       shadowRadius: 2,
     },

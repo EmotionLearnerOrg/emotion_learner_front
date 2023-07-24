@@ -7,7 +7,7 @@ interface SvgComponentProps {
   color?: string;
 }
 
-const InsigniaSvg: React.FC<SvgComponentProps> = ({
+const InsigniaMirrorSvg: React.FC<SvgComponentProps> = ({
   width,
   height,
   color = 'gray',
@@ -49,6 +49,6 @@ const InsigniaSvg: React.FC<SvgComponentProps> = ({
   );
 };
 
-const Insignia = React.memo(InsigniaSvg);
+const InsigniaMirror = React.memo(InsigniaMirrorSvg);
 
-export default Insignia;
+export default InsigniaMirror;

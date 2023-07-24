@@ -1,45 +1,136 @@
-import React, {FC} from 'react';
-import {FlatList, View} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {ScrollView, View} from 'react-native';
 import {makeInsigniasScreenStyles} from './InsigniasScreen.style';
 import {Text} from 'react-native-magnus';
-import SvgInsignia from '../../../assets/svgImages/Insignia';
-import {InsigniaBloqueada} from '../../../assets';
+import {
+  InsigniaMirror,
+  InsigniaArcade,
+  InsigniaAso,
+  InsigniaRuleta,
+} from '../../../assets';
 import {insigniasColor, insigniasEnum} from '../../types/insignias';
 import {useUserData} from '../../contexts';
 
-const InsigniaItem = ({style, item}: {style: any; item: any}) => {
+const InsigniaPorCategoria = ({cat, item}: {cat: string; item: any}) => {
+  if (cat === 'mirror') {
+    return (
+      <InsigniaMirror
+        width={85}
+        height={85}
+        color={
+          item[1]
+            ? insigniasColor[item[0] as unknown as insigniasEnum]
+            : 'black'
+        }
+      />
+    );
+  } else if (cat === 'ruleta') {
+    return (
+      <InsigniaRuleta
+        width={85}
+        height={85}
+        color={
+          item[1]
+            ? insigniasColor[item[0] as unknown as insigniasEnum]
+            : 'black'
+        }
+      />
+    );
+  } else if (cat === 'arcade') {
+    return (
+      <InsigniaArcade
+        width={85}
+        height={85}
+        color={
+          item[1]
+            ? insigniasColor[item[0] as unknown as insigniasEnum]
+            : 'black'
+        }
+      />
+    );
+  } else {
+    return (
+      <InsigniaAso
+        width={85}
+        height={85}
+        color={
+          item[1]
+            ? insigniasColor[item[0] as unknown as insigniasEnum]
+            : 'black'
+        }
+      />
+    );
+  }
+};
+
+function groupStringsByPrefix(insignias: [string, unknown][]): {
+  [key: string]: [string, unknown][];
+} {
+  const groupedStrings: {[key: string]: [string, unknown][]} = {};
+
+  insignias.forEach(insignia => {
+    const prefix = insignia[0].split('_')[0]; // Obtenemos la cadena inicial hasta el primer '_'
+    if (!groupedStrings[prefix]) {
+      groupedStrings[prefix] = [];
+    }
+    groupedStrings[prefix].push([insignia[0], insignia[1]]);
+  });
+
+  return groupedStrings;
+}
+
+const InsigniaItem = ({
+  style,
+  item,
+  cat,
+}: {
+  style: any;
+  item: any;
+  cat: string;
+}) => {
+  const title = item[0].split('_').length > 1 ? item[0].split('_') : item[0];
+
   return (
     <View style={style}>
-      <Text>{item[0]}</Text>
-      {item[1] ? (
-        <SvgInsignia
-          width={85}
-          height={85}
-          color={insigniasColor[item[0] as unknown as insigniasEnum]}
-        />
-      ) : (
-        <InsigniaBloqueada width={85} height={85} color="black" />
-      )}
+      <Text mb={8}>{title}</Text>
+      {InsigniaPorCategoria({cat: cat, item: item})}
     </View>
   );
 };
 
 const InsigniasScreen: FC<{}> = () => {
-  const style = makeInsigniasScreenStyles();
+  const styles = makeInsigniasScreenStyles();
   const {insignias} = useUserData();
+  const [groupedInsignias, setGroupedInsignias] = useState<{
+    [key: string]: [string, unknown][];
+  }>();
+  useEffect(() => {
+    setGroupedInsignias(groupStringsByPrefix(insignias!));
+  }, [insignias]);
 
   return (
-    <FlatList
-      style={style.list}
-      data={insignias}
-      numColumns={2}
-      keyExtractor={(item, index) => `${item[0]}${index.toString()}`}
-      renderItem={({item}) => (
-        <InsigniaItem item={item} style={style.insigniaItem} />
-      )}
-      contentContainerStyle={style.gapList}
-      columnWrapperStyle={style.gapList}
-    />
+    <ScrollView nestedScrollEnabled>
+      <Text p={8} fontSize={32}>
+        Estas son las insignias que ganaste!
+      </Text>
+      {groupedInsignias &&
+        Object.keys(groupedInsignias).map(key => (
+          <View key={key} style={styles.sectionContainer}>
+            <Text textAlign="center" style={styles.titleSection} fontSize={24}>
+              {key}
+            </Text>
+            {groupedInsignias[key].map(elemento => (
+              <View key={elemento[0]} style={styles.item}>
+                <InsigniaItem
+                  item={elemento}
+                  style={styles.insignia}
+                  cat={key}
+                />
+              </View>
+            ))}
+          </View>
+        ))}
+    </ScrollView>
   );
 };
 

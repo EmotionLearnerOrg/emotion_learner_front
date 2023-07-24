@@ -3,8 +3,8 @@ import {Control, Controller, FieldError, FieldValues} from 'react-hook-form';
 import {Text} from 'react-native-magnus';
 import {Input} from '@rneui/base';
 import {makeFormInputStyle} from './FormInput.style';
-import {InputPassword, InputLabel} from '../index';
-
+import {InputLabel} from '../InputLabel';
+import {InputPassword} from '../InputPassword';
 export interface FormInputProps {
   name: string;
   label: string;

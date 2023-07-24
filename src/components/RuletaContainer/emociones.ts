@@ -60,3 +60,27 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathReal: NeutralReal,
   },
 };
+
+const blabla = {
+  arcade: [
+    ['arcade_feliz', false],
+    ['arcade_triste', false],
+    ['arcade_sorprendido', false],
+    ['arcade_enojado', false],
+    ['arcade_neutral', false],
+  ],
+  mirror: [
+    ['mirror_feliz', false],
+    ['mirror_triste', false],
+    ['mirror_sorprendido', false],
+    ['mirror_enojado', false],
+    ['mirror_neutral', false],
+  ],
+  ruleta: [
+    ['ruleta_feliz', false],
+    ['ruleta_triste', false],
+    ['ruleta_sorprendido', false],
+    ['ruleta_enojado', false],
+    ['ruleta_neutral', false],
+  ],
+};

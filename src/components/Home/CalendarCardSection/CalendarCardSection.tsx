@@ -1,10 +1,17 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { makeCalendarCardContainerStyles } from './CalendarCardSection.style';
-import { Button, Text } from 'react-native-magnus';
+import {TouchableOpacity, View} from 'react-native';
+import {makeCalendarCardContainerStyles} from './CalendarCardSection.style';
+import {Button, Text} from 'react-native-magnus';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Card from '../SelectorGameSection/Card/Card';
 
-const CalendarCardSection = ({ goToCalendar, goToRegisterEmotionCalendar }: { goToCalendar: () => void, goToRegisterEmotionCalendar: () => void }) => {
+const CalendarCardSection = ({
+  goToCalendar,
+  goToRegisterEmotionCalendar,
+}: {
+  goToCalendar: () => void;
+  goToRegisterEmotionCalendar: () => void;
+}) => {
   const style = makeCalendarCardContainerStyles();
 
   return (
@@ -18,22 +25,32 @@ const CalendarCardSection = ({ goToCalendar, goToRegisterEmotionCalendar }: { go
         <Icon name="label-variant-outline" size={34} />
       </TouchableOpacity>
       <View style={style.cardContainer}>
-        <Button
-          rounded={8}
-          bg="#CFC3F9"
-          color="#524b6b"
-          style={style.buttonCalendar}
-          onPress={goToRegisterEmotionCalendar}>
-          Registrar Emosion
-        </Button>
-        <Button
-          rounded={8}
-          bg="#CFC3F9"
-          color="#524b6b"
-          style={style.buttonCalendar}
-          onPress={goToCalendar}>
-          Acceder a calendario
-        </Button>
+        <View style={{flex: 0.5}}>
+          <TouchableOpacity
+            style={{flex: 1}}
+            activeOpacity={0.4}
+            onPress={goToRegisterEmotionCalendar}>
+            <Card
+              style={{flex: 1}}
+              color={'#D4CAF7'}
+              text={'Registrar emocion'}
+              icon={<Icon name="mirror" size={34} />}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{flex: 0.5}}>
+          <TouchableOpacity
+            style={{flex: 1}}
+            activeOpacity={0.4}
+            onPress={goToCalendar}>
+            <Card
+              style={{flex: 1}}
+              color={'#D4CAF7'}
+              text={'Calendario de emociones'}
+              icon={<Icon name="calendar" size={34} />}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
