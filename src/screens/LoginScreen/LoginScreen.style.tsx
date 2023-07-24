@@ -23,16 +23,12 @@ export const makeLoginScreenStyle = () =>
       marginBottom: 10,
       color: '#34495E',
     },
-    button: {
-      backgroundColor: '#3498DB',
-      borderRadius: 5,
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      marginBottom: 24,
-    },
     buttonText: {
-      color: '#FFFFFF',
+      color: '#524B6B',
       fontSize: 16,
       fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
     },
   });

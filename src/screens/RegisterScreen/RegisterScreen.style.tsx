@@ -24,14 +24,10 @@ export const makeRegisterScreenStyle = () =>
       color: '#34495E',
     },
     button: {
-      backgroundColor: '#3498DB',
-      borderRadius: 5,
-      paddingVertical: 10,
-      paddingHorizontal: 20,
-      marginBottom: 24,
+      width: '100%',
     },
     buttonText: {
-      color: '#FFFFFF',
+      color: '#524B6B',
       fontSize: 16,
       fontWeight: 'bold',
     },

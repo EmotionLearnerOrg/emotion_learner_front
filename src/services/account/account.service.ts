@@ -26,6 +26,25 @@ export const loginWithEmailAndPassword = async ({
   return response.user.uid;
 };
 
+export const loginWithEmailAndPassword2 = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(response => {
+        savePreferenceData(auth.currentUser?.displayName!!, response.user.uid);
+        return response.user.uid;
+      })
+      .catch();
+  } catch (error) {
+    throw new Error('Error creating document: ' + error);
+  }
+};
+
 export const signUpWithEmailAndPassword = async ({
   email,
   password,

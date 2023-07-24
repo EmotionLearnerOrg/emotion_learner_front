@@ -3,7 +3,7 @@ import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
 import {insigniasDefault, typeInsignias} from '../../types/insignias';
 
 export const getInsigniasByUser = async ({uid}: {uid: string}) => {
-  const docRef = doc(db, 'users', uid!);
+  const docRef = doc(db, 'users', uid);
 
   return getDoc(docRef)
     .then(docSnap => {

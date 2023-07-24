@@ -14,7 +14,7 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const { getParent } = useNavigation();
   const style = makeProfileScreenStyles();
-  const { nickName, updateNickname, clearData } = useUserAuth();
+  const { nickName, updateNickname, clearData: clearUserData } = useUserAuth();
   const [newNickname, setNewNickName] = useState(nickName);
 
   const cleanData = () => {
@@ -33,7 +33,7 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
   const handleLogout = async () => {
     try {
       await logout();
-      clearData();
+      clearUserData();
       const parent = getParent();
       if (parent) {
         parent.dispatch(

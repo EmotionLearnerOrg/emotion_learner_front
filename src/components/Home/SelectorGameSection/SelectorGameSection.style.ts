@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export const makeSelectorGameSectionStyles = () =>
   StyleSheet.create({
     selectorGameContainer: {
-      height: 220,
+      height: 314,
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 10,
@@ -16,7 +16,7 @@ export const makeSelectorGameSectionStyles = () =>
     gamesGrid: {
       flexDirection: 'row',
       gap: 10,
-      height: 170,
+      height: 264,
     },
     leftSection: {
       flex: 0.5,
@@ -25,7 +25,7 @@ export const makeSelectorGameSectionStyles = () =>
       flex: 1,
     },
     contHalf: {
-      flex: 0.5,
+      flex: 0.33,
     },
     rigthSection: {
       flex: 0.5,

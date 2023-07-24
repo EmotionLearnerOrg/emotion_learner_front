@@ -1,9 +1,10 @@
 import React, {FC, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import {makeLoadingScreenStyle} from './LoadingScreen.style';
 import {LoadingType, LoginRoutes} from '../../stacks/LoginParams';
 import {useFocusEffect} from '@react-navigation/native';
 import {useUserAuth} from '../../contexts';
+import {EmotionPerson} from '../../../assets';
 
 const LoadingScreen: FC<LoadingType> = ({navigation}) => {
   const style = makeLoadingScreenStyle();
@@ -34,7 +35,14 @@ const LoadingScreen: FC<LoadingType> = ({navigation}) => {
 
   return (
     <View style={style.container}>
-      <Text style={style.title}>Loading</Text>
+      <Image
+        source={EmotionPerson}
+        style={{
+          alignSelf: 'center',
+          resizeMode: 'contain',
+        }}
+      />
+      <Text style={style.title}>Mi Mundo Emocional</Text>
     </View>
   );
 };

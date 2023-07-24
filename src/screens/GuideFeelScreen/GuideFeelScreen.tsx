@@ -19,7 +19,11 @@ const GuideFeelScreen: FC<GuideFeelType> = ({route, navigation}) => {
         dolor sit amet.
       </Text>
       <View style={style.imageContainer}>
-        <Image source={emotion.pathGuia} style={style.image} />
+        <Image
+          source={emotion.pathGuia}
+          // source={{uri: emotion.pathReal}}
+          style={style.image}
+        />
       </View>
       <View style={style.buttonContainer}>
         <Button

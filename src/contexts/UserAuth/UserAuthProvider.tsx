@@ -32,7 +32,7 @@ export const UserAuthProvider: React.FC<any> = ({ children }) => {
     setNickName(nickNameProp!);
     dispatch({
       type: UserAuthActionKind.SET_NICKNAME,
-      nickName: nickNameProp!,
+      nickName: nickNameProp,
     });
   };
 

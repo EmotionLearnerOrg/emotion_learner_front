@@ -98,8 +98,9 @@ const HomeScreen: FC<HomeType> = ({ navigation }) => {
         goToRuleta={goToRuleta}
         goToAsociation={goToAsociation}
       />
-      {/* <CalendarCardSection goToCalendar={goToCalendar} goToRegisterEmotionCalendar={goToRegisterEmotionCalendar} /> */}
       <InsigniasAccessSection goToInsignias={goToInsignias} />
+      {/* Lo paso abajo solo por comodidad del desarrollo de las insigniasLo paso abajo solo por comodidad del desarrollo de las insignias */}
+      <CalendarCardSection goToCalendar={goToCalendar} goToRegisterEmotionCalendar={goToRegisterEmotionCalendar} />
     </ScrollView>
   );
 };

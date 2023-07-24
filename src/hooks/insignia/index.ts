@@ -1,17 +1,17 @@
 import {useMutation, useQuery} from 'react-query';
 import {typeInsignias} from '../../types/insignias';
-import {createInsigniaByUser, updateInsigniaByUser} from '../../services';
+import {
+  createInsigniaByUser,
+  updateInsigniaByUser,
+  getInsigniasByUser,
+} from '../../services';
 import {ResponseType} from '../../contexts';
-import {getInsigniasByUser} from '../../services';
 
 export const useGetInsigniasByUser = (props: ResponseType & {uid: string}) => {
-  return useQuery(
-    'useGetInsigniasByUser',
-    () => getInsigniasByUser({uid: props.uid}),
-    {
-      ...props,
-    },
-  );
+  return useQuery({
+    queryKey: `useGetInsigniasByUser${props.uid}`,
+    queryFn: () => getInsigniasByUser({uid: props.uid}),
+  });
 };
 
 export const useCreateInsigniaByUser = (

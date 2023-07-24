@@ -5,13 +5,18 @@ export const makeCalendarScreenStyles = () =>
     containerView: { flex: 1 },
     container: {
       flex: 1,
+      alignItems: 'center',
+      alignSelf: 'center',
     },
-    item: {
-      flex: 1,
-      borderRadius: 5,
-      padding: 5,
-      marginRight: 5,
-      marginTop: 25,
-      marginEnd: 25
+    buttonContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    button: {
+      mb: 4,
+      rounded: 8,
+      width: 120,
+      fontSize: 20,
+      alignSelf: 'center',
     },
   });
