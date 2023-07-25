@@ -8,6 +8,7 @@ import { HomeRoutes, PerformEmotionType } from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
 import { CameraComponent } from '../../components/Camera';
+import { boolean } from 'yup';
 
 interface Prediction {
   emocion: string;
@@ -27,14 +28,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const predictionsCant = 15;
 
-  const analyzeEmotion = (predictions: Prediction[]) => {
+  const analyzeEmotion = (predictions: Prediction[], percentage: number, consecutiveRecognitionSuccess: number) => {
 
     console.log("Comienza el analisis");
     console.log(JSON.stringify(predictions));
 
     const emotionSelected = emotion.name;
-    const percentage = 70;
-    const requiredConsecutiveEmotions = 6;
     let numberOfHits = 0;
     let consecutiveEmotions = 0;
 
@@ -56,7 +55,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
       if (prediction.emocion) {
         if (prediction.emocion.toLowerCase() === emotionSelected.toLowerCase()) {
           consecutiveEmotions++;
-          if (consecutiveEmotions >= requiredConsecutiveEmotions) {
+          if (consecutiveEmotions >= consecutiveRecognitionSuccess) {
             break;
           }
         } else {
@@ -67,12 +66,15 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
       }
     }
 
-    if (percentageEmotions >= percentage || consecutiveEmotions >= requiredConsecutiveEmotions) {
-      navigation.navigate(HomeRoutes.FEEDBACK_POS, { emotion })
-    } else {
-      navigation.navigate(HomeRoutes.FEEDBACK_NEG, { emotion })
-    }
+    return percentageEmotions >= percentage || consecutiveEmotions >= consecutiveRecognitionSuccess;
   };
+
+  const navidateToFeedback = (detection: boolean) => {
+    return detection ?
+      navigation.navigate(HomeRoutes.FEEDBACK_POS, { emotion })
+      :
+      navigation.navigate(HomeRoutes.FEEDBACK_NEG, { emotion })
+  }
 
   const detectEmotionsApi = (imageData: string) => {
     const url = 'http://192.168.0.99:3001/detect-emotion';
@@ -132,12 +134,31 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     }
   }, [imageBase64]);
 
+
   useEffect(() => {
-    if (predictions && predictions.length === predictionsCant) {
-      analyzeEmotion(predictions);
-    } else {
+    // Se realizan dos mediciones intermedia para acelerar el resultado positivo
+    let updateRefresh = true;
+    if (predictions) {
+      if (predictions.length === 5 || predictions.length === 10) {
+        let percentage = 70;
+        let detectionsConsecutive = 5;
+        const analyzeResult = analyzeEmotion(predictions, percentage, detectionsConsecutive);
+        if (analyzeResult) {
+          navidateToFeedback(analyzeResult);
+          updateRefresh = false;
+        }
+      }
+      if (predictions.length === predictionsCant) {
+        const lastAnalyze = analyzeEmotion(predictions, 65, 6);
+        navidateToFeedback(lastAnalyze);
+        updateRefresh = false;
+      }
+    }
+
+    if (updateRefresh) {
       setRefresh(!refresh);
     }
+
   }, [predictions]);
 
   useEffect(() => {
