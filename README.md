@@ -4,6 +4,10 @@ Made in react native
 # Para ser levantado
 1-npx react-native start
 2-npx react-native run-android
+# Ejecutar emulador
+1-cd C:\Users\{username}\AppData\Local\Android\Sdk\emulator
+2-.\emulator -list-avds
+3-.\emulator -avd {resultado de list-avds}
 
 # Estándares de codificación para Javascript
 Estandares de codificación para el lenguaje javascript
