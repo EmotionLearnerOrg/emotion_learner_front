@@ -11,6 +11,10 @@ import {
 import {insigniasColor, insigniasEnum} from '../../types/insignias';
 import {useUserData} from '../../contexts';
 
+const capitalizeFirstLetter = ({str}: {str: string}) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 const InsigniaPorCategoria = ({cat, item}: {cat: string; item: any}) => {
   if (cat === 'mirror') {
     return (
@@ -92,7 +96,7 @@ const InsigniaItem = ({
 
   return (
     <View style={style}>
-      <Text mb={8}>{title}</Text>
+      <Text mb={8}>{capitalizeFirstLetter({str: title[1]})}</Text>
       {InsigniaPorCategoria({cat: cat, item: item})}
     </View>
   );
@@ -117,7 +121,7 @@ const InsigniasScreen: FC<{}> = () => {
         Object.keys(groupedInsignias).map(key => (
           <View key={key} style={styles.sectionContainer}>
             <Text textAlign="center" style={styles.titleSection} fontSize={24}>
-              {key}
+              {capitalizeFirstLetter({str: key})}
             </Text>
             {groupedInsignias[key].map(elemento => (
               <View key={elemento[0]} style={styles.item}>
