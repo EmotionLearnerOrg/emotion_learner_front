@@ -3,7 +3,7 @@ import {Image, View, TouchableOpacity} from 'react-native';
 import {makeAsociationScreenStyles} from './AsociationScreen.style';
 import {Button, Text} from 'react-native-magnus';
 import {HomeRoutes, AsociationType} from '../../stacks/HomeParams';
-import {emocionType, emociones} from '../../components/Ruleta/emociones';
+import {emocionType, emociones} from '../../components/RuletaContainer/emociones';
 
 const AsociationScreen: FC<AsociationType> = ({navigation}) => {
   const emotions = Object.values(emociones);
