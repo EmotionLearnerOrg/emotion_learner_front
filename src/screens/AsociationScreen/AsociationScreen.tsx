@@ -7,9 +7,9 @@ import {emocionType, emociones} from '../../components/RuletaContainer/emociones
 
 const AsociationScreen: FC<AsociationType> = ({navigation}) => {
   const emotions = Object.values(emociones);
-  var RandomNumber1 = Math.floor(Math.random() * 5) ;
-  var RandomNumber2 = Math.floor(Math.random() * 5) ;
-  var RandomNumber3 = Math.floor(Math.random() * 5) ;
+  var RandomNumber1 = generateRandom(0, 4, 6, 6);
+  var RandomNumber2 = generateRandom(0, 4, RandomNumber1, 6);
+  var RandomNumber3 = generateRandom(0, 4, RandomNumber1, RandomNumber2);
   const style = makeAsociationScreenStyles();
 
   const opcion1 = getOptionImage(RandomNumber1);
@@ -18,6 +18,11 @@ const AsociationScreen: FC<AsociationType> = ({navigation}) => {
 
   function reload() {
     navigation.navigate(HomeRoutes.ASOCIATION)
+  }
+
+  function generateRandom(min, max, ex1, ex2):number {
+    var num = Math.floor(Math.random() * (max - min + 1)) + min;
+    return (num === ex1 || num === ex2) ? generateRandom(min, max, ex1, ex2) : num;
   }
 
   function getOptionImage(id) {
