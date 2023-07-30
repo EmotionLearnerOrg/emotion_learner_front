@@ -32,8 +32,9 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
 
   const handleLogout = async () => {
     try {
-      await logout();
-      clearUserData();
+      goToHome(); // Redirigir al usuario a la pantalla de inicio de sesión
+      await clearUserData();
+      await logout(); // Desloguear al usuario después de la redirección
       const parent = getParent();
       if (parent) {
         parent.dispatch(
@@ -43,15 +44,15 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
           }),
         );
       }
-      goToHome();
     } catch (error) {
       Alert.alert('Error', 'Usuario o contraseña incorrectos', [{ text: 'OK' }]);
     }
   };
 
   const goToHome = () => {
-    navigation.navigate(HomeRoutes.LOG_IN);
+    navigation.replace(HomeRoutes.LOG_IN);
   };
+
 
   return (
     <ScrollView style={style.containerView}>
@@ -102,9 +103,9 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
         <Button
           block
           m={10}
-          onPress={() => {
+          onPress={async () => {
             setVisible(false);
-            handleLogout();
+            await handleLogout();
           }}>
           Si
         </Button>
