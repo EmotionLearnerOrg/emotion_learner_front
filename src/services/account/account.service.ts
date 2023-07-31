@@ -12,6 +12,9 @@ import {
   clearPreferenceData,
   savePreferenceData,
 } from '../preference/preference.service';
+import { insigniasDefault } from '../../types/insignias';
+import { createInsigniaByUser } from '../insignia/insignia.service';
+
 
 export const loginWithEmailAndPassword = async ({
   email,
@@ -57,8 +60,10 @@ export const signUpWithEmailAndPassword = async ({
 }) => {
   const response = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(auth.currentUser!!, { displayName: nickName });
+  await createInsigniaByUser({ uid: response.user.uid, nuevasInsignias: insigniasDefault });
   await setDisplayName(nickName, response.user.uid!!);
   await savePreferenceData(nickName, response.user.uid);
+
   return response.user.uid;
 };
 
