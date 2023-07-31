@@ -23,8 +23,8 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const cleanData = () => {
     reset();
   };
-  const handleLogin = () => {
-    initData();
+  const handleLogin = async () => {
+    await initData();
     cleanData();
     goToHome();
   };
@@ -53,10 +53,10 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   });
 
   const goToRegister = () => {
-    navigation.navigate(LoginRoutes.REGISTER);
+    navigation.replace(LoginRoutes.REGISTER);
   };
   const goToHome = () => {
-    navigation.navigate(LoginRoutes.HOME_APP);
+    navigation.replace(LoginRoutes.HOME_APP);
   };
 
   const controlMsgErrors = (errMsg: string) => {

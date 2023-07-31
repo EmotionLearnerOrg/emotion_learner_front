@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Alert, FlatList, View } from 'react-native';
 import { Button, Text } from 'react-native-magnus';
-import { emocionType, emociones } from '../../components/RuletaContainer/emociones';
+import { emociones, emocionType } from '../../components';
 import { HomeRoutes, RegisterEmotionCalendarType } from '../../stacks/HomeParams';
 import { makeMirrorScreenStyles } from '../MirrorScreen/MirrorScreen.style';
 import { HorarioEnum, HorarioType, horarios } from '../../types/horarios';
