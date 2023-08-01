@@ -26,15 +26,7 @@ export const InsigniaPorCategoria = ({
   width?: number;
   height?: number;
 }) => {
-  console.log('category', category);
-  console.log('item', item);
-
   if (category === 'mirror') {
-    console.log(
-      'color :',
-      item[1] ? insigniasColor[item[0] as unknown as insigniasEnum] : 'black',
-    );
-
     return (
       <InsigniaMirror
         width={width ?? 85}

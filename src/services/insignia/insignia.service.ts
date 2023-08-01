@@ -1,8 +1,12 @@
-import { db } from '../../configs/config.firebase';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { insigniasDefault, typeInsignias } from '../../types/insignias';
+import {db} from '../../configs/config.firebase';
+import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
+import {insigniasDefault, typeInsignias} from '../../types/insignias';
 
-export const getInsigniasByUser = async ({ uid }: { uid: string }): Promise<typeInsignias> => {
+export const getInsigniasByUser = async ({
+  uid,
+}: {
+  uid: string;
+}): Promise<typeInsignias> => {
   const docRef = doc(db, 'insignias', uid);
 
   return getDoc(docRef)
@@ -12,7 +16,7 @@ export const getInsigniasByUser = async ({ uid }: { uid: string }): Promise<type
         insignias = docSnap.data().insignias;
       }
 
-      return insignias ?? insigniasDefault;
+      return insignias.length === 0 ? insigniasDefault : insignias;
     })
     .catch(error => {
       throw error.parsedError;
