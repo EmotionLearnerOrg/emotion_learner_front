@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const makeCalendarScreenStyles = () =>
   StyleSheet.create({
-    containerView: { flex: 1 },
+    containerView: {flex: 1},
     container: {
       flex: 1,
     },
@@ -12,6 +12,6 @@ export const makeCalendarScreenStyles = () =>
       padding: 5,
       marginRight: 5,
       marginTop: 25,
-      marginEnd: 25
+      marginEnd: 25,
     },
   });

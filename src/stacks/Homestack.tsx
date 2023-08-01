@@ -1,6 +1,6 @@
 import React from 'react';
-import { HomeRoutes, HomeStackNavigator } from './HomeParams';
-import { UserDataProvider } from '../contexts';
+import {HomeRoutes, HomeStackNavigator} from './HomeParams';
+import {UserDataProvider} from '../contexts';
 import {
   RuletaScreen,
   MirrorScreen,
@@ -14,20 +14,20 @@ import {
   HomeScreen,
   ProfileScreen,
   FeedbackPosScreen,
-  FeedbackNegScreen
+  FeedbackNegScreen,
 } from '../screens';
-import { HeaderCommon } from '../components';
+import {HeaderCommon} from '../components';
 
 const HomeStack = () => {
   return (
     <UserDataProvider>
       <HomeStackNavigator.Navigator
         initialRouteName={HomeRoutes.HOME_S}
-        screenOptions={{ headerShown: true, header: () => <HeaderCommon /> }}>
+        screenOptions={{headerShown: true, header: () => <HeaderCommon />}}>
         <HomeStackNavigator.Screen
           name={HomeRoutes.HOME_S}
           component={HomeScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <HomeStackNavigator.Screen
           name={HomeRoutes.RULETA}
@@ -68,7 +68,7 @@ const HomeStack = () => {
         <HomeStackNavigator.Screen
           name={HomeRoutes.PROFILE}
           component={ProfileScreen}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <HomeStackNavigator.Screen
           name={HomeRoutes.FEEDBACK_POS}

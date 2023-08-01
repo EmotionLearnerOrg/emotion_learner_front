@@ -25,8 +25,8 @@ export const useCreateInsigniaByUser = (
         nuevasInsignias: data.nuevasInsignias,
       }),
     {
-      onSuccess: () => props.onSuccess && props.onSuccess(),
-      onError: () => props.onError && props.onError(),
+      onSuccess: () => props.onSuccess?.(),
+      onError: () => props.onError?.(),
     },
   );
 };
@@ -42,8 +42,8 @@ export const useUpdateInsigniaByUser = (
         nuevasInsignias: data.nuevasInsignias,
       }),
     {
-      onSuccess: () => props.onSuccess && props.onSuccess(),
-      onError: () => props.onError && props.onError(),
+      onSuccess: () => props.onSuccess?.(),
+      onError: () => props.onError?.(),
     },
   );
 };

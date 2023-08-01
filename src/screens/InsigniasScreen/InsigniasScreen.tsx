@@ -15,12 +15,30 @@ const capitalizeFirstLetter = ({str}: {str: string}) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const InsigniaPorCategoria = ({cat, item}: {cat: string; item: any}) => {
-  if (cat === 'mirror') {
+export const InsigniaPorCategoria = ({
+  category,
+  item,
+  width,
+  height,
+}: {
+  category: string;
+  item: [string, boolean];
+  width?: number;
+  height?: number;
+}) => {
+  console.log('category', category);
+  console.log('item', item);
+
+  if (category === 'mirror') {
+    console.log(
+      'color :',
+      item[1] ? insigniasColor[item[0] as unknown as insigniasEnum] : 'black',
+    );
+
     return (
       <InsigniaMirror
-        width={85}
-        height={85}
+        width={width ?? 85}
+        height={height ?? 85}
         color={
           item[1]
             ? insigniasColor[item[0] as unknown as insigniasEnum]
@@ -28,11 +46,11 @@ const InsigniaPorCategoria = ({cat, item}: {cat: string; item: any}) => {
         }
       />
     );
-  } else if (cat === 'ruleta') {
+  } else if (category === 'ruleta') {
     return (
       <InsigniaRuleta
-        width={85}
-        height={85}
+        width={width ?? 85}
+        height={height ?? 85}
         color={
           item[1]
             ? insigniasColor[item[0] as unknown as insigniasEnum]
@@ -40,11 +58,11 @@ const InsigniaPorCategoria = ({cat, item}: {cat: string; item: any}) => {
         }
       />
     );
-  } else if (cat === 'arcade') {
+  } else if (category === 'arcade') {
     return (
       <InsigniaArcade
-        width={85}
-        height={85}
+        width={width ?? 85}
+        height={height ?? 85}
         color={
           item[1]
             ? insigniasColor[item[0] as unknown as insigniasEnum]
@@ -55,8 +73,8 @@ const InsigniaPorCategoria = ({cat, item}: {cat: string; item: any}) => {
   } else {
     return (
       <InsigniaAso
-        width={85}
-        height={85}
+        width={width ?? 85}
+        height={height ?? 85}
         color={
           item[1]
             ? insigniasColor[item[0] as unknown as insigniasEnum]
@@ -67,10 +85,12 @@ const InsigniaPorCategoria = ({cat, item}: {cat: string; item: any}) => {
   }
 };
 
-function groupStringsByPrefix(insignias: [string, unknown][]): {
-  [key: string]: [string, unknown][];
-} {
-  const groupedStrings: {[key: string]: [string, unknown][]} = {};
+const groupStringsByPrefix = (
+  insignias: [string, boolean][],
+): {
+  [key: string]: [string, boolean][];
+} => {
+  const groupedStrings: {[key: string]: [string, boolean][]} = {};
 
   insignias.forEach(insignia => {
     const prefix = insignia[0].split('_')[0]; // Obtenemos la cadena inicial hasta el primer '_'
@@ -81,23 +101,23 @@ function groupStringsByPrefix(insignias: [string, unknown][]): {
   });
 
   return groupedStrings;
-}
+};
 
 const InsigniaItem = ({
   style,
   item,
-  cat,
+  category,
 }: {
   style: any;
-  item: any;
-  cat: string;
+  item: [string, boolean];
+  category: string;
 }) => {
   const title = item[0].split('_').length > 1 ? item[0].split('_') : item[0];
 
   return (
     <View style={style}>
       <Text mb={8}>{capitalizeFirstLetter({str: title[1]})}</Text>
-      {InsigniaPorCategoria({cat: cat, item: item})}
+      {InsigniaPorCategoria({category: category, item: item})}
     </View>
   );
 };
@@ -106,7 +126,7 @@ const InsigniasScreen: FC<{}> = () => {
   const styles = makeInsigniasScreenStyles();
   const {insignias} = useUserData();
   const [groupedInsignias, setGroupedInsignias] = useState<{
-    [key: string]: [string, unknown][];
+    [key: string]: [string, boolean][];
   }>();
   useEffect(() => {
     setGroupedInsignias(groupStringsByPrefix(insignias!));
@@ -128,7 +148,7 @@ const InsigniasScreen: FC<{}> = () => {
                 <InsigniaItem
                   item={elemento}
                   style={styles.insignia}
-                  cat={key}
+                  category={key}
                 />
               </View>
             ))}

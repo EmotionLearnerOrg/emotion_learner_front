@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
-import {View, Alert} from 'react-native';
-import {signUpWithEmailAndPassword} from '../../services';
+import {View} from 'react-native';
 import {makeRegisterScreenStyle} from './RegisterScreen.style';
 import {LoginRoutes, RegisterType} from '../../stacks/LoginParams';
 import {Button, Text} from 'react-native-magnus';
@@ -10,6 +9,7 @@ import * as yup from 'yup';
 import {SchemaOf} from 'yup';
 import {validations} from '../../utils/formValidations/validations';
 import {FormInput} from '../../components';
+import {useSignUpWithEmailAndPassword} from '../../hooks/account';
 
 export type RegisterForm = {
   email: string;
@@ -18,20 +18,16 @@ export type RegisterForm = {
 };
 
 const RegisterScreen: FC<RegisterType> = ({navigation}) => {
-  const style = makeRegisterScreenStyle();
-  const handleRegister = async () => {
-    try {
-      await signUpWithEmailAndPassword({
-        email: getValues('email'),
-        password: getValues('password'),
-        nickName: getValues('nickName'),
-      });
-      reset();
-      goToLogin();
-    } catch (error) {
-      Alert.alert('Error', 'Registro Incorrecto', [{text: 'OK'}]);
-    }
+  const handleRegister = () => {
+    reset();
+    goToLogin();
   };
+
+  const {
+    mutateAsync: mutateSignUpWithEmailAndPassword,
+    isLoading: isLoadingLoginWithEmailAndPassword,
+  } = useSignUpWithEmailAndPassword({onSuccess: handleRegister});
+  const style = makeRegisterScreenStyle();
 
   const goToLogin = () => {
     navigation.navigate(LoginRoutes.HOME_LOGIN);
@@ -96,13 +92,20 @@ const RegisterScreen: FC<RegisterType> = ({navigation}) => {
         label="Password"
       />
       <Button
+        loading={isLoadingLoginWithEmailAndPassword}
         disabled={!isValid}
         style={style.button}
         alignSelf="center"
         bg="#FCCDCE"
         mx={10}
         rounded={16}
-        onPress={handleRegister}>
+        onPress={() =>
+          mutateSignUpWithEmailAndPassword({
+            email: getValues('email'),
+            nickName: getValues('nickName'),
+            password: getValues('password'),
+          })
+        }>
         <Text style={style.buttonText}>Registrarse</Text>
       </Button>
     </View>
