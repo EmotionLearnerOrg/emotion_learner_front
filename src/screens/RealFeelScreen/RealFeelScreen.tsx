@@ -21,7 +21,10 @@ const RealFeelScreen: FC<RealFeelType> = ({route, navigation}) => {
       <View style={style.buttonContainer}>
         <Button
           onPress={() =>
-            navigation.navigate(HomeRoutes.PERFORM_EMOTION, {emotion: emotion})
+            navigation.navigate(HomeRoutes.PERFORM_EMOTION, {
+              emotion: emotion,
+              type: 'mirror',
+            })
           }>
           Ir a realizar emocion
         </Button>

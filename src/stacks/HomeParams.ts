@@ -1,7 +1,7 @@
-import { RouteProp } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { emocionType } from '../components';
+import {RouteProp} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {emocionType} from '../components';
 
 export enum HomeRoutes {
   HOME_S = 'Home',
@@ -27,14 +27,23 @@ export type HomeStackParamList = {
   [HomeRoutes.ASOCIATION]: undefined;
   [HomeRoutes.INSIGNIAS]: undefined;
   [HomeRoutes.CALENDAR]: undefined;
-  [HomeRoutes.PERFORM_EMOTION]: { emotion: emocionType };
-  [HomeRoutes.GUIDE_FEEL]: { emotion: emocionType };
-  [HomeRoutes.REAL_FEEL]: { emotion: emocionType };
+  [HomeRoutes.PERFORM_EMOTION]: {
+    emotion: emocionType;
+    type: 'mirror' | 'ruleta';
+  };
+  [HomeRoutes.GUIDE_FEEL]: {emotion: emocionType};
+  [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
   [HomeRoutes.LOG_IN]: undefined;
   [HomeRoutes.REGISTEREMOTIONCALENDAR]: undefined;
   [HomeRoutes.PROFILE]: undefined;
-  [HomeRoutes.FEEDBACK_POS]: { emotion: emocionType };
-  [HomeRoutes.FEEDBACK_NEG]: { emotion: emocionType };
+  [HomeRoutes.FEEDBACK_POS]: {
+    emotion: emocionType;
+    type: 'mirror' | 'ruleta' | 'arcade' | 'asociacion';
+  };
+  [HomeRoutes.FEEDBACK_NEG]: {
+    emotion: emocionType;
+    type: 'mirror' | 'ruleta' | 'arcade' | 'asociacion';
+  };
 };
 
 export type HomeStackNavigationsProp = StackNavigationProp<HomeStackParamList>;
@@ -63,7 +72,10 @@ export type GuideFeelType = {
   route: GuideFeelScreenRouteType;
 };
 
-type RegisterEmotionCalendarRouteType = RouteProp<HomeStackParamList, HomeRoutes.REGISTEREMOTIONCALENDAR>;
+type RegisterEmotionCalendarRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.REGISTEREMOTIONCALENDAR
+>;
 
 export type RegisterEmotionCalendarType = {
   navigation: HomeStackNavigationsProp;
@@ -104,10 +116,7 @@ export type PerformEmotionType = {
   route: PerformEmotionScreenRouteType;
 };
 
-type ProfileScreenRouteType = RouteProp<
-  HomeStackParamList,
-  HomeRoutes.PROFILE
->;
+type ProfileScreenRouteType = RouteProp<HomeStackParamList, HomeRoutes.PROFILE>;
 
 export type ProfileType = {
   navigation: HomeStackNavigationsProp;
@@ -134,4 +143,5 @@ export type FeedbackNegType = {
   route: FeedbackNegScreenRouteType;
 };
 
-export const HomeStackNavigator = createNativeStackNavigator<HomeStackParamList>();
+export const HomeStackNavigator =
+  createNativeStackNavigator<HomeStackParamList>();

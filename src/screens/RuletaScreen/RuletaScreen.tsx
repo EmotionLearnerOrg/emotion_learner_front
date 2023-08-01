@@ -11,6 +11,7 @@ const RuletaScreen: FC<RuletaType> = ({navigation}) => {
   const goToPerformEmotion = (emotion: emocionType) => {
     navigation.navigate(HomeRoutes.PERFORM_EMOTION, {
       emotion: emotion,
+      type: 'ruleta',
     });
   };
 

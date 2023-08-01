@@ -1,24 +1,25 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-magnus';
-import { makePerformEmotionScreenStyles } from './PerformEmotionScreen.style';
-import { Camera } from 'react-native-vision-camera';
-import { useAuthorizedCamera } from '../../components/Camera/useAuthorizedCamera';
-import { HomeRoutes, PerformEmotionType } from '../../stacks/HomeParams';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {View} from 'react-native';
+import {Button, Text} from 'react-native-magnus';
+import {makePerformEmotionScreenStyles} from './PerformEmotionScreen.style';
+import {Camera} from 'react-native-vision-camera';
+import {useAuthorizedCamera} from '../../components/Camera/useAuthorizedCamera';
+import {HomeRoutes, PerformEmotionType} from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
-import { CameraComponent } from '../../components/Camera';
-import { boolean } from 'yup';
+import {CameraComponent} from '../../components/Camera';
+import {useUserData} from '../../contexts';
+import {insigniasEnum} from '../../types/insignias';
 
 interface Prediction {
   emocion: string;
 }
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => {
-  const { emotion } = route.params;
+const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
+  const {emotion: emotionParam, type} = route.params;
   const style = makePerformEmotionScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
+  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
   const [imageBase64, setImageBase64] = useState('');
   const [refresh, setRefresh] = useState(true);
   const [response, setResponse] = useState('');
@@ -27,54 +28,83 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const predictionsCant = 15;
+  const {updateInsignias} = useUserData();
 
-  const analyzeEmotion = (predictions: Prediction[], percentage: number, consecutiveRecognitionSuccess: number) => {
+  const analyzeEmotion = useCallback(
+    (
+      predictionsData: Prediction[],
+      percentage: number,
+      consecutiveRecognitionSuccess: number,
+    ) => {
+      console.log('Comienza el analisis');
+      console.log(JSON.stringify(predictionsData));
 
-    console.log("Comienza el analisis");
-    console.log(JSON.stringify(predictions));
+      const emotionSelected = emotionParam.name;
+      let numberOfHits = 0;
+      let consecutiveEmotions = 0;
 
-    const emotionSelected = emotion.name;
-    let numberOfHits = 0;
-    let consecutiveEmotions = 0;
-
-    // Primer criterio: Obtener el x% de predicciones correctas
-    for (const prediction of predictions) {
-      if (prediction.emocion && emotionSelected) {
-        if (prediction.emocion.toLocaleLowerCase() === emotionSelected.toLowerCase()) {
-          numberOfHits++;
-        }
-      } else {
-        console.log('ERROR ', prediction.emocion, ' ', emotionSelected);
-      }
-    }
-
-    const percentageEmotions = (numberOfHits / predictions.length) * 100;
-
-    // Segundo criterio: Obtener x cantidad de detecciones consecutivas correctas
-    for (const prediction of predictions) {
-      if (prediction.emocion) {
-        if (prediction.emocion.toLowerCase() === emotionSelected.toLowerCase()) {
-          consecutiveEmotions++;
-          if (consecutiveEmotions >= consecutiveRecognitionSuccess) {
-            break;
+      // Primer criterio: Obtener el x% de predicciones correctas
+      for (const prediction of predictionsData) {
+        if (prediction.emocion && emotionSelected) {
+          if (
+            prediction.emocion.toLocaleLowerCase() ===
+            emotionSelected.toLowerCase()
+          ) {
+            numberOfHits++;
           }
         } else {
-          consecutiveEmotions = 0;
+          console.log('ERROR ', prediction.emocion, ' ', emotionSelected);
         }
-      } else {
-        console.log('ERROR: Prediccion no detectada', prediction.emocion);
       }
-    }
 
-    return percentageEmotions >= percentage || consecutiveEmotions >= consecutiveRecognitionSuccess;
-  };
+      const percentageEmotions = (numberOfHits / predictionsData.length) * 100;
 
-  const navidateToFeedback = (detection: boolean) => {
-    return detection ?
-      navigation.navigate(HomeRoutes.FEEDBACK_POS, { emotion })
-      :
-      navigation.navigate(HomeRoutes.FEEDBACK_NEG, { emotion })
-  }
+      // Segundo criterio: Obtener x cantidad de detecciones consecutivas correctas
+      for (const prediction of predictionsData) {
+        if (prediction.emocion) {
+          if (
+            prediction.emocion.toLowerCase() === emotionSelected.toLowerCase()
+          ) {
+            consecutiveEmotions++;
+            if (consecutiveEmotions >= consecutiveRecognitionSuccess) {
+              break;
+            }
+          } else {
+            consecutiveEmotions = 0;
+          }
+        } else {
+          console.log('ERROR: Prediccion no detectada', prediction.emocion);
+        }
+      }
+
+      return (
+        percentageEmotions >= percentage ||
+        consecutiveEmotions >= consecutiveRecognitionSuccess
+      );
+    },
+    [emotionParam.name],
+  );
+
+  const navigateToFeedback = useCallback(
+    (detection: boolean) => {
+      if (detection) {
+        updateInsignias({
+          idInsignia:
+            `${type}_${emotionParam.name}` as unknown as insigniasEnum,
+        });
+        navigation.navigate(HomeRoutes.FEEDBACK_POS, {
+          emotion: emotionParam,
+          type,
+        });
+      } else {
+        navigation.navigate(HomeRoutes.FEEDBACK_NEG, {
+          emotion: emotionParam,
+          type,
+        });
+      }
+    },
+    [emotionParam, navigation, type, updateInsignias],
+  );
 
   const detectEmotionsApi = (imageData: string) => {
     const url = 'http://192.168.0.99:3001/detect-emotion';
@@ -120,12 +150,11 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   useEffect(() => {
     if (imageBase64 && imageBase64 !== '') {
       detectEmotionsApi(imageBase64).then(predict => {
-
         // TODO: Revisar cuando emotion es undefined para que tome otra imagen, esto sucede porque la api no reconoce una cara (creo)
-        const { emotion } = JSON.parse(JSON.stringify(predict));
+        const {emotion} = JSON.parse(JSON.stringify(predict));
         setPredictions(prevPredictions => [
           ...prevPredictions,
-          { emocion: emotion },
+          {emocion: emotion},
         ]);
 
         console.log(emotion);
@@ -134,7 +163,6 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     }
   }, [imageBase64]);
 
-
   useEffect(() => {
     // Se realizan dos mediciones intermedia para acelerar el resultado positivo
     let updateRefresh = true;
@@ -142,15 +170,19 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
       if (predictions.length === 5 || predictions.length === 10) {
         let percentage = 70;
         let detectionsConsecutive = 5;
-        const analyzeResult = analyzeEmotion(predictions, percentage, detectionsConsecutive);
+        const analyzeResult = analyzeEmotion(
+          predictions,
+          percentage,
+          detectionsConsecutive,
+        );
         if (analyzeResult) {
-          navidateToFeedback(analyzeResult);
+          navigateToFeedback(analyzeResult);
           updateRefresh = false;
         }
       }
       if (predictions.length === predictionsCant) {
         const lastAnalyze = analyzeEmotion(predictions, 65, 6);
-        navidateToFeedback(lastAnalyze);
+        navigateToFeedback(lastAnalyze);
         updateRefresh = false;
       }
     }
@@ -158,7 +190,6 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     if (updateRefresh) {
       setRefresh(!refresh);
     }
-
   }, [predictions]);
 
   useEffect(() => {
@@ -182,7 +213,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   return (
     <View style={style.containerView}>
       <CameraComponent
-        emotion={emotion}
+        emotion={emotionParam}
         ref={cameraRef}
         cameraPosition={'front'}
         isAuthorized={isAuthorized}
@@ -202,18 +233,20 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
           <Countdown
             duration={3}
             size={40}
-            color='#ff00ff'
+            color="#ff00ff"
             onFinished={() => setFinishedCountDown(true)}
           />
         ) : (
-          <Text fontSize={32} color="#ff00ff">Ya!</Text>
+          <Text fontSize={32} color="#ff00ff">
+            Ya!
+          </Text>
         )}
       </View>
-      {response && (
+      {response ? (
         <Text fontSize={32} color="#ff00ff">
           {JSON.stringify(response)}
         </Text>
-      )}
+      ) : null}
     </View>
   );
 };

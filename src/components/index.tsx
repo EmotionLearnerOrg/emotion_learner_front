@@ -4,5 +4,6 @@ export * from './Camera';
 export * from './InputPassword';
 export * from './InputLabel';
 export * from './FormInput';
+export * from './FeedbackView';
 export * from './RuletaContainer';
 export * from './Home';
