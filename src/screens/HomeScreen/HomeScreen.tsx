@@ -1,10 +1,10 @@
-import React, {FC} from 'react';
-import {ScrollView, Text} from 'react-native';
-import {makeHomeScreenStyles} from './HomeScreen.style';
-import {HomeRoutes, HomeType} from '../../stacks/HomeParams';
-import {Button} from 'react-native-magnus';
-import {insigniasEnum} from '../../types/insignias';
-import {useUserData} from '../../contexts';
+import React, { FC } from 'react';
+import { ScrollView, Text } from 'react-native';
+import { makeHomeScreenStyles } from './HomeScreen.style';
+import { HomeRoutes, HomeType } from '../../stacks/HomeParams';
+import { Button } from 'react-native-magnus';
+import { insigniasEnum } from '../../types/insignias';
+import { useUserData } from '../../contexts';
 import {
   CalendarCardSection,
   HeaderSection,
@@ -12,9 +12,9 @@ import {
   InsigniasAccessSection,
 } from '../../components';
 
-const HomeScreen: FC<HomeType> = ({navigation}) => {
+const HomeScreen: FC<HomeType> = ({ navigation }) => {
   const style = makeHomeScreenStyles();
-  const {updateInsignias, isLoadingPostInsignias} = useUserData();
+  const { updateInsignias, isLoadingPostInsignias } = useUserData();
 
   const goToMirror = () => {
     navigation.navigate(HomeRoutes.MIRROR);
@@ -43,11 +43,14 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
   const goToProfile = () => {
     navigation.navigate(HomeRoutes.PROFILE);
   };
+  const goToArcade = () => {
+    navigation.navigate(HomeRoutes.ARCADE);
+  };
 
   return (
     <ScrollView style={style.containerView}>
       <HeaderSection goToProfile={goToProfile} />
-      <Button
+      {/* <Button
         bg="green"
         rounded={16}
         loading={isLoadingPostInsignias}
@@ -55,11 +58,12 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
           updateInsignias({idInsignia: insigniasEnum.RULETA_TRISTE})
         }>
         <Text>Estoy ruleta triste</Text>
-      </Button>
+      </Button> */}
       <SelectorGameSection
         goToMirror={goToMirror}
         goToRuleta={goToRuleta}
         goToAsociation={goToAsociation}
+        goToArcade={goToArcade}
       />
       <CalendarCardSection
         goToCalendar={goToCalendar}
