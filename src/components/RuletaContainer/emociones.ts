@@ -27,6 +27,7 @@ export type emocionType = {
   pathReal: any;
   pathGuia: any;
   pathMonstruo: any;
+  pathOpciones: any;
 };
 
 export const emociones: {[K in emocionesEnum]: emocionType} = {
@@ -36,6 +37,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: FelizGuia,
     pathReal: FelizReal,
     pathMonstruo: require('./../../../assets/ilustraciones/feliz/monstruo_feliz.png'),
+    pathOpciones: require('./../../../assets/ilustraciones/feliz/opciones/1.png'),
   },
   [emocionesEnum.TRISTE]: {
     color: '#65ADFC',
@@ -43,6 +45,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: TristeGuia,
     pathReal: TristeReal,
     pathMonstruo: require('./../../../assets/ilustraciones/triste/monstruo_triste.png'),
+    pathOpciones: require('./../../../assets/ilustraciones/triste/opciones/1.png'),
   },
   [emocionesEnum.SORPRENDIDO]: {
     color: '#BBBBBB',
@@ -50,6 +53,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: SorpresaGuia,
     pathReal: SorpresaReal,
     pathMonstruo: require('./../../../assets/ilustraciones/sorpresa/monstruo_sorprendido.png'),
+    pathOpciones: require('./../../../assets/ilustraciones/sorpresa/opciones/1.png'),
   },
   [emocionesEnum.ENOJADO]: {
     color: '#FC4D4A',
@@ -57,6 +61,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: EnojadoGuia,
     pathReal: EnojadoReal,
     pathMonstruo: require('./../../../assets/ilustraciones/enojado/monstruo_enojado.png'),
+    pathOpciones: require('./../../../assets/ilustraciones/enojado/opciones/1.png'),
   },
   [emocionesEnum.NEUTRAL]: {
     color: '#88EA5A',
@@ -64,5 +69,6 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: NeutralGuia,
     pathReal: NeutralReal,
     pathMonstruo: require('./../../../assets/ilustraciones/neutral/monstruo_neutral.png'),
+    pathOpciones: require('./../../../assets/ilustraciones/neutral/opciones/1.png'),
   },
 };

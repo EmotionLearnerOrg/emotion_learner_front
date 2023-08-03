@@ -1,76 +1,64 @@
 import React, {FC} from 'react';
 import {Image, View, TouchableOpacity} from 'react-native';
 import {makeAsociationScreenStyles} from './AsociationScreen.style';
-import {Button, Text} from 'react-native-magnus';
+import {Text} from 'react-native-magnus';
 import {HomeRoutes, AsociationType} from '../../stacks/HomeParams';
-import {emocionType, emociones} from '../../components/RuletaContainer/emociones';
+import {emociones} from '../../components/RuletaContainer/emociones';
 
 const AsociationScreen: FC<AsociationType> = ({navigation}) => {
-  const emotions = Object.values(emociones);
-  var RandomNumber1 = generateRandom(0, 4, 6, 6);
-  var RandomNumber2 = generateRandom(0, 4, RandomNumber1, 6);
-  var RandomNumber3 = generateRandom(0, 4, RandomNumber1, RandomNumber2);
   const style = makeAsociationScreenStyles();
+  const emotions = Object.values(emociones);
+  //declaro indices randoms para emociones
+  var randomNum1 = generateRandom(0, 4);
+  var randomNum2 = generateRandom(0, 4, randomNum1);
+  var randomNum3 = generateRandom(0, 4, randomNum1, randomNum2);
+  //declaro indices randoms para orden de opciones
+  var randomNum4 = generateRandom(0, 2);
+  var randomNum5 = generateRandom(0, 2, randomNum4);
+  var randomNum6 = generateRandom(0, 2, randomNum4, randomNum5);
 
-  const opcion1 = getOptionImage(RandomNumber1);
-  const opcion2 = getOptionImage(RandomNumber2);
-  const opcion3 = getOptionImage(RandomNumber3);
+  var imgsOpciones = [
+    emotions[randomNum1].pathOpciones,
+    emotions[randomNum2].pathOpciones,
+    emotions[randomNum3].pathOpciones
+  ];
+
+  function generateRandom(min, max, exeption1 = -10000, exeption2 = -10000):number {
+    var num = Math.floor(Math.random() * (max - min + 1)) + min;
+    return (num === exeption1 || num === exeption2) ? generateRandom(min, max, exeption1, exeption2) : num;
+  }
 
   function reload() {
     navigation.navigate(HomeRoutes.ASOCIATION)
   }
 
-  function generateRandom(min, max, ex1, ex2):number {
-    var num = Math.floor(Math.random() * (max - min + 1)) + min;
-    return (num === ex1 || num === ex2) ? generateRandom(min, max, ex1, ex2) : num;
-  }
-
-  function getOptionImage(id) {
-    if (id==0) {
-      return require('./../../../assets/ilustraciones/feliz/opciones/1.png');
-    }
-    if (id==1) {
-      return require('./../../../assets/ilustraciones/triste/opciones/1.png');
-    }
-    if (id==2) {
-      return require('./../../../assets/ilustraciones/sorpresa/opciones/1.png');
-    }
-    if (id==3) {
-      return require('./../../../assets/ilustraciones/enojado/opciones/1.png');
-    }
-    if (id==4) {
-      return require('./../../../assets/ilustraciones/neutral/opciones/1.png');
-    }
-    return "";
-  }
-
   return (
     <View style={[style.containerView, {flexDirection: 'column', alignItems:'center'}]}>
-      <Image source={emotions[RandomNumber1].pathMonstruo} style={{ width: 120, resizeMode: 'contain', flex: 1}} />
+      <Image source={emotions[randomNum1].pathMonstruo} style={{ width: 120, resizeMode: 'contain', flex: 1}} />
 
       <Text fontSize={18} textAlign="center" style={{flex:1}}>
-        ¿Cual de estos personajes está {emotions[RandomNumber1].name}?
+        ¿Cual de estos personajes está {emotions[randomNum1].name}?
       </Text>
 
       <View style={{flex: 1, flexDirection: 'row', alignItems:'flex-start', justifyContent : 'space-evenly'}}>
-        
+
         <TouchableOpacity style={{flex: 1}} activeOpacity={0.5} onPress={() => reload()}>
             <Image 
-              source={opcion1}
+              source={imgsOpciones[randomNum4]}
               style={style.OptionImageStyle}
             />
         </TouchableOpacity>
 
         <TouchableOpacity style={{flex: 1}} activeOpacity={0.5} onPress={() => reload()}>
             <Image 
-              source={opcion2}
+              source={imgsOpciones[randomNum5]}
               style={style.OptionImageStyle}
             />
         </TouchableOpacity>
 
         <TouchableOpacity style={{flex: 1}} activeOpacity={0.5} onPress={() => reload()}>
             <Image 
-              source={opcion3}
+              source={imgsOpciones[randomNum6]}
               style={style.OptionImageStyle}
             />
         </TouchableOpacity>
