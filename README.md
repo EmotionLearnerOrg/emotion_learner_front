@@ -10,6 +10,10 @@ Made in react native
 2-.\emulator -list-avds
 3-.\emulator -avd {resultado de list-avds}
 
+# Requisitos a instalar y versiones
+Node 18.16.1
+Java jdk 18.0.2.1
+Android Studio 2022.2.1.20
 # Estándares de codificación para Javascript
 Estandares de codificación para el lenguaje javascript
 
