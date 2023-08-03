@@ -2,7 +2,6 @@ import {UserAuthState} from './UserAuth.model';
 
 export enum UserAuthActionKind {
   INIT_DATA = 'INIT_DATA',
-  SET_NICKNAME = 'SET_NICKNAME',
   SET_UID = 'SET_UID',
   SET_LOGGED = 'SET_LOGGED',
   CLEAR_DATA = 'CLEAR_DATA',
@@ -12,10 +11,6 @@ export type UserAuthAction =
   | {
       type: UserAuthActionKind.INIT_DATA;
       state: UserAuthState;
-    }
-  | {
-      type: UserAuthActionKind.SET_NICKNAME;
-      nickName: string;
     }
   | {
       type: UserAuthActionKind.SET_UID;

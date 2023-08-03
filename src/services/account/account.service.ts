@@ -1,6 +1,5 @@
-import { auth } from '../../configs/config.firebase';
-import { db } from '../../configs/config.firebase';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import {auth, db} from '../../configs/config.firebase';
+import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,25 +7,12 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import {
-  getUID,
   clearPreferenceData,
   savePreferenceData,
 } from '../preference/preference.service';
-
+import {insigniasDefault} from '../../types/insignias';
+import {createInsigniaByUser} from '../insignia/insignia.service';
 export const loginWithEmailAndPassword = async ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
-  const response = await signInWithEmailAndPassword(auth, email, password);
-  const nickName = await getDisplayName(response.user.uid);
-  await savePreferenceData(nickName, response.user.uid);
-  return response.user.uid;
-};
-
-export const loginWithEmailAndPassword2 = async ({
   email,
   password,
 }: {
@@ -36,8 +22,8 @@ export const loginWithEmailAndPassword2 = async ({
   try {
     await signInWithEmailAndPassword(auth, email, password)
       .then(async response => {
-        const nickName = await getDisplayName(response.user.uid);
-        savePreferenceData(nickName, response.user.uid);
+        const nickName = await getDisplayName({uid: response.user.uid});
+        await savePreferenceData(nickName, response.user.uid);
         return response.user.uid;
       })
       .catch();
@@ -55,14 +41,26 @@ export const signUpWithEmailAndPassword = async ({
   password: string;
   nickName: string;
 }) => {
-  const response = await createUserWithEmailAndPassword(auth, email, password);
-  await updateProfile(auth.currentUser!!, { displayName: nickName });
-  await setDisplayName(nickName, response.user.uid!!);
-  await savePreferenceData(nickName, response.user.uid);
-  return response.user.uid;
+  try {
+    const response = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    await updateProfile(auth.currentUser!!, {displayName: nickName});
+    await createInsigniaByUser({
+      uid: response.user.uid,
+      nuevasInsignias: insigniasDefault,
+    });
+    await setDisplayName(nickName, response.user.uid!!);
+    await savePreferenceData(nickName, response.user.uid);
+    return response.user.uid;
+  } catch (error) {
+    throw new Error('Error creating document: ' + error);
+  }
 };
 
-export const getDisplayName = async (uid: string) => {
+export const getDisplayName = async ({uid}: {uid: string}): Promise<any> => {
   const docRef = doc(db, 'users', uid!);
   return getDoc(docRef)
     .then(docSnap => {
@@ -75,12 +73,12 @@ export const getDisplayName = async (uid: string) => {
     .catch(error => {
       throw error.parsedError;
     });
-}
+};
 
 export const setDisplayName = async (nickName: string, uid: string) => {
   try {
     await setDoc(doc(db, 'users', uid!), {
-      nickName: nickName
+      nickName: nickName,
     })
       .then()
       .catch();
@@ -88,21 +86,25 @@ export const setDisplayName = async (nickName: string, uid: string) => {
     throw new Error('Error creating document: ' + error);
   }
   return nickName;
-}
+};
 
-export const updateDisplayName = async (nickName: string) => {
+export const updateDisplayName = async ({
+  nickName,
+  uid,
+}: {
+  nickName: string;
+  uid: string;
+}) => {
   try {
-    const uid = await getUID();
     await updateDoc(doc(db, 'users', uid!!), {
-      nickName: nickName
+      nickName: nickName,
     })
       .then()
       .catch();
   } catch (error) {
     throw new Error('Error creating document: ' + error);
   }
-  return nickName;
-}
+};
 
 export const logout = async () => {
   await clearPreferenceData();

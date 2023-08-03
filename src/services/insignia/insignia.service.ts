@@ -2,8 +2,12 @@ import {db} from '../../configs/config.firebase';
 import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
 import {insigniasDefault, typeInsignias} from '../../types/insignias';
 
-export const getInsigniasByUser = async ({uid}: {uid: string}) => {
-  const docRef = doc(db, 'users', uid);
+export const getInsigniasByUser = async ({
+  uid,
+}: {
+  uid: string;
+}): Promise<typeInsignias> => {
+  const docRef = doc(db, 'insignias', uid);
 
   return getDoc(docRef)
     .then(docSnap => {
@@ -12,7 +16,7 @@ export const getInsigniasByUser = async ({uid}: {uid: string}) => {
         insignias = docSnap.data().insignias;
       }
 
-      return insignias ?? insigniasDefault;
+      return insignias.length === 0 ? insigniasDefault : insignias;
     })
     .catch(error => {
       throw error.parsedError;
@@ -27,7 +31,7 @@ export const createInsigniaByUser = async ({
   nuevasInsignias: typeInsignias;
 }) => {
   try {
-    await setDoc(doc(db, 'users', uid), {
+    await setDoc(doc(db, 'insignias', uid), {
       insignias: nuevasInsignias,
     })
       .then()
@@ -45,7 +49,7 @@ export const updateInsigniaByUser = async ({
   nuevasInsignias: typeInsignias;
 }) => {
   try {
-    await updateDoc(doc(db, 'users', uid), {
+    await updateDoc(doc(db, 'insignias', uid), {
       insignias: nuevasInsignias,
     })
       .then()

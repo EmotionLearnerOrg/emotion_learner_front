@@ -1,24 +1,31 @@
-import React, { createContext, useCallback, useContext, useReducer } from 'react';
-import { setNickName, updateDisplayName, getNickName, getUID, getIsLoggedIn } from '../../services';
-import { IUserAuthContext } from './UserAuth.model';
-import { DEFAULT_STATE_AUTH, UserAuthReducer } from './UserAuth.reducer';
-import { UserAuthActionKind } from './UserAuth.actions';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useReducer,
+} from 'react';
+import {getUID, getIsLoggedIn} from '../../services';
+import {IUserAuthContext} from './UserAuth.model';
+import {DEFAULT_STATE_AUTH, UserAuthReducer} from './UserAuth.reducer';
+import {UserAuthActionKind} from './UserAuth.actions';
 
 export type ResponseType<T = Record<string, unknown>> = {
-  onSuccess?: (data?: T) => void;
+  onSuccess?: (data?: T) => Promise<void>;
   onError?: (err?: any) => void;
 };
 
 const UserAuthContext = createContext<IUserAuthContext>({
-  nickName: '',
   uid: '',
   loggedIn: null,
-  initData: () => { },
-  clearData: () => { },
-  updateNickname: () => { },
+  initData: () =>
+    new Promise<void>(resolve => {
+      resolve();
+    }),
+  clearData: () => {},
 });
 
-export const UserAuthProvider: React.FC<any> = ({ children }) => {
+export const UserAuthProvider: React.FC<any> = ({children}) => {
   const [state, dispatch] = useReducer(UserAuthReducer, DEFAULT_STATE_AUTH);
 
   const clearData = () => {
@@ -27,38 +34,30 @@ export const UserAuthProvider: React.FC<any> = ({ children }) => {
     });
   };
 
-  const updateNickname = async ({ nickNameProp }: { nickNameProp: string }) => {
-    updateDisplayName(nickNameProp!);
-    setNickName(nickNameProp!);
-    dispatch({
-      type: UserAuthActionKind.SET_NICKNAME,
-      nickName: nickNameProp,
-    });
-  };
-
   const initData = useCallback(async () => {
-    let nickName = await getNickName();
     let uid = await getUID();
     let loggedIn = await getIsLoggedIn();
 
     dispatch({
       type: UserAuthActionKind.INIT_DATA,
       state: {
-        nickName: nickName!,
         uid: uid!,
         loggedIn: loggedIn,
       },
     });
   }, []);
 
+  const memoState = useMemo(
+    () => ({
+      ...state,
+      initData,
+      clearData,
+    }),
+    [initData, state],
+  );
+
   return (
-    <UserAuthContext.Provider
-      value={{
-        ...state,
-        initData,
-        clearData,
-        updateNickname,
-      }}>
+    <UserAuthContext.Provider value={memoState}>
       {children}
     </UserAuthContext.Provider>
   );

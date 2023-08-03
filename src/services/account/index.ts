@@ -1,6 +1,5 @@
 export {
   logout,
-  loginWithEmailAndPassword,
   signUpWithEmailAndPassword,
-  updateDisplayName
+  updateDisplayName,
 } from './account.service';

@@ -1,4 +1,1 @@
-export {
-  getCalendarByUser,
-  updateCalendarByUser
-} from './calendar.service';
+export {getCalendarByUser, updateCalendarByUser} from './calendar.service';

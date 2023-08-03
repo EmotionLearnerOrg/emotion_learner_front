@@ -1,63 +1,70 @@
-import React, { FC, useState } from 'react';
-import { Alert, ScrollView, Text, View } from 'react-native';
-import { makeProfileScreenStyles } from './ProfileScreen.style';
-import { Button, Icon } from 'react-native-magnus';
-import { HomeRoutes, ProfileType } from '../../stacks/HomeParams';
-import { Dialog } from '@rneui/themed';
-import { CommonActions, useNavigation } from '@react-navigation/native';
-import { HeaderCommon, PaymentSection } from '../../components';
-import { Input } from '@rneui/base';
-import { useUserAuth } from '../../contexts';
-import { logout } from '../../services';
+import React, {FC, useState} from 'react';
+import {Alert, ScrollView, Text, View} from 'react-native';
+import {makeProfileScreenStyles} from './ProfileScreen.style';
+import {Button, Icon} from 'react-native-magnus';
+import {HomeRoutes, ProfileType} from '../../stacks/HomeParams';
+import {Dialog} from '@rneui/themed';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+import {HeaderCommon, PaymentSection} from '../../components';
+import {Input} from '@rneui/base';
+import {useUserAuth, useUserData} from '../../contexts';
+import {logout} from '../../services';
 
-const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
+const ProfileScreen: FC<ProfileType> = ({navigation}) => {
   const [visible, setVisible] = useState(false);
-  const { getParent } = useNavigation();
+  const {getParent} = useNavigation();
   const style = makeProfileScreenStyles();
-  const { nickName, updateNickname, clearData: clearUserData } = useUserAuth();
+  const {clearData: clearUserData} = useUserAuth();
+  const {
+    nickName: nickName,
+    updateNickname,
+    isLoadingUpdateNickname,
+  } = useUserData();
   const [newNickname, setNewNickName] = useState(nickName);
 
   const cleanData = () => {
     setNewNickName('');
   };
 
-  const handleNewNickname = async () => {
-    try {
-      updateNickname({ nickNameProp: newNickname });
-      cleanData();
-    } catch (error) {
-      Alert.alert('Error', 'Error al guardar el nuevo nickName', [{ text: 'OK' }]);
-    }
+  const handleNewNickname = () => {
+    updateNickname({nickname: newNickname!});
+    cleanData();
   };
 
   const handleLogout = async () => {
     try {
-      await logout();
-      clearUserData();
+      goToHome(); // Redirigir al usuario a la pantalla de inicio de sesión
+      await clearUserData();
+      await logout(); // Desloguear al usuario después de la redirección
       const parent = getParent();
       if (parent) {
         parent.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: parent.getState().routeNames[0] }],
+            routes: [{name: parent.getState().routeNames[0]}],
           }),
         );
       }
-      goToHome();
     } catch (error) {
-      Alert.alert('Error', 'Usuario o contraseña incorrectos', [{ text: 'OK' }]);
+      Alert.alert('Error', 'Usuario o contraseña incorrectos', [{text: 'OK'}]);
     }
   };
 
   const goToHome = () => {
-    navigation.navigate(HomeRoutes.LOG_IN);
+    navigation.replace(HomeRoutes.LOG_IN);
   };
 
   return (
     <ScrollView style={style.containerView}>
       <View style={style.cardProfile}>
         <View style={style.cardProfileHeader}>
-          <Icon style={style.nickname} rounded="circle" name="user" fontFamily="Feather" fontSize={40} />
+          <Icon
+            style={style.nickname}
+            rounded="circle"
+            name="user"
+            fontFamily="Feather"
+            fontSize={40}
+          />
           <Text style={style.nickname}>{nickName}</Text>
           <HeaderCommon />
         </View>
@@ -71,8 +78,7 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
             onChangeText={setNewNickName}
             value={newNickname}
           />
-          <Button
-            onPress={handleNewNickname}>
+          <Button loading={isLoadingUpdateNickname} onPress={handleNewNickname}>
             Guardar nuevo nickname
           </Button>
         </View>
@@ -102,9 +108,9 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
         <Button
           block
           m={10}
-          onPress={() => {
+          onPress={async () => {
             setVisible(false);
-            handleLogout();
+            await handleLogout();
           }}>
           Si
         </Button>
