@@ -26,7 +26,7 @@ export const InsigniaPorCategoria = ({
   width?: number;
   height?: number;
 }) => {
-  if (category === 'mirror') {
+  if (category === 'Mirror') {
     return (
       <InsigniaMirror
         width={width ?? 85}
@@ -38,7 +38,7 @@ export const InsigniaPorCategoria = ({
         }
       />
     );
-  } else if (category === 'ruleta') {
+  } else if (category === 'Ruleta') {
     return (
       <InsigniaRuleta
         width={width ?? 85}
@@ -50,7 +50,7 @@ export const InsigniaPorCategoria = ({
         }
       />
     );
-  } else if (category === 'arcade') {
+  } else if (category === 'Arcade') {
     return (
       <InsigniaArcade
         width={width ?? 85}

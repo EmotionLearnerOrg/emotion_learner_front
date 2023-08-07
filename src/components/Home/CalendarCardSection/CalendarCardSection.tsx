@@ -34,7 +34,7 @@ const CalendarCardSection = ({
               style={{flex: 1}}
               color={'#D4CAF7'}
               text={'Registrar emocion'}
-              icon={<Icon name="mirror" size={34} />}
+              icon={<Icon name="Mirror" size={34} />}
             />
           </TouchableOpacity>
         </View>

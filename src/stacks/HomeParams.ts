@@ -29,7 +29,7 @@ export type HomeStackParamList = {
   [HomeRoutes.CALENDAR]: undefined;
   [HomeRoutes.PERFORM_EMOTION]: {
     emotion: emocionType;
-    type: 'mirror' | 'ruleta';
+    type: 'Mirror' | 'Ruleta';
   };
   [HomeRoutes.GUIDE_FEEL]: {emotion: emocionType};
   [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
@@ -38,11 +38,11 @@ export type HomeStackParamList = {
   [HomeRoutes.PROFILE]: undefined;
   [HomeRoutes.FEEDBACK_POS]: {
     emotion: emocionType;
-    type: 'mirror' | 'ruleta' | 'arcade' | 'asociacion';
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   };
   [HomeRoutes.FEEDBACK_NEG]: {
     emotion: emocionType;
-    type: 'mirror' | 'ruleta' | 'arcade' | 'asociacion';
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   };
 };
 

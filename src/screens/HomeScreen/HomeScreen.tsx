@@ -47,15 +47,15 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
   return (
     <ScrollView style={style.containerView}>
       <HeaderSection goToProfile={goToProfile} />
-      <Button
+      {/* <Button
         bg="green"
         rounded={16}
         loading={isLoadingPostInsignias}
         onPress={() =>
-          updateInsignias({idInsignia: insigniasEnum.RULETA_TRISTE})
+          updateInsignias({idInsignia: insigniasEnum.RULETA_TRISTEZA})
         }>
-        <Text>Estoy ruleta triste</Text>
-      </Button>
+        <Text>Estoy Ruleta Tristeza</Text>
+      </Button> */}
       <SelectorGameSection
         goToMirror={goToMirror}
         goToRuleta={goToRuleta}

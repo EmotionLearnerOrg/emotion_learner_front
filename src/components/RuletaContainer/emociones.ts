@@ -1,22 +1,22 @@
 import {
-  FelizGuia,
-  FelizReal,
-  TristeGuia,
-  TristeReal,
+  AlegriaGuia,
+  AlegriaReal,
+  TristezaGuia,
+  TristezaReal,
   SorpresaGuia,
   SorpresaReal,
-  EnojadoGuia,
-  EnojadoReal,
-  NeutralGuia,
-  NeutralReal,
+  EnojoGuia,
+  EnojoReal,
+  CalmaGuia,
+  CalmaReal,
 } from '../../../assets';
 
 export enum emocionesEnum {
-  FELIZ = 'feliz',
-  TRISTE = 'triste',
-  SORPRENDIDO = 'sorprendido',
-  ENOJADO = 'enojado',
-  NEUTRAL = 'neutral',
+  ALEGRIA = 'Alegria',
+  TRISTEZA = 'Tristeza',
+  SORPRESA = 'Sorpresa',
+  ENOJO = 'Enojo',
+  CALMA = 'Calma',
 }
 
 export type EmocionesTypeNames = `${emocionesEnum}`;
@@ -29,34 +29,34 @@ export type emocionType = {
 };
 
 export const emociones: {[K in emocionesEnum]: emocionType} = {
-  [emocionesEnum.FELIZ]: {
+  [emocionesEnum.ALEGRIA]: {
     color: '#FDFF49',
-    name: emocionesEnum.FELIZ,
-    pathGuia: FelizGuia,
-    pathReal: FelizReal,
+    name: emocionesEnum.ALEGRIA,
+    pathGuia: AlegriaGuia,
+    pathReal: AlegriaReal,
   },
-  [emocionesEnum.TRISTE]: {
+  [emocionesEnum.TRISTEZA]: {
     color: '#65ADFC',
-    name: emocionesEnum.TRISTE,
-    pathGuia: TristeGuia,
-    pathReal: TristeReal,
+    name: emocionesEnum.TRISTEZA,
+    pathGuia: TristezaGuia,
+    pathReal: TristezaReal,
   },
-  [emocionesEnum.SORPRENDIDO]: {
+  [emocionesEnum.SORPRESA]: {
     color: '#BBBBBB',
-    name: emocionesEnum.SORPRENDIDO,
+    name: emocionesEnum.SORPRESA,
     pathGuia: SorpresaGuia,
     pathReal: SorpresaReal,
   },
-  [emocionesEnum.ENOJADO]: {
+  [emocionesEnum.ENOJO]: {
     color: '#FC4D4A',
-    name: emocionesEnum.ENOJADO,
-    pathGuia: EnojadoGuia,
-    pathReal: EnojadoReal,
+    name: emocionesEnum.ENOJO,
+    pathGuia: EnojoGuia,
+    pathReal: EnojoReal,
   },
-  [emocionesEnum.NEUTRAL]: {
+  [emocionesEnum.CALMA]: {
     color: '#88EA5A',
-    name: emocionesEnum.NEUTRAL,
-    pathGuia: NeutralGuia,
-    pathReal: NeutralReal,
+    name: emocionesEnum.CALMA,
+    pathGuia: CalmaGuia,
+    pathReal: CalmaReal,
   },
 };

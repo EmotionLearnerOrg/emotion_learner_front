@@ -19,7 +19,7 @@ const FeedbackView = ({
   textButton?: string;
   emotion: emocionType;
   goTo?: () => void;
-  type: 'mirror' | 'ruleta' | 'arcade' | 'asociacion';
+  type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   success: boolean;
 }) => {
   const style = makeFeedbackViewStyles();
@@ -39,7 +39,7 @@ const FeedbackView = ({
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
         {success ? (
           InsigniaPorCategoria({
-            category: 'mirror',
+            category: 'Mirror',
             item: [type + '_' + emotion.name, true],
             height: 200,
             width: 200,

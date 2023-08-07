@@ -23,7 +23,7 @@ const RealFeelScreen: FC<RealFeelType> = ({route, navigation}) => {
           onPress={() =>
             navigation.navigate(HomeRoutes.PERFORM_EMOTION, {
               emotion: emotion,
-              type: 'mirror',
+              type: 'Mirror',
             })
           }>
           Ir a realizar emocion
