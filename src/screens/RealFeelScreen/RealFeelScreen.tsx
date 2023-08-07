@@ -13,10 +13,7 @@ const RealFeelScreen: FC<RealFeelType> = ({route, navigation}) => {
       <Text textAlign="center" fontSize={32}>
         Imagen real ({emotion.name})
       </Text>
-      <Text fontSize={16} textAlign="center" mt={20}>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
-        dolor sit amet.
-      </Text>
+      {/* <Text fontSize={16} textAlign="center" mt={20}> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet. </Text> */}
       <Image source={emotion.pathReal} style={style.image} />
       <View style={style.buttonContainer}>
         <Button
@@ -26,7 +23,7 @@ const RealFeelScreen: FC<RealFeelType> = ({route, navigation}) => {
               type: 'Mirror',
             })
           }>
-          Ir a realizar emocion
+          Siguiente
         </Button>
       </View>
     </View>
