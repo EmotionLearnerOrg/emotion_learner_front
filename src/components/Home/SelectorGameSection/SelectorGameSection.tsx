@@ -33,7 +33,7 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#AFECFE'}
               text={'Espejo Inteligente'}
-              icon={<Icon name="Mirror" size={34} />}
+              icon={<Icon name="mirror" size={34} />}
             />
           </TouchableOpacity>
         </View>
