@@ -1,18 +1,20 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {makeSelectorGameSectionStyles} from './SelectorGameSection.style';
+import { TouchableOpacity, View } from 'react-native';
+import { makeSelectorGameSectionStyles } from './SelectorGameSection.style';
 import Card from './Card/Card';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Text} from 'react-native-magnus';
+import { Text } from 'react-native-magnus';
 
 const SelectorGameSection = ({
   goToMirror,
   goToAsociation,
   goToRuleta,
+  goToArcade
 }: {
   goToMirror: () => void;
   goToRuleta: () => void;
   goToAsociation: () => void;
+  goToArcade: () => void;
 }) => {
   const style = makeSelectorGameSectionStyles();
 
@@ -63,7 +65,7 @@ const SelectorGameSection = ({
           <TouchableOpacity
             style={style.contHalf}
             activeOpacity={0.4}
-            onPress={goToAsociation}>
+            onPress={goToArcade}>
             <Card
               style={style.contFull}
               color={'#FEAFB0'}

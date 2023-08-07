@@ -15,6 +15,7 @@ import {
   ProfileScreen,
   FeedbackPosScreen,
   FeedbackNegScreen,
+  ArcadeScreen,
 } from '../screens';
 import {HeaderCommon} from '../components';
 
@@ -77,6 +78,10 @@ const HomeStack = () => {
         <HomeStackNavigator.Screen
           name={HomeRoutes.FEEDBACK_NEG}
           component={FeedbackNegScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.ARCADE}
+          component={ArcadeScreen}
         />
       </HomeStackNavigator.Navigator>
     </UserDataProvider>
