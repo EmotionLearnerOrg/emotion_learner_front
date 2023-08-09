@@ -44,7 +44,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     name: emocionesEnum.TRISTEZA,
     pathGuia: TristezaGuia,
     pathReal: TristezaReal,
-    pathMonstruo: require('./../../../assets/ilustraciones/Tristeza/monstruo_feliz.png'),
+    pathMonstruo: require('./../../../assets/ilustraciones/Tristeza/monstruo_triste.png'),
     pathOpciones: require('./../../../assets/ilustraciones/Tristeza/opciones/1.png'),
   },
   [emocionesEnum.SORPRESA]: {
@@ -60,7 +60,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     name: emocionesEnum.ENOJO,
     pathGuia: EnojoGuia,
     pathReal: EnojoReal,
-    pathMonstruo: require('./../../../assets/ilustraciones/Enojo/monstruo_sorprendido.png'),
+    pathMonstruo: require('./../../../assets/ilustraciones/Enojo/monstruo_enojado.png'),
     pathOpciones: require('./../../../assets/ilustraciones/Enojo/opciones/1.png'),
   },
   [emocionesEnum.CALMA]: {
@@ -68,7 +68,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     name: emocionesEnum.CALMA,
     pathGuia: CalmaGuia,
     pathReal: CalmaReal,
-    pathMonstruo: require('./../../../assets/ilustraciones/Calma/monstruo_sorprendido.png'),
+    pathMonstruo: require('./../../../assets/ilustraciones/Calma/monstruo_calmado.png'),
     pathOpciones: require('./../../../assets/ilustraciones/Calma/opciones/1.png'),
   },
 };
