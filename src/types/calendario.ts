@@ -59,11 +59,11 @@ export const defaultCalendar: CalendarioType = [
 
 export const convertToEventItems = (calendar: CalendarioType): EventItem[] => {
   const colorMapping: {[key: string]: string} = {
-    feliz: '#FDFF49',
-    triste: '#65ADFC',
-    enojado: '#FC4D4A',
-    sorprendido: '#BBBBBB',
-    neutral: '#88EA5A',
+    Alegria: '#FDFF49',
+    Tristeza: '#65ADFC',
+    Enojo: '#FC4D4A',
+    Sorpresa: '#BBBBBB',
+    Calma: '#88EA5A',
   };
 
   const eventItems: EventItem[] = [];

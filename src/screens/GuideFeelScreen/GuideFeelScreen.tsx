@@ -14,10 +14,7 @@ const GuideFeelScreen: FC<GuideFeelType> = ({route, navigation}) => {
       <Text textAlign="center" fontSize={32}>
         Imagen instructivo ({emotion.name})
       </Text>
-      <Text fontSize={16} textAlign="center" mt={20}>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
-        dolor sit amet.
-      </Text>
+      {/* <Text fontSize={16} textAlign="center" mt={20}> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet. </Text> */}
       <View style={style.imageContainer}>
         <Image source={emotion.pathGuia} style={style.image} />
       </View>
@@ -26,7 +23,7 @@ const GuideFeelScreen: FC<GuideFeelType> = ({route, navigation}) => {
           onPress={() =>
             navigation.navigate(HomeRoutes.REAL_FEEL, {emotion: emotion})
           }>
-          Ir a imagen real
+          Siguiente
         </Button>
       </View>
     </View>

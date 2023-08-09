@@ -37,8 +37,7 @@ const MirrorScreen: FC<MirrorType> = ({navigation}) => {
         Espejo inteligente
       </Text>
       <Text fontSize={16} textAlign="center" mt={20}>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
-        dolor sit amet, consectetur adipisicing elit.
+        Elegí la emoción que quieras aprender y practicar!
       </Text>
       <View style={style.buttonsContainer}>
         <View>

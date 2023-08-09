@@ -1,20 +1,20 @@
-import {EnojadoGuia, EnojadoReal} from './enojado/instructivo';
-import {FelizGuia, FelizReal} from './feliz/instructivo';
-import {NeutralGuia, NeutralReal} from './neutral/instructivo';
-import {SorpresaGuia, SorpresaReal} from './sorpresa/instructivo';
-import {TristeGuia, TristeReal} from './triste/instructivo';
+import {EnojoGuia, EnojoReal} from './Enojo/instructivo';
+import {AlegriaGuia, AlegriaReal} from './Alegria/instructivo';
+import {CalmaGuia, CalmaReal} from './Calma/instructivo';
+import {SorpresaGuia, SorpresaReal} from './Sorpresa/instructivo';
+import {TristezaGuia, TristezaReal} from './Tristeza/instructivo';
 const EmotionPerson = require('./emotionPerson.png');
 
 export {
-  EnojadoGuia,
-  EnojadoReal,
-  FelizGuia,
-  FelizReal,
-  NeutralGuia,
-  NeutralReal,
+  EnojoGuia,
+  EnojoReal,
+  AlegriaGuia,
+  AlegriaReal,
+  CalmaGuia,
+  CalmaReal,
   SorpresaGuia,
   SorpresaReal,
-  TristeGuia,
-  TristeReal,
+  TristezaGuia,
+  TristezaReal,
   EmotionPerson,
 };

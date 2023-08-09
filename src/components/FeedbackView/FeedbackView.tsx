@@ -19,7 +19,7 @@ const FeedbackView = ({
   textButton?: string;
   emotion: emocionType;
   goTo?: () => void;
-  type: 'mirror' | 'ruleta' | 'arcade' | 'asociacion';
+  type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   success: boolean;
 }) => {
   const style = makeFeedbackViewStyles();
@@ -32,14 +32,12 @@ const FeedbackView = ({
           : `No pudimos reconocer la expresión ${emotion.name}, probá nuevamente!`}
       </Text>
       <Text fontSize={18} textAlign="center" mt={20}>
-        {description ?? success
-          ? `Hiciste la emoción ${emotion.name} correctamente y te ganaste una medalla:`
-          : 'Sugerencias:'}
+      Excelente trabajo, ganaste una medalla!
       </Text>
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
         {success ? (
           InsigniaPorCategoria({
-            category: 'mirror',
+            category: 'Mirror',
             item: [type + '_' + emotion.name, true],
             height: 200,
             width: 200,

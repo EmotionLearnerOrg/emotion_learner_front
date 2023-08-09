@@ -18,6 +18,7 @@ export enum HomeRoutes {
   PROFILE = 'Profile',
   FEEDBACK_POS = 'FeedbackPos',
   FEEDBACK_NEG = 'FeedbackNeg',
+  ARCADE = 'Arcade'
 }
 
 export type HomeStackParamList = {
@@ -29,7 +30,7 @@ export type HomeStackParamList = {
   [HomeRoutes.CALENDAR]: undefined;
   [HomeRoutes.PERFORM_EMOTION]: {
     emotion: emocionType;
-    type: 'mirror' | 'ruleta';
+    type: 'Mirror' | 'Ruleta';
   };
   [HomeRoutes.GUIDE_FEEL]: {emotion: emocionType};
   [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
@@ -38,12 +39,13 @@ export type HomeStackParamList = {
   [HomeRoutes.PROFILE]: undefined;
   [HomeRoutes.FEEDBACK_POS]: {
     emotion: emocionType;
-    type: 'mirror' | 'ruleta' | 'arcade' | 'asociacion';
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   };
   [HomeRoutes.FEEDBACK_NEG]: {
     emotion: emocionType;
-    type: 'mirror' | 'ruleta' | 'arcade' | 'asociacion';
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   };
+  [HomeRoutes.ARCADE]: undefined;
 };
 
 export type HomeStackNavigationsProp = StackNavigationProp<HomeStackParamList>;
@@ -149,6 +151,16 @@ export type FeedbackNegType = {
   navigation: HomeStackNavigationsProp;
   route: FeedbackNegScreenRouteType;
 };
+
+export type ArcadeType = {
+  navigation: HomeStackNavigationsProp;
+  route: ArcadeRouteType;
+};
+
+type ArcadeRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.ARCADE
+>;
 
 export const HomeStackNavigator =
   createNativeStackNavigator<HomeStackParamList>();
