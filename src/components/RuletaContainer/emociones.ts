@@ -52,8 +52,8 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     name: emocionesEnum.SORPRESA,
     pathGuia: SorpresaGuia,
     pathReal: SorpresaReal,
-    pathMonstruo: require('./../../../assets/ilustraciones/sorpresa/monstruo_sorprendido.png'),
-    pathOpciones: require('./../../../assets/ilustraciones/sorpresa/opciones/1.png'),
+    pathMonstruo: require('./../../../assets/ilustraciones/Sorpresa/monstruo_sorprendido.png'),
+    pathOpciones: require('./../../../assets/ilustraciones/Sorpresa/opciones/1.png'),
   },
   [emocionesEnum.ENOJO]: {
     color: '#FC4D4A',
