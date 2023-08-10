@@ -55,4 +55,12 @@ export const makeProfileScreenStyles = () =>
       paddingHorizontal: 10,
       color: 'white',
     },
+    buttonText: {
+      color: '#524B6B',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
+    },
   });

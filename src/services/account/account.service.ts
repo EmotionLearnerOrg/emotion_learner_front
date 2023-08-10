@@ -1,5 +1,5 @@
-import {auth, db} from '../../configs/config.firebase';
-import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
+import { auth, db } from '../../configs/config.firebase';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,8 +10,8 @@ import {
   clearPreferenceData,
   savePreferenceData,
 } from '../preference/preference.service';
-import {insigniasDefault} from '../../types/insignias';
-import {createInsigniaByUser} from '../insignia/insignia.service';
+import { insigniasDefault } from '../../types/insignias';
+import { createInsigniaByUser } from '../insignia/insignia.service';
 export const loginWithEmailAndPassword = async ({
   email,
   password,
@@ -22,8 +22,9 @@ export const loginWithEmailAndPassword = async ({
   try {
     await signInWithEmailAndPassword(auth, email, password)
       .then(async response => {
-        const nickName = await getDisplayName({uid: response.user.uid});
-        await savePreferenceData(nickName, response.user.uid);
+        const nickName = await getDisplayName({ uid: response.user.uid });
+        const subscriptionType = await getSubscriptionType({ uid: response.user.uid });
+        await savePreferenceData(nickName, subscriptionType, response.user.uid);
         return response.user.uid;
       })
       .catch();
@@ -47,20 +48,34 @@ export const signUpWithEmailAndPassword = async ({
       email,
       password,
     );
-    await updateProfile(auth.currentUser!!, {displayName: nickName});
+    await updateProfile(auth.currentUser!!, { displayName: nickName });
     await createInsigniaByUser({
       uid: response.user.uid,
       nuevasInsignias: insigniasDefault,
     });
-    await setDisplayName(nickName, response.user.uid!!);
-    await savePreferenceData(nickName, response.user.uid);
+    await setInitialData(nickName, 'PRUEBA', response.user.uid!!);
+    await savePreferenceData(nickName, 'PRUEBA', response.user.uid);
     return response.user.uid;
   } catch (error) {
     throw new Error('Error creating document: ' + error);
   }
 };
 
-export const getDisplayName = async ({uid}: {uid: string}): Promise<any> => {
+export const setInitialData = async (nickName: string, subscriptionType: string, uid: string) => {
+  try {
+    await setDoc(doc(db, 'users', uid!), {
+      nickName: nickName,
+      subscriptionType: subscriptionType,
+    })
+      .then()
+      .catch();
+  } catch (error) {
+    throw new Error('Error creating document: ' + error);
+  }
+  return uid;
+};
+
+export const getDisplayName = async ({ uid }: { uid: string }): Promise<any> => {
   const docRef = doc(db, 'users', uid!);
   return getDoc(docRef)
     .then(docSnap => {
@@ -75,19 +90,6 @@ export const getDisplayName = async ({uid}: {uid: string}): Promise<any> => {
     });
 };
 
-export const setDisplayName = async (nickName: string, uid: string) => {
-  try {
-    await setDoc(doc(db, 'users', uid!), {
-      nickName: nickName,
-    })
-      .then()
-      .catch();
-  } catch (error) {
-    throw new Error('Error creating document: ' + error);
-  }
-  return nickName;
-};
-
 export const updateDisplayName = async ({
   nickName,
   uid,
@@ -98,6 +100,39 @@ export const updateDisplayName = async ({
   try {
     await updateDoc(doc(db, 'users', uid!!), {
       nickName: nickName,
+    })
+      .then()
+      .catch();
+  } catch (error) {
+    throw new Error('Error creating document: ' + error);
+  }
+};
+
+export const getSubscriptionType = async ({ uid }: { uid: string }): Promise<any> => {
+  const docRef = doc(db, 'users', uid!);
+  return getDoc(docRef)
+    .then(docSnap => {
+      let subscriptionType = 'PRUEBA';
+      if (docSnap.exists()) {
+        subscriptionType = docSnap.data().subscriptionType;
+      }
+      return subscriptionType;
+    })
+    .catch(error => {
+      throw error.parsedError;
+    });
+};
+
+export const updateSubscriptionType = async ({
+  subscriptionType,
+  uid,
+}: {
+  subscriptionType: string;
+  uid: string;
+}) => {
+  try {
+    await updateDoc(doc(db, 'users', uid!!), {
+      subscriptionType: subscriptionType,
     })
       .then()
       .catch();

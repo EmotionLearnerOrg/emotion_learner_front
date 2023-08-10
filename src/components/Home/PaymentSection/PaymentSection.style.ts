@@ -15,4 +15,12 @@ export const makePaymentSectionStyles = () =>
       borderBottomColor: '#DEE1E7',
       borderBottomWidth: 1,
     },
+    buttonText: {
+      color: '#524B6B',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
+    },
   });

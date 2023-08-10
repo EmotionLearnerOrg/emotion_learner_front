@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const savePreferenceData = async (nickName: string, uid: string) => {
+export const savePreferenceData = async (nickName: string, subscriptionType: string, uid: string) => {
   try {
+    await AsyncStorage.setItem('subscriptionType', subscriptionType);
     await AsyncStorage.setItem('nickName', nickName);
     await AsyncStorage.setItem('uid', uid);
     await AsyncStorage.setItem('loggedIn', 'true');
@@ -39,5 +40,19 @@ export const getUID = async () => {
   try {
     const uid = await AsyncStorage.getItem('uid');
     return uid || '';
+  } catch (e) {}
+};
+
+export const getSubscriptionType = async () => {
+  try {
+    const subscriptionType = await AsyncStorage.getItem('subscriptionType');
+    return subscriptionType || '';
+  } catch (e) {}
+};
+
+export const setSubscriptionType = async (subscriptionType: string) => {
+  try {
+    await AsyncStorage.setItem('subscriptionType', subscriptionType);
+    return subscriptionType || '';
   } catch (e) {}
 };
