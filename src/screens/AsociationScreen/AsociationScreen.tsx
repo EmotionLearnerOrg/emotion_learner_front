@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {Image, View, TouchableOpacity} from 'react-native';
 import {makeAsociationScreenStyles} from './AsociationScreen.style';
 import {Text} from 'react-native-magnus';
@@ -23,8 +23,8 @@ const AsociationScreen: FC<AsociationType> = ({navigation}) => {
     emotions[randEmotion3]
   ];
 
-  var respuestas = 0;
-  var correctas = 0;
+  var [answers, setAnswers] = useState(0);
+  var [correctAnswers, setCorrectAnswers] = useState(0);
 
   function generateRandom(min, max, exeption1 = -10000, exeption2 = -10000):number {
     var num = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -32,24 +32,40 @@ const AsociationScreen: FC<AsociationType> = ({navigation}) => {
   }
 
   function reload(emotionSelected) {
-    respuestas++;
+    setAnswers(answers++);
     if (emotionSelected.name === emotions[randEmotion1].name) {
-      correctas++;
-      console.log("Opcion correcta " + emotionSelected.name + " respuestas: " + respuestas + " correctas: " + correctas);
+      setCorrectAnswers(correctAnswers++);
+      console.log("respuestas: " + answers + " correctas: " + correctAnswers);
     }
-    if (respuestas == 5) {
-      if (correctas >= 3) {
+    if (answers == 5) {
+      if (correctAnswers >= 3) {
         navigation.navigate(HomeRoutes.FEEDBACK_POS, {
           emotion: emotionSelected,
-          type: 'asociacion'
+          type: 'Asociation'
         })
       } else {
         navigation.navigate(HomeRoutes.FEEDBACK_NEG, {
           emotion: emotionSelected,
-          type: 'asociacion'
+          type: 'Asociation'
         });
       }
     }
+  }
+
+  if (answers < 5 ) {
+    randEmotion1 = generateRandom(0, 4);
+    randEmotion2 = generateRandom(0, 4, randEmotion1);
+    randEmotion3 = generateRandom(0, 4, randEmotion1, randEmotion2);
+
+    randOption1 = generateRandom(0, 2);
+    randOption2 = generateRandom(0, 2, randOption1);
+    randOption3 = generateRandom(0, 2, randOption1, randOption2);
+
+    options = [
+      emotions[randEmotion1],
+      emotions[randEmotion2],
+      emotions[randEmotion3]
+    ];
   }
 
   return (
