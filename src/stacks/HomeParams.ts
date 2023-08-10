@@ -98,6 +98,13 @@ export type MirrorType = {
   route: MirrorScreenRouteType;
 };
 
+type AsociationRouteType = RouteProp<HomeStackParamList, HomeRoutes.ASOCIATION>;
+
+export type AsociationType = {
+  navigation: HomeStackNavigationsProp;
+  route: AsociationRouteType;
+};
+
 type RealFeelScreenRouteType = RouteProp<
   HomeStackParamList,
   HomeRoutes.REAL_FEEL
