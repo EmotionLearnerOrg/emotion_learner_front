@@ -1,8 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const makePaymentSectionStyles = () =>
   StyleSheet.create({
-    containerView: {flex: 1},
+    containerView: { flex: 1 },
     cardPayment: {
       backgroundColor: 'white',
       borderRadius: 20,
@@ -22,5 +22,17 @@ export const makePaymentSectionStyles = () =>
     },
     button: {
       width: '100%',
+    },
+    radioButton: {
+      marginVertical: 8,
+      padding: 12,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      backgroundColor: 'transparent',
+    },
+    radioButtonText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: '#333',
     },
   });
