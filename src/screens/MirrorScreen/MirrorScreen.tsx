@@ -18,7 +18,7 @@ const ButtonItem = ({
     <Button
       mb={4}
       rounded={16}
-      style={{ width: 80, height: 150 }}
+      style={{ width: 80, height: 160 }}
       bg={item.colorBottonContainer}
       color="#524b6b"
       onPress={goToLearn}>
@@ -26,7 +26,7 @@ const ButtonItem = ({
         <Text style={{ color: '#524B6B', textAlignVertical: 'top', textAlign: 'center', marginBottom: 10 }}>
           {item.displayname}
         </Text>
-        <Image source={item.pathMonstruo} style={{ width: 80, height: 80 }} />
+        <Image source={item.pathMonstruo} style={{ width: 100, height: 130 }} />
       </View>
     </Button>
   );

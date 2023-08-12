@@ -8,7 +8,7 @@ export const makeMirrorScreenStyles = () =>
       marginVertical: 20,
       padding: 10,
       elevation: 5,
-      borderRadius: 8,
+      borderRadius: 16,
       backgroundColor: 'white',
     },
     // cardContainer: {
