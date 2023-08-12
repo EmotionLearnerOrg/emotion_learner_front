@@ -1,11 +1,11 @@
-import React, {FC, useState} from 'react';
-import {Alert, FlatList, View} from 'react-native';
-import {Button, Text} from 'react-native-magnus';
-import {emociones, emocionType} from '../../components';
-import {HomeRoutes, RegisterEmotionCalendarType} from '../../stacks/HomeParams';
-import {makeMirrorScreenStyles} from '../MirrorScreen/MirrorScreen.style';
-import {HorarioEnum, HorarioType, horarios} from '../../types/horarios';
-import {makeCalendarCardContainerStyles} from '../../components/Home/CalendarCardSection/CalendarCardSection.style';
+import React, { FC, useState } from 'react';
+import { Alert, FlatList, View } from 'react-native';
+import { Button, Text } from 'react-native-magnus';
+import { emociones, emocionType } from '../../components';
+import { HomeRoutes, RegisterEmotionCalendarType } from '../../stacks/HomeParams';
+import { makeMirrorScreenStyles } from '../MirrorScreen/MirrorScreen.style';
+import { HorarioEnum, HorarioType, horarios } from '../../types/horarios';
+import { makeCalendarCardContainerStyles } from '../../components/Home/CalendarCardSection/CalendarCardSection.style';
 import {
   useGetCalendarByUser,
   useUpdateEmotionTodayByUser,
@@ -17,7 +17,8 @@ import {
   getCurrentHorarioEnum,
   horarioConfigUTC,
 } from '../../types/calendario';
-import {useUserAuth} from '../../contexts';
+import { useUserAuth } from '../../contexts';
+import { generateRandomCalendario } from '../CalendarScreen/CalendarScreen.mockup';
 
 const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
   navigation,
@@ -25,9 +26,9 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
   const styleMirror = makeMirrorScreenStyles();
   const styleCalendar = makeCalendarCardContainerStyles();
 
-  const {uid} = useUserAuth();
-  const {data: calendar} = useGetCalendarByUser({uid: uid});
-  const {mutate: updateCalendar} = useUpdateEmotionTodayByUser({uid});
+  const { uid } = useUserAuth();
+  const { data: calendar } = useGetCalendarByUser({ uid: uid });
+  const { mutate: updateCalendar } = useUpdateEmotionTodayByUser({ uid });
 
   const gap = 16;
   const emotions = Object.values(emociones);
@@ -37,7 +38,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
 
   const defaultCalendarItemType: CalendarItemType = {
     [getCurrentDate()]: {
-      [timeSelected]: {emocion: emotionSelected},
+      [timeSelected]: { emocion: emotionSelected },
     },
   };
 
@@ -91,7 +92,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
         if (existingEmotion) {
           existingEmotion.emocion = emotionSelected;
         } else {
-          emotions[timeSelected] = {emocion: emotionSelected};
+          emotions[timeSelected] = { emocion: emotionSelected };
         }
 
         // Actualizo la agenda del usuario completa
@@ -116,7 +117,9 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
           });
         }
 
-        updateCalendar({calendario: updatedCalendar});
+        // Generar 3 meses de emociones random para que no este vacio desde el principio (reemplazarlo por unica vez en la linea 122)
+        // updateCalendar({ calendario: generateRandomCalendario() })
+        updateCalendar({ calendario: updatedCalendar });
         goToCalendar();
       }
     }
@@ -124,7 +127,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
 
   const alertMessageAccept = (title: string, message: string) => {
     Alert.alert(title, message, [
-      {text: 'Aceptar', onPress: () => console.log('OK Pressed')},
+      { text: 'Aceptar', onPress: () => console.log('OK Pressed') },
     ]);
   };
 
@@ -143,7 +146,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
       <Button
         mb={4}
         rounded={8}
-        style={{width: 120}}
+        style={{ width: 120 }}
         bg={emotionSelected === item.name ? '#370928' : item.color}
         color={emotionSelected === item.name ? '#FFFFFF' : '#524b6b'}
         onPress={updateEmotionTime}>
@@ -163,7 +166,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
       <Button
         mb={4}
         rounded={8}
-        style={{width: 120}}
+        style={{ width: 120 }}
         bg={timeSelected === item.name ? '#370928' : item.color}
         color={timeSelected === item.name ? '#FFFFFF' : '#524b6b'}
         onPress={updateStateTime}>
@@ -175,7 +178,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
   return (
     <>
       <View style={styleMirror.containerView}>
-        <Text style={{alignSelf: 'center'}} fontSize={20}>
+        <Text style={{ alignSelf: 'center' }} fontSize={20}>
           {getCurrentDate()}
         </Text>
         <View style={styleCalendar.calendarCardContainer}>
@@ -187,14 +190,14 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
             data={emotions}
             numColumns={2}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <ButtonEmotionItem
                 item={item}
                 updateEmotionTime={() => setEmotionSelected(item.name)}
               />
             )}
-            contentContainerStyle={{gap}}
-            columnWrapperStyle={{gap}}
+            contentContainerStyle={{ gap }}
+            columnWrapperStyle={{ gap }}
           />
         </View>
       </View>
@@ -208,7 +211,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
             data={times}
             numColumns={2}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <ButtonTimeItem
                 item={item}
                 updateStateTime={() => {
@@ -216,14 +219,14 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
                 }}
               />
             )}
-            contentContainerStyle={{gap}}
-            columnWrapperStyle={{gap}}
+            contentContainerStyle={{ gap }}
+            columnWrapperStyle={{ gap }}
           />
         </View>
       </View>
-      <View style={{alignSelf: 'center'}}>
+      <View style={{ alignSelf: 'center' }}>
         <Button
-          style={{width: 120}}
+          style={{ width: 120 }}
           mb={4}
           rounded={8}
           color="#000000"
