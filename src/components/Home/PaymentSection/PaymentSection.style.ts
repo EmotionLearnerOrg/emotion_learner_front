@@ -24,31 +24,5 @@ export const makePaymentSectionStyles = () =>
     },
     button: {
       width: '100%',
-    },
-    modal: {
-      justifyContent: 'center',
-      margin: 0,
-    },
-    modalContent: {
-      backgroundColor: 'white',
-      borderRadius: 16,
-      padding: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-      maxHeight: '50%', // Establece la altura máxima al 50% de la pantalla
-      width: '100%', // Ocupa todo el ancho de la pantalla
-    },
-    modalTitle: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      marginTop: 20,
-      marginBottom: 10,
-      color: 'black',
-    },
-    modalMessage: {
-      marginBottom: 20,
-      fontSize: 16,
-      textAlign: 'center',
-      color: 'gray',
-    },
+    }
   });

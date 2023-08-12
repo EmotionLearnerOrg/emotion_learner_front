@@ -31,6 +31,13 @@ const PaymentSection = () => {
         setModalVisible(true);
     };
 
+    const handleCanceledSubscription = () => {
+        updateSubscriptionType({ subscriptionType: 'PRUEBA' });
+        setTitleModal('Subscripción cancelada');
+        setMessageModal('Se cancelo la subscripción, podes volver a subscribirte a premium cuando quieras!');
+        setModalVisible(true);
+    };
+
     return (
         <ScrollView style={style.containerView}>
             <View style={style.cardPayment}>
@@ -38,25 +45,43 @@ const PaymentSection = () => {
                 <View style={style.line} />
                 <Text style={{ color: '#524B6B', fontSize: 18 }}>{subscriptionType !== undefined ? SubscriptionEnum[subscriptionType] : SubscriptionEnum.PRUEBA}</Text>
             </View>
-            <View style={style.cardPayment}>
-                <Text style={{ color: '#150B3D', fontSize: 16, marginBottom: 20, fontWeight: 'bold' }}>¿Queres cambiar tu subscripción?</Text>
-                <RadioButton label={SubscriptionEnum.PREMIUM_ANUAL} selected={selectedSubscriptionType === 'PREMIUM_ANUAL'} handleOnPress={() => handleSubscriptionTypeChange('PREMIUM_ANUAL')} />
-                <Text style={{ color: '#AAA6B9' }}>Podés cancelar cuando quieras</Text>
-                <View style={style.line} />
-                <RadioButton label={SubscriptionEnum.PREMIUM_MENSUAL} selected={selectedSubscriptionType === 'PREMIUM_MENSUAL'} handleOnPress={() => handleSubscriptionTypeChange('PREMIUM_MENSUAL')} />
-                <Text style={{ color: '#AAA6B9' }}>Podés cancelar cuando quieras</Text>
-                <Button
-                    style={style.button}
-                    alignSelf="center"
-                    bg="#FCCDCE"
-                    mt={12}
-                    mb={12}
-                    rounded={16}
-                    loading={isLoadingUpdateSubscriptionType}
-                    onPress={handlePayment}>
-                    <Text style={style.buttonText}>Continuar con el pago</Text>
-                </Button>
-            </View>
+            {subscriptionType === 'PRUEBA' && (
+                <View style={style.cardPayment}>
+                    <Text style={{ color: '#150B3D', fontSize: 16, marginBottom: 20, fontWeight: 'bold' }}>¿Queres cambiar tu subscripción?</Text>
+                    <RadioButton label={SubscriptionEnum.PREMIUM_ANUAL} selected={selectedSubscriptionType === 'PREMIUM_ANUAL'} handleOnPress={() => handleSubscriptionTypeChange('PREMIUM_ANUAL')} />
+                    <Text style={{ color: '#AAA6B9' }}>Podés cancelar cuando quieras</Text>
+                    <View style={style.line} />
+                    <RadioButton label={SubscriptionEnum.PREMIUM_MENSUAL} selected={selectedSubscriptionType === 'PREMIUM_MENSUAL'} handleOnPress={() => handleSubscriptionTypeChange('PREMIUM_MENSUAL')} />
+                    <Text style={{ color: '#AAA6B9' }}>Podés cancelar cuando quieras</Text>
+                    <Button
+                        style={style.button}
+                        alignSelf="center"
+                        bg="#FCCDCE"
+                        mt={12}
+                        mb={12}
+                        rounded={16}
+                        loading={isLoadingUpdateSubscriptionType}
+                        onPress={handlePayment}>
+                        <Text style={style.buttonText}>Continuar con el pago</Text>
+                    </Button>
+                </View>
+            )}
+            {subscriptionType !== 'PRUEBA' && (
+                <View style={style.cardPayment}>
+                    <Text style={{ color: '#150B3D', fontSize: 16, marginBottom: 20, fontWeight: 'bold' }}>¿Queres cancelar tu subscripción?</Text>
+                    <Button
+                        style={style.button}
+                        alignSelf="center"
+                        bg="#FCCDCE"
+                        mt={12}
+                        mb={12}
+                        rounded={16}
+                        loading={isLoadingUpdateSubscriptionType}
+                        onPress={handleCanceledSubscription}>
+                        <Text style={style.buttonText}>Cancelar subscripción</Text>
+                    </Button>
+                </View>
+            )}
             <ModalPayment isModalVisible={isModalVisible} title={titleModal} message={messageModal} setModalVisible={() => setModalVisible(false)} />
         </ScrollView>
     );
