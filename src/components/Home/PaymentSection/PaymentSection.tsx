@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makePaymentSectionStyles } from './PaymentSection.style';
 import { ScrollView, Text, View } from 'react-native';
 import { Button } from 'react-native-magnus';
-import Modal from 'react-native-modal';
+import ModalPayment from './ModalPayment';
 import { SubscriptionEnum } from '../../../types/subscripcion';
 import { useUserData } from '../../../contexts';
 import RadioButton from './RadioButton'
@@ -17,6 +17,8 @@ const PaymentSection = () => {
 
     const [selectedSubscriptionType, setSelectedSubscriptionType] = useState(subscriptionType);
     const [isModalVisible, setModalVisible] = useState(false);
+    const [titleModal, setTitleModal] = useState('');
+    const [messageModal, setMessageModal] = useState('');
 
     const handleSubscriptionTypeChange = (newSubscriptionType: string) => {
         setSelectedSubscriptionType(newSubscriptionType);
@@ -24,6 +26,8 @@ const PaymentSection = () => {
 
     const handlePayment = () => {
         updateSubscriptionType({ subscriptionType: selectedSubscriptionType! });
+        setTitleModal('¡Pago exitoso!');
+        setMessageModal('Felicidades, ahora sos usuario Premium');
         setModalVisible(true);
     };
 
@@ -53,19 +57,7 @@ const PaymentSection = () => {
                     <Text style={style.buttonText}>Continuar con el pago</Text>
                 </Button>
             </View>
-            <Modal
-                isVisible={isModalVisible}
-                onBackdropPress={() => setModalVisible(false)}
-                animationIn="slideInUp"
-                animationOut="slideOutDown"
-                style={style.modal}
-                backdropOpacity={0.5}
-                useNativeDriver={true}>
-                <View style={style.modalContent}>
-                    <Text style={style.modalTitle}>¡Pago exitoso!</Text>
-                    <Text style={style.modalMessage}>Felicidades, ahora sos usuario Premium</Text>
-                </View>
-            </Modal>
+            <ModalPayment isModalVisible={isModalVisible} title={titleModal} message={messageModal} setModalVisible={() => setModalVisible(false)} />
         </ScrollView>
     );
 };
