@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { FlatList, View } from 'react-native';
 import { makeMirrorScreenStyles } from './MirrorScreen.style';
-import { Button, Text } from 'react-native-magnus';
+import { Button, Text, Image } from 'react-native-magnus';
 import { HomeRoutes, MirrorType } from '../../stacks/HomeParams';
 import { emociones, emocionType } from '../../components';
 
@@ -17,12 +17,17 @@ const ButtonItem = ({
   return (
     <Button
       mb={4}
-      rounded={8}
-      style={{ width: 120 }}
-      bg={item.color}
+      rounded={16}
+      style={{ width: 80, height: 150 }}
+      bg={item.colorBottonContainer}
       color="#524b6b"
       onPress={goToLearn}>
-      {item.displayname}
+      <View style={{ flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Text style={{ color: '#524B6B', textAlignVertical: 'top', textAlign: 'center', marginBottom: 10 }}>
+          {item.displayname}
+        </Text>
+        <Image source={item.pathMonstruo} style={{ width: 80, height: 80 }} />
+      </View>
     </Button>
   );
 };
@@ -43,7 +48,7 @@ const MirrorScreen: FC<MirrorType> = ({ navigation }) => {
         <FlatList
           style={style.list}
           data={prueba}
-          numColumns={2}
+          numColumns={3}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <ButtonItem
@@ -54,7 +59,10 @@ const MirrorScreen: FC<MirrorType> = ({ navigation }) => {
             />
           )}
           contentContainerStyle={{ gap }}
-          columnWrapperStyle={{ gap }}
+          columnWrapperStyle={{
+            gap,
+            justifyContent: 'center',
+          }}
         />
       </View>
     </View>

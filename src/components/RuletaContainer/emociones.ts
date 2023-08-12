@@ -23,6 +23,7 @@ export type EmocionesTypeNames = `${emocionesEnum}`;
 
 export type emocionType = {
   color: string;
+  colorBottonContainer: string;
   name: string;
   displayname: string;
   pathReal: any;
@@ -34,6 +35,7 @@ export type emocionType = {
 export const emociones: {[K in emocionesEnum]: emocionType} = {
   [emocionesEnum.ALEGRIA]: {
     color: '#FDFF49',
+    colorBottonContainer: '#FEFC78',
     name: emocionesEnum.ALEGRIA,
     displayname: 'Alegría',
     pathGuia: AlegriaGuia,
@@ -43,6 +45,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
   },
   [emocionesEnum.TRISTEZA]: {
     color: '#65ADFC',
+    colorBottonContainer: '#6CB5F9',
     name: emocionesEnum.TRISTEZA,
     displayname: 'Tristeza',
     pathGuia: TristezaGuia,
@@ -52,6 +55,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
   },
   [emocionesEnum.SORPRESA]: {
     color: '#BBBBBB',
+    colorBottonContainer: '#BBBBBB',
     name: emocionesEnum.SORPRESA,
     displayname: 'Sorpresa',
     pathGuia: SorpresaGuia,
@@ -61,6 +65,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
   },
   [emocionesEnum.ENOJO]: {
     color: '#FC4D4A',
+    colorBottonContainer: '#FD5A55',
     name: emocionesEnum.ENOJO,
     displayname: 'Enojo',
     pathGuia: EnojoGuia,
@@ -70,6 +75,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
   },
   [emocionesEnum.CALMA]: {
     color: '#88EA5A',
+    colorBottonContainer: '#56CD54',
     name: emocionesEnum.CALMA,
     displayname: 'Calma',
     pathGuia: CalmaGuia,

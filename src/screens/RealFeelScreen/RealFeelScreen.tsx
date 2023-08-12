@@ -4,6 +4,8 @@ import { makeRealFeelScreenStyles } from './RealFeelScreen.style';
 import { Button, Text } from 'react-native-magnus';
 import { RealFeelType } from '../../stacks/HomeParams';
 import { HomeRoutes } from '../../stacks/HomeParams';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const RealFeelScreen: FC<RealFeelType> = ({ route, navigation }) => {
   const { emotion } = route.params;
   const style = makeRealFeelScreenStyles();
@@ -17,16 +19,18 @@ const RealFeelScreen: FC<RealFeelType> = ({ route, navigation }) => {
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
         dolor sit amet.
       </Text> */}
-      <Image source={emotion.pathReal} style={style.image} />
-      <View style={style.buttonContainer}>
+      <View style={style.imageContainer}>
+        <Image source={emotion.pathReal} style={style.image} />
+      </View>
+      <View style={style.floatingButtonContainer}>
         <Button
-          onPress={() =>
-            navigation.navigate(HomeRoutes.PERFORM_EMOTION, {
-              emotion: emotion,
-              type: 'Mirror',
-            })
-          }>
-          Siguiente
+          bg="#130160"
+          p="md"
+          h={60}
+          w={60}
+          rounded="circle"
+          onPress={() => navigation.navigate(HomeRoutes.REAL_FEEL, { emotion: emotion })}>
+          <Icon name="arrow-right" size={34} color='white' />
         </Button>
       </View>
     </View>
