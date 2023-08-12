@@ -76,7 +76,7 @@ export const convertToEventItems = (calendar: CalendarioType): EventItem[] => {
       if (Object.prototype.hasOwnProperty.call(calendarData, horario)) {
         const emocion = calendarData[horario].emocion;
         const horarioTime = horarioConfig[horario as HorarioEnum];
-        const color = colorMapping[emocion.toLowerCase()];
+        const color = colorMapping[emocion];
 
         const eventItem: EventItem = {
           id: `${fecha}-${horario}`,
@@ -85,7 +85,6 @@ export const convertToEventItems = (calendar: CalendarioType): EventItem[] => {
           title: emocion,
           color: color,
         };
-
         eventItems.push(eventItem);
       }
     }
