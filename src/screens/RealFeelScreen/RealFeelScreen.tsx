@@ -11,7 +11,7 @@ const RealFeelScreen: FC<RealFeelType> = ({ route, navigation }) => {
   return (
     <View style={style.containerView}>
       <Text textAlign="center" fontSize={32}>
-        Imagen real ({emotion.name})
+        Imagen real ({emotion.displayname})
       </Text>
       {/* <Text fontSize={16} textAlign="center" mt={20}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum

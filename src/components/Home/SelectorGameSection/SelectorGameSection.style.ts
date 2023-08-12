@@ -6,6 +6,7 @@ export const makeSelectorGameSectionStyles = () =>
       height: 314,
       alignItems: 'center',
       justifyContent: 'center',
+      marginTop: 10,
       marginBottom: 10,
       paddingHorizontal: 10,
     },
@@ -17,6 +18,7 @@ export const makeSelectorGameSectionStyles = () =>
       flexDirection: 'row',
       gap: 10,
       height: 264,
+      marginTop: 15
     },
     leftSection: {
       flex: 0.5,

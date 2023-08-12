@@ -12,7 +12,7 @@ const GuideFeelScreen: FC<GuideFeelType> = ({route, navigation}) => {
   return (
     <View style={style.containerView}>
       <Text textAlign="center" fontSize={32}>
-        Imagen instructivo ({emotion.name})
+        Imagen instructivo ({emotion.displayname})
       </Text>
       {/* <Text fontSize={16} textAlign="center" mt={20}> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet. </Text> */}
       <View style={style.imageContainer}>

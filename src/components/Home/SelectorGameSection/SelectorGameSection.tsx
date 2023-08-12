@@ -21,8 +21,8 @@ const SelectorGameSection = ({
   return (
     <View style={style.selectorGameContainer}>
       <View style={style.titleContainer}>
-        <Text fontWeight="700" fontSize={16}>
-          Elige un juego
+        <Text style={{color: 'black', fontWeight: '700', fontSize: 16}}>
+          ¡Elegí un Juego!
         </Text>
       </View>
       <View style={style.gamesGrid}>
@@ -58,7 +58,7 @@ const SelectorGameSection = ({
             <Card
               style={style.contFull}
               color={'#FFD6AD'}
-              text={'Asociacion de Emociones'}
+              text={'Asociación de Emociones'}
               icon={<Icon name="emoticon-tongue-outline" size={34} />}
             />
           </TouchableOpacity>

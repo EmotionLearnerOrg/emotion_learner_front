@@ -1,7 +1,7 @@
 import React from 'react';
-import {View} from 'react-native';
-import {makeInsigniasAccessSectionStyles} from './InsigniasAccessSection.style';
-import {Button, Text} from 'react-native-magnus';
+import { View } from 'react-native';
+import { makeInsigniasAccessSectionStyles } from './InsigniasAccessSection.style';
+import { Button, Text } from 'react-native-magnus';
 
 const InsigniasAccessSection = ({
   goToInsignias,
@@ -13,17 +13,18 @@ const InsigniasAccessSection = ({
   return (
     <View style={style.insigniasContainer}>
       <View>
-        <Text fontWeight="700" fontSize={16}>
+        <Text color='#150B3D' fontWeight="700" fontSize={16}>
           Insignias ganadas
         </Text>
       </View>
       <Button
-        rounded={8}
-        bg="#F5CACC"
-        color="#524b6b"
+        alignSelf="center"
+        bg="#FCCDCE"
+        mt={15}
+        rounded={16}
         style={style.button}
         onPress={goToInsignias}>
-        Acceder a Mis Insignias
+        <Text style={style.buttonText}>Acceder a mis insignias</Text>
       </Button>
     </View>
   );

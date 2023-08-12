@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
-import {FlatList, View} from 'react-native';
-import {makeMirrorScreenStyles} from './MirrorScreen.style';
-import {Button, Text} from 'react-native-magnus';
-import {HomeRoutes, MirrorType} from '../../stacks/HomeParams';
-import {emociones, emocionType} from '../../components';
+import React, { FC } from 'react';
+import { FlatList, View } from 'react-native';
+import { makeMirrorScreenStyles } from './MirrorScreen.style';
+import { Button, Text } from 'react-native-magnus';
+import { HomeRoutes, MirrorType } from '../../stacks/HomeParams';
+import { emociones, emocionType } from '../../components';
 
 const prueba = Object.values(emociones);
 
@@ -18,48 +18,43 @@ const ButtonItem = ({
     <Button
       mb={4}
       rounded={8}
-      style={{width: 120}}
+      style={{ width: 120 }}
       bg={item.color}
       color="#524b6b"
       onPress={goToLearn}>
-      {item.name}
+      {item.displayname}
     </Button>
   );
 };
 
-const MirrorScreen: FC<MirrorType> = ({navigation}) => {
+const MirrorScreen: FC<MirrorType> = ({ navigation }) => {
   const style = makeMirrorScreenStyles();
   const gap = 16;
 
   return (
     <View style={style.containerView}>
-      <Text textAlign="center" fontSize={32}>
+      <Text style={{ color: '#150B3D', textAlign: "center", fontSize: 32 }}>
         Espejo inteligente
       </Text>
-      <Text fontSize={16} textAlign="center" mt={20}>
+      <Text style={{ color: '#150B3D', textAlign: "left", fontSize: 16, marginStart: 10, marginTop: 20 }}>
         Elegí la emoción que quieras aprender y practicar!
       </Text>
       <View style={style.buttonsContainer}>
-        <View>
-          <Text fontWeight="700" fontSize={16}>
-            Elegi una emocion
-          </Text>
-        </View>
         <FlatList
           style={style.list}
           data={prueba}
           numColumns={2}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <ButtonItem
               item={item}
               goToLearn={() =>
-                navigation.navigate(HomeRoutes.GUIDE_FEEL, {emotion: item})
+                navigation.navigate(HomeRoutes.GUIDE_FEEL, { emotion: item })
               }
             />
           )}
-          contentContainerStyle={{gap}}
-          columnWrapperStyle={{gap}}
+          contentContainerStyle={{ gap }}
+          columnWrapperStyle={{ gap }}
         />
       </View>
     </View>
