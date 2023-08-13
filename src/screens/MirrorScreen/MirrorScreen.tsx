@@ -42,7 +42,7 @@ const MirrorScreen: FC<MirrorType> = ({ navigation }) => {
         Espejo inteligente
       </Text>
       <Text style={{ color: '#150B3D', textAlign: "left", fontSize: 16, marginStart: 10, marginTop: 20 }}>
-        Elegí la emoción que quieras aprender y practicar!
+        Elegí la emoción que quieras aprender y practicar
       </Text>
       <View style={style.buttonsContainer}>
         <FlatList

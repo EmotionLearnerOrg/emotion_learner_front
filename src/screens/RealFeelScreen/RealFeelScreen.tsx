@@ -29,7 +29,11 @@ const RealFeelScreen: FC<RealFeelType> = ({ route, navigation }) => {
           h={60}
           w={60}
           rounded="circle"
-          onPress={() => navigation.navigate(HomeRoutes.REAL_FEEL, { emotion: emotion })}>
+          onPress={() =>
+            navigation.navigate(HomeRoutes.PERFORM_EMOTION, {
+              emotion: emotion,
+              type: 'Mirror',
+            })}>
           <Icon name="arrow-right" size={34} color='white' />
         </Button>
       </View>

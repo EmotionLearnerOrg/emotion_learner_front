@@ -11,6 +11,14 @@ export const makeFeedbackViewStyles = () =>
       backgroundColor: 'white',
       alignSelf: 'center',
     },
+    buttonText: {
+      color: '#524B6B',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
+    },
     cardContainer: {
       marginTop: 20,
       rowGap: 16,

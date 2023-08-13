@@ -68,7 +68,7 @@ const SelectorGameSection = ({
             onPress={goToArcade}>
             <Card
               style={style.contFull}
-              color={'#FEAFB0'}
+              color={'#FFB8B8'}
               text={'Modo Arcade'}
               icon={<Icon name="emoticon-tongue-outline" size={34} />}
             />

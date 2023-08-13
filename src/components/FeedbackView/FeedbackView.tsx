@@ -26,13 +26,15 @@ const FeedbackView = ({
 
   return (
     <View style={style.containerView}>
-      <Text fontSize={18} textAlign="center" mt={20}>
+      <Text fontWeight="700" fontSize={20} textAlign="center" mt={20}>
         {title ?? success
-          ? 'Felicitaciones'
-          : `No pudimos reconocer la expresión ${emotion.name}, probá nuevamente!`}
+          ? '¡Felicitaciones!'
+          : `No pudimos reconocer la expresión ${emotion.displayname.toLocaleLowerCase()}, probá nuevamente`}
       </Text>
-      <Text fontSize={18} textAlign="center" mt={20}>
-      Excelente trabajo, ganaste una medalla!
+      <Text fontWeight="400" fontSize={18} textAlign="center" mt={25}>
+        {success
+          ? 'Excelente trabajo, ganaste una medalla'
+          : `Sigue las siguientes sugerencias para realizar la expresión ${emotion.displayname.toLocaleLowerCase()}`}
       </Text>
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
         {success ? (
@@ -49,11 +51,16 @@ const FeedbackView = ({
           />
         )}
       </View>
-      <View style={style.buttonContainer}>
-        <Button onPress={() => goTo && goTo()}>
-          {textButton ?? success ? 'Menu Principal' : 'Volver a intentar'}
-        </Button>
-      </View>
+      <Button
+        alignSelf="center"
+        bg="#FCCDCE"
+        mx={10}
+        mb={10}
+        rounded={16}
+        style={style.button}
+        onPress={() => goTo && goTo()}>
+        <Text style={style.buttonText}> {textButton ?? success ? 'Acceder a mis insignias' : 'Volver a intentar'}</Text>
+      </Button>
     </View>
   );
 };

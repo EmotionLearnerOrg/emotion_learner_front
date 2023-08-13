@@ -10,7 +10,7 @@ const FeedbackPosScreen: FC<FeedbackPosType> = ({route, navigation}) => {
       type={type}
       success
       goTo={() => {
-        navigation.navigate(HomeRoutes.HOME_S);
+        navigation.navigate(HomeRoutes.INSIGNIAS);
       }}
     />
   );

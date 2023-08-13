@@ -98,12 +98,12 @@ const CameraComponent: ForwardRefExoticComponent<
           device={currentDevice}
           onInitialized={() => setIsInitialized?.(true)}
         />
-        <Text style={{ textAlign: 'center', fontSize: 32, marginTop: 10 }}>Emoción : {emotion.displayname}</Text>
+        <Text style={{ textAlign: 'center', fontSize: 32, marginTop: 10 }}>Emoción: {emotion.displayname}</Text>
         <Text style={{ textAlign: 'center', fontSize: 12, marginTop: 10 }}>Cuando estes listo, presioná el botón y realiza la expresión seleccionada</Text>
       </>
     ) : (
       <TouchableOpacity style={styles.button} onPress={requestCameraPermission}>
-        <Text>dale a los permisos</Text>
+        <Text>Dale a los permisos</Text>
       </TouchableOpacity>
     );
   },

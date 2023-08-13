@@ -21,9 +21,9 @@ const CalendarCardSection = ({
           ¿Cómo te sentiste hoy?
         </Text>
       </View>
-      <TouchableOpacity style={style.labelContainer}>
+      {/* <TouchableOpacity style={style.labelContainer}>
         <Icon name="label-variant-outline" size={34} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={style.cardContainer}>
         <View style={{ flex: 0.5 }}>
           <TouchableOpacity
