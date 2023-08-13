@@ -12,11 +12,12 @@ export const makeCalendarScreenStyles = () =>
       alignItems: 'center',
       justifyContent: 'center',
     },
+    buttonText: {
+      color: '#524B6B',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
     button: {
-      mb: 4,
-      rounded: 8,
-      width: 120,
-      fontSize: 20,
-      alignSelf: 'center',
+      width: '100%',
     },
   });

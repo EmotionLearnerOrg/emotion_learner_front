@@ -16,6 +16,7 @@ import {
   getCurrentDate,
   getCurrentHorarioEnum,
   horarioConfigUTC,
+  getFormattedCurrentDate
 } from '../../types/calendario';
 import { useUserAuth } from '../../contexts';
 import { generateRandomCalendario } from '../CalendarScreen/CalendarScreen.mockup';
@@ -55,15 +56,15 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
 
   const validateItemsSelected = (): boolean => {
     if (timeSelected === '' && emotionSelected === '') {
-      alertMessageAccept('Error', 'debe seleccionar el horario y emocion');
+      alertMessageAccept('Error', 'Debe seleccionar un horario y una emoción');
       return false;
     }
     if (timeSelected === '') {
-      alertMessageAccept('Error', 'Debe seleccionar el horario');
+      alertMessageAccept('Error', 'Debe seleccionar un horario');
       return false;
     }
     if (emotionSelected === '') {
-      alertMessageAccept('Error', 'debe seleccionar la emocion');
+      alertMessageAccept('Error', 'Debe seleccionar una emoción');
       return false;
     }
 
@@ -146,11 +147,11 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
       <Button
         mb={4}
         rounded={8}
-        style={{ width: 120 }}
-        bg={emotionSelected === item.name ? '#370928' : item.color}
+        style={{ width: 80, height: 50 }}
+        bg={item.colorBottonContainer}
         color={emotionSelected === item.name ? '#FFFFFF' : '#524b6b'}
         onPress={updateEmotionTime}>
-        {item.name}
+        {item.displayname}
       </Button>
     );
   };
@@ -166,8 +167,8 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
       <Button
         mb={4}
         rounded={8}
-        style={{ width: 120 }}
-        bg={timeSelected === item.name ? '#370928' : item.color}
+        style={{ width: 120, height: 50 }}
+        bg={item.color}
         color={timeSelected === item.name ? '#FFFFFF' : '#524b6b'}
         onPress={updateStateTime}>
         {item.name}
@@ -178,17 +179,17 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
   return (
     <>
       <View style={styleMirror.containerView}>
-        <Text style={{ alignSelf: 'center' }} fontSize={20}>
-          {getCurrentDate()}
+        <Text style={{ fontWeight: 'bold', alignSelf: 'center' }} fontSize={20}>
+          {`Hoy es: ${getFormattedCurrentDate()}`}
         </Text>
         <View style={styleCalendar.calendarCardContainer}>
-          <Text fontSize={16} textAlign="auto" mt={10}>
-            Elegi la emosion que queres registrar en el dia de hoy
+          <Text fontWeight="bold" fontSize={16} textAlign="auto" mx={20} mt={10}>
+            Elegí la emoción que queres registrar en el dia de hoy
           </Text>
           <FlatList
             style={styleMirror.list}
             data={emotions}
-            numColumns={2}
+            numColumns={3}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
               <ButtonEmotionItem
@@ -197,14 +198,17 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
               />
             )}
             contentContainerStyle={{ gap }}
-            columnWrapperStyle={{ gap }}
+            columnWrapperStyle={{
+              gap,
+              justifyContent: 'center',
+            }}
           />
         </View>
       </View>
       <View style={styleMirror.containerView}>
         <View style={styleCalendar.calendarCardContainer}>
-          <Text fontSize={16} textAlign="auto" mt={10}>
-            Marca el momento del dia en el que sentiste esta emosion
+          <Text fontWeight="bold" fontSize={16} textAlign="auto" mx={20} mt={10}>
+            Marca el momento del día en el que sentiste esta emoción
           </Text>
           <FlatList
             style={styleMirror.list}
@@ -220,23 +224,24 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
               />
             )}
             contentContainerStyle={{ gap }}
-            columnWrapperStyle={{ gap }}
+            columnWrapperStyle={{
+              gap,
+              justifyContent: 'center',
+            }}
           />
         </View>
       </View>
-      <View style={{ alignSelf: 'center' }}>
-        <Button
-          style={{ width: 120 }}
-          mb={4}
-          rounded={8}
-          color="#000000"
-          bg="#ee3964"
-          onPress={() => {
-            handlerRegisterNewItemCalendar();
-          }}>
-          Aceptar
-        </Button>
-      </View>
+      <Button
+        style={styleMirror.button}
+        alignSelf="center"
+        bg="#FCCDCE"
+        m={25}
+        rounded={16}
+        onPress={() => {
+          handlerRegisterNewItemCalendar();
+        }}>
+        <Text style={styleMirror.buttonText}>Registrar emoción</Text>
+      </Button>
     </>
   );
 };

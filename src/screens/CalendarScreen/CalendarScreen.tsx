@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-magnus';
+import { Button, Text } from 'react-native-magnus';
 import { makeCalendarScreenStyles } from './CalendarScreen.style';
 import { useGetCalendarByUser } from '../../hooks/calendar';
 import { useUserAuth } from '../../contexts';
@@ -52,18 +52,17 @@ const CalendarScreen: React.FC<CalendarType> = ({ navigation }) => {
         maxDate={maxDate}
         isLoading={isLoading}
       />
-      <View style={style.buttonContainer}>
-        <Button
-          mt={4}
-          mb={4}
-          rounded={8}
-          color="#000000"
-          bg="#F08080"
-          style={style.button}
-          onPress={goToRegisterEmotionCalendar}>
-          Nueva emocion
-        </Button>
-      </View>
+      <Button
+        style={style.button}
+        alignSelf="center"
+        bg="#FCCDCE"
+        m={25}
+        rounded={16}
+        onPress={() => {
+          goToRegisterEmotionCalendar();
+        }}>
+        <Text style={style.buttonText}>Registrar nueva emoción</Text>
+      </Button>
     </View >
   );
 };

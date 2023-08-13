@@ -55,7 +55,7 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
   },
   [emocionesEnum.SORPRESA]: {
     color: '#BBBBBB',
-    colorBottonContainer: '#BBBBBB',
+    colorBottonContainer: '#BFBFBF',
     name: emocionesEnum.SORPRESA,
     displayname: 'Sorpresa',
     pathGuia: SorpresaGuia,

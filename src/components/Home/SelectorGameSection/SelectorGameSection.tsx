@@ -22,7 +22,7 @@ const SelectorGameSection = ({
     <View style={style.selectorGameContainer}>
       <View style={style.titleContainer}>
         <Text style={{color: 'black', fontWeight: '700', fontSize: 16}}>
-          ¡Elegí un Juego!
+          ¡Elegí un juego!
         </Text>
       </View>
       <View style={style.gamesGrid}>

@@ -25,4 +25,12 @@ export const makeMirrorScreenStyles = () =>
       alignSelf: 'center',
       marginTop: 16,
     },
+    buttonText: {
+      color: '#524B6B',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
+    },
   });
