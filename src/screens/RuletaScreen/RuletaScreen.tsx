@@ -20,10 +20,10 @@ const RuletaScreen: FC<RuletaType> = ({ navigation }) => {
       <Text textAlign="center" fontSize={32}>
         ¡Girá la ruleta!
       </Text>
-      <Text fontSize={16} textAlign="center" mt={20}>
+      {/* <Text fontSize={16} textAlign="center" mt={20}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
         dolor sit amet.
-      </Text>
+      </Text> */}
       <RuletaContainer divisions={5} goToPerformEmotion={goToPerformEmotion} />
     </View>
   );

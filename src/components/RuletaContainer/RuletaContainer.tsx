@@ -77,16 +77,19 @@ const RuletaContainer = ({
       <Dialog isVisible={visible} onBackdropPress={() => setVisible(false)}>
         <Dialog.Title
           titleStyle={style.dialogTitle}
-          title={`Emocion ganadora: ¡${emocion?.displayname}!`}
+          title={`Emoción ganadora: ¡${emocion?.displayname}!`}
         />
         <Button
           block
-          m={10}
+          m={12}
+          bg="#FCCDCE"
+          alignSelf="center"
+          rounded={16}
           onPress={() => {
             setVisible(false);
             goToPerformEmotion(emocion!);
           }}>
-          Realizar emoción
+          <Text style={style.buttonText}>Realizar emoción</Text>
         </Button>
       </Dialog>
     </View>

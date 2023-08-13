@@ -22,15 +22,16 @@ export const makeRuletaContainerStyle = () =>
       marginTop: 20,
       paddingVertical: 10,
       paddingHorizontal: 20,
-      backgroundColor: 'blue',
-      borderRadius: 5,
+      backgroundColor: '#FCCDCE',
+      borderRadius: 16,
     },
     buttonText: {
-      fontSize: 18,
+      color: '#524B6B',
+      fontSize: 16,
       fontWeight: 'bold',
-      color: 'white',
     },
     dialogTitle: {
+      color: "#150B3D",
       alignSelf: 'center',
     },
   });
