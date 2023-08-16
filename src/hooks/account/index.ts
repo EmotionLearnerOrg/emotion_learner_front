@@ -1,10 +1,12 @@
 import {useMutation, useQuery} from 'react-query';
 import {
   getDisplayName,
+  getSubscriptionType,
   loginWithEmailAndPassword,
   signUpWithEmailAndPassword,
   updateDisplayName,
-} from '../../services/account/account.service';
+  updateSubscriptionType,
+} from '../../services';
 import {ResponseType} from '../../contexts';
 
 export const useLoginWithEmailAndPassword = (props: ResponseType) => {
@@ -57,5 +59,31 @@ export const useGetNicknameByUser = (props: ResponseType & {uid: string}) => {
   return useQuery({
     queryKey: `useGetNicknameByUser${props.uid}`,
     queryFn: () => getDisplayName({uid: props.uid}),
+  });
+};
+
+export const useUpdateSubscriptionType = (
+  props: ResponseType & {uid: string},
+) => {
+  return useMutation(
+    'useUpdateSubscriptionType',
+    (data: {subscriptionType: string}) =>
+      updateSubscriptionType({
+        subscriptionType: data.subscriptionType,
+        uid: props.uid,
+      }),
+    {
+      onSuccess: () => props.onSuccess && props.onSuccess(),
+      onError: () => props.onError && props.onError(),
+    },
+  );
+};
+
+export const useGetSubscriptionTypeByUser = (
+  props: ResponseType & {uid: string},
+) => {
+  return useQuery({
+    queryKey: `useGetSubscriptionTypeByUser${props.uid}`,
+    queryFn: () => getSubscriptionType(),
   });
 };

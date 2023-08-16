@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from 'react-query';
-import {typeInsignias} from '../../types/insignias';
+import {typeInsignias} from '../../types';
 import {
   createInsigniaByUser,
   updateInsigniaByUser,

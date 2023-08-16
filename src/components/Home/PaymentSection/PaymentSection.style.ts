@@ -1,8 +1,8 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const makePaymentSectionStyles = () =>
   StyleSheet.create({
-    containerView: {flex: 1},
+    containerView: { flex: 1 },
     cardPayment: {
       backgroundColor: 'white',
       borderRadius: 20,
@@ -14,5 +14,15 @@ export const makePaymentSectionStyles = () =>
     line: {
       borderBottomColor: '#DEE1E7',
       borderBottomWidth: 1,
+      marginTop: 10,
+      marginBottom: 10,
     },
+    buttonText: {
+      color: '#524B6B',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
+    }
   });

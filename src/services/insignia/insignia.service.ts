@@ -1,6 +1,6 @@
 import {db} from '../../configs/config.firebase';
 import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
-import {insigniasDefault, typeInsignias} from '../../types/insignias';
+import {insigniasDefault, typeInsignias} from '../../types';
 
 export const getInsigniasByUser = async ({
   uid,

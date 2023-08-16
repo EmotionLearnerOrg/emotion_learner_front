@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import {SchemaOf} from 'yup';
 import {validations} from '../../utils/formValidations/validations';
 import {FormInput} from '../../components';
-import {useSignUpWithEmailAndPassword} from '../../hooks/account';
+import {useSignUpWithEmailAndPassword} from '../../hooks';
 
 export type RegisterForm = {
   email: string;

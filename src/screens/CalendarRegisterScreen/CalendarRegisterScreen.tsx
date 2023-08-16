@@ -1,21 +1,19 @@
 import React, {FC, useState} from 'react';
 import {Alert, FlatList, View} from 'react-native';
 import {Button, Text} from 'react-native-magnus';
-import {emociones} from '../../components';
 import {HomeRoutes, RegisterEmotionCalendarType} from '../../stacks/HomeParams';
-import {HorarioEnum, horarios} from '../../types/horarios';
 import {makeCalendarRegisterScreenStyles} from './CalendarRegisterScreen.style';
+import {emociones} from '../../components';
 import {
-  useGetCalendarByUser,
-  useUpdateEmotionTodayByUser,
-} from '../../hooks/calendar';
-import {
+  HorarioEnum,
+  horarios,
   CalendarItemType,
   CalendarioType,
   getCurrentDate,
   getCurrentHorarioEnum,
   horarioConfigUTC,
-} from '../../types/calendario';
+} from '../../types';
+import {useGetCalendarByUser, useUpdateEmotionTodayByUser} from '../../hooks';
 import {useUserAuth} from '../../contexts';
 import ButtonCalendarItem from './ButtonCalendarItem';
 
@@ -115,6 +113,8 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
           });
         }
 
+        // Generar 3 meses de emociones random para que no este vacio desde el principio (reemplazarlo por unica vez en la linea 122)
+        // updateCalendar({ calendario: generateRandomCalendario() })
         updateCalendar({calendario: updatedCalendar});
         goToCalendar();
       }

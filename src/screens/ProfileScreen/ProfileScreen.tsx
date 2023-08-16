@@ -83,14 +83,18 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
           </Button>
         </View>
       </View>
-      {/* <PaymentSection /> */}
+      <PaymentSection />
       <Button
-        block
-        m={10}
+        style={style.button}
+        alignSelf="center"
+        bg="#FCCDCE"
+        mx={10}
+        mb={12}
+        rounded={16}
         onPress={() => {
           setVisible(true);
         }}>
-        Cerrar sesion
+        <Text style={style.buttonText}>Cerrar sesión</Text>
       </Button>
       <Dialog isVisible={visible}>
         <Dialog.Title

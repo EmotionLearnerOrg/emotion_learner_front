@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button} from 'react-native-magnus';
-import {HorarioType} from '../../types/horarios';
+import {HorarioType} from '../../types';
 import {makeButtonCalendarItemStyles} from './ButtonCalendarItem.style';
 
 const ButtonCalendarItem = ({

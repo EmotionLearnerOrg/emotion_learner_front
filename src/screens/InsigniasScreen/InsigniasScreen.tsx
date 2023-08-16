@@ -8,7 +8,7 @@ import {
   InsigniaAso,
   InsigniaRuleta,
 } from '../../../assets';
-import {insigniasColor, insigniasEnum} from '../../types/insignias';
+import {insigniasColor, insigniasEnum} from '../../types';
 import {useUserData} from '../../contexts';
 
 const capitalizeFirstLetter = ({str}: {str: string}) => {

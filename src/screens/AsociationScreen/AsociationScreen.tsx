@@ -3,12 +3,9 @@ import {Image, View} from 'react-native';
 import {makeAsociationScreenStyles} from './AsociationScreen.style';
 import {Text} from 'react-native-magnus';
 import {HomeRoutes, AsociationType} from '../../stacks/HomeParams';
-import {
-  emocionType,
-  emociones,
-} from '../../components/RuletaContainer/emociones';
+import {emocionType, emociones} from '../../components';
 import {useUserData} from '../../contexts';
-import {insigniasEnum} from '../../types/insignias';
+import {insigniasEnum} from '../../types';
 import {useFocusEffect} from '@react-navigation/native';
 import OptionItem from './OptionItem';
 

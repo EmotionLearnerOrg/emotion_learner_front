@@ -1,6 +1,6 @@
 import {db} from '../../configs/config.firebase';
 import {doc, getDoc, setDoc} from 'firebase/firestore';
-import {CalendarioType, defaultCalendar} from '../../types/calendario';
+import {CalendarioType, defaultCalendar} from '../../types';
 
 // trae el calendario completo del usuario.
 export const getCalendarByUser = async ({

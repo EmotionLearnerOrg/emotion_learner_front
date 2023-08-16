@@ -1,5 +1,5 @@
-import {UserDataState} from './UserData.model';
-import {UserDataAction, UserDataActionKind} from './UserData.actions';
+import { UserDataState } from './UserData.model';
+import { UserDataAction, UserDataActionKind } from './UserData.actions';
 
 const {
   SET_INSIGNIAS,
@@ -7,13 +7,17 @@ const {
   SET_NICKNAME,
   CLEAR_DATA,
   SET_UPDATING_INSIGNIAS,
+  SET_SUBSCRIPTION_TYPE,
+  SET_UPDATING_SUBSCRIPTION_TYPE
 } = UserDataActionKind;
 
 export const DEFAULT_STATE_DATA: UserDataState = {
   isLoadingUpdateNickname: false,
   isLoadingPostInsignias: false,
+  isLoadingUpdateSubscriptionType: false,
   insignias: [],
   nickName: '',
+  subscriptionType: 'PRUEBA',
 };
 
 export const userInsigniasReducer = (
@@ -31,6 +35,11 @@ export const userInsigniasReducer = (
         ...prevState,
         nickName: action.nickName,
       };
+    case SET_SUBSCRIPTION_TYPE:
+      return {
+        ...prevState,
+        subscriptionType: action.subscriptionType,
+      };
     case CLEAR_DATA:
       return {
         ...DEFAULT_STATE_DATA,
@@ -44,6 +53,11 @@ export const userInsigniasReducer = (
       return {
         ...prevState,
         isLoadingUpdateNickname: action.isLoadingUpdateNickname,
+      };
+    case SET_UPDATING_SUBSCRIPTION_TYPE:
+      return {
+        ...prevState,
+        isLoadingUpdateSubscriptionType: action.isLoadingUpdateSubscriptionType,
       };
     default:
       return prevState;
