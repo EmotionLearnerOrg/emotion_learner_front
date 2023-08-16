@@ -92,12 +92,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
           idInsignia:
             `${type}_${emotionParam.name}` as unknown as insigniasEnum,
         });
-        navigation.navigate(HomeRoutes.FEEDBACK_POS, {
+        navigation.navigate(HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
           emotion: emotionParam,
           type,
         });
       } else {
-        navigation.navigate(HomeRoutes.FEEDBACK_NEG, {
+        navigation.navigate(HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
           emotion: emotionParam,
           type,
         });

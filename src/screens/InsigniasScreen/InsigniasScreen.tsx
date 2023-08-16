@@ -108,7 +108,11 @@ const InsigniaItem = ({
 
   return (
     <View style={style}>
-      <Text mb={8}>{capitalizeFirstLetter({str: title[1]})}</Text>
+      <Text mb={8}>
+        {category === 'Asociacion'
+          ? ''
+          : capitalizeFirstLetter({str: title[1]})}
+      </Text>
       {InsigniaPorCategoria({category: category, item: item})}
     </View>
   );

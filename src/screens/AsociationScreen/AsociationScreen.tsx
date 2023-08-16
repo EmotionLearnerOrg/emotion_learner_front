@@ -1,104 +1,152 @@
-import React, {FC, useState} from 'react';
-import {Image, View, TouchableOpacity} from 'react-native';
+import React, {FC, useCallback, useState} from 'react';
+import {Image, View} from 'react-native';
 import {makeAsociationScreenStyles} from './AsociationScreen.style';
 import {Text} from 'react-native-magnus';
 import {HomeRoutes, AsociationType} from '../../stacks/HomeParams';
-import {emociones} from '../../components/RuletaContainer/emociones';
+import {
+  emocionType,
+  emociones,
+} from '../../components/RuletaContainer/emociones';
+import {useUserData} from '../../contexts';
+import {insigniasEnum} from '../../types/insignias';
+import {useFocusEffect} from '@react-navigation/native';
+import OptionItem from './OptionItem';
 
 const AsociationScreen: FC<AsociationType> = ({navigation}) => {
   const style = makeAsociationScreenStyles();
   const emotions = Object.values(emociones);
-  //declaro indices randoms para emociones
-  var randEmotion1 = generateRandom(0, 4);
-  var randEmotion2 = generateRandom(0, 4, randEmotion1);
-  var randEmotion3 = generateRandom(0, 4, randEmotion1, randEmotion2);
-  //declaro indices randoms para orden de opciones
-  var randOption1 = generateRandom(0, 2);
-  var randOption2 = generateRandom(0, 2, randOption1);
-  var randOption3 = generateRandom(0, 2, randOption1, randOption2);
+  const [answers, setAnswers] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [optionsState, setOptions] = useState<any>();
+  const [indicesRandomsOpciones, setIndicesRandomsOpciones] = useState<any>();
+  const [usadas, setUsadas] = useState<number[]>([]);
+  const {updateInsignias} = useUserData();
 
-  var options = [
-    emotions[randEmotion1],
-    emotions[randEmotion2],
-    emotions[randEmotion3]
-  ];
+  const generateRandom = useCallback(
+    ({
+      min,
+      max,
+      exception1 = -10000,
+      exception2 = -10000,
+    }: {
+      min: number;
+      max: number;
+      exception1?: number;
+      exception2?: number;
+    }): number => {
+      const num = Math.floor(Math.random() * (max - min + 1)) + min;
+      return num === exception1 || num === exception2
+        ? generateRandom({min, max, exception1, exception2})
+        : num;
+    },
+    [],
+  );
+  const generateRandomFirst = useCallback((): number => {
+    const resultado = [0, 1, 2, 3, 4].filter(item => !usadas.includes(item));
 
-  var [answers, setAnswers] = useState(0);
-  var [correctAnswers, setCorrectAnswers] = useState(0);
+    const indiceAleatorio = Math.floor(Math.random() * resultado.length);
+    return resultado[indiceAleatorio];
+  }, [usadas]);
 
-  function generateRandom(min, max, exeption1 = -10000, exeption2 = -10000):number {
-    var num = Math.floor(Math.random() * (max - min + 1)) + min;
-    return (num === exeption1 || num === exeption2) ? generateRandom(min, max, exeption1, exeption2) : num;
-  }
-
-  function reload(emotionSelected) {
-    setAnswers(answers++);
-    if (emotionSelected.name === emotions[randEmotion1].name) {
-      setCorrectAnswers(correctAnswers++);
-      console.log("respuestas: " + answers + " correctas: " + correctAnswers);
-    }
-    if (answers == 5) {
-      if (correctAnswers >= 3) {
-        navigation.navigate(HomeRoutes.FEEDBACK_POS, {
-          emotion: emotionSelected,
-          type: 'Asociation'
-        })
-      } else {
-        navigation.navigate(HomeRoutes.FEEDBACK_NEG, {
-          emotion: emotionSelected,
-          type: 'Asociation'
-        });
-      }
-    }
-  }
-
-  if (answers < 5 ) {
-    randEmotion1 = generateRandom(0, 4);
-    randEmotion2 = generateRandom(0, 4, randEmotion1);
-    randEmotion3 = generateRandom(0, 4, randEmotion1, randEmotion2);
-
-    randOption1 = generateRandom(0, 2);
-    randOption2 = generateRandom(0, 2, randOption1);
-    randOption3 = generateRandom(0, 2, randOption1, randOption2);
-
-    options = [
+  const generateIndicesYOptionsRandomsEmociones = useCallback(() => {
+    const randEmotion1 = generateRandomFirst();
+    const nuevoArray = [...usadas, randEmotion1];
+    const randEmotion2 = generateRandom({
+      min: 0,
+      max: 4,
+      exception1: randEmotion1,
+    });
+    const randEmotion3 = generateRandom({
+      min: 0,
+      max: 4,
+      exception1: randEmotion1,
+      exception2: randEmotion2,
+    });
+    const randOption1 = generateRandom({min: 0, max: 2});
+    const randOption2 = generateRandom({
+      min: 0,
+      max: 2,
+      exception1: randOption1,
+    });
+    const randOption3 = generateRandom({
+      min: 0,
+      max: 2,
+      exception1: randOption1,
+      exception2: randOption2,
+    });
+    setIndicesRandomsOpciones([randOption1, randOption2, randOption3]);
+    setOptions([
       emotions[randEmotion1],
       emotions[randEmotion2],
-      emotions[randEmotion3]
-    ];
-  }
+      emotions[randEmotion3],
+    ]);
+    setUsadas(nuevoArray);
+  }, [emotions, generateRandom, generateRandomFirst, usadas]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setAnswers(0);
+      setCorrectAnswers(0);
+      generateIndicesYOptionsRandomsEmociones();
+    }, []),
+  );
+
+  const reload = (emotionSelected: emocionType) => {
+    let respuestasCorrectas = correctAnswers;
+    let respuestas = answers + 1;
+    if (emotionSelected.name === optionsState[0].name) {
+      respuestasCorrectas++;
+      setCorrectAnswers(correctAnswers + 1);
+    }
+    if (respuestas === 5) {
+      if (respuestasCorrectas >= 3) {
+        updateInsignias({
+          idInsignia: 'Asociacion' as unknown as insigniasEnum,
+        });
+        navigation.navigate(HomeRoutes.FEEDBACK_POS_ASO, {
+          type: 'Asociacion',
+          aciertos: respuestasCorrectas,
+        });
+      } else {
+        navigation.navigate(HomeRoutes.FEEDBACK_NEG_ASO, {
+          emotion: emotionSelected,
+          type: 'Asociacion',
+          aciertos: respuestasCorrectas,
+        });
+      }
+    } else {
+      generateIndicesYOptionsRandomsEmociones();
+    }
+    setAnswers(answers + 1);
+  };
 
   return (
-    <View style={[style.containerView, {flexDirection: 'column', alignItems:'center'}]}>
-      <Image source={emotions[randEmotion1].pathMonstruo} style={{ width: 120, resizeMode: 'contain', flex: 1}} />
-
-      <Text fontSize={18} textAlign="center" style={{flex:1}}>
-        ¿Cual de estos personajes está {emotions[randEmotion1].name}?
-      </Text>
-
-      <View style={{flex: 1, flexDirection: 'row', alignItems:'flex-start', justifyContent : 'space-evenly'}}>
-
-        <TouchableOpacity style={{flex: 1}} activeOpacity={0.5} onPress={() => reload(options[randOption1])}>
-            <Image 
-              source={options[randOption1].pathOpciones}
-              style={style.OptionImageStyle}
+    <View style={style.containerView}>
+      {!!optionsState && !!indicesRandomsOpciones && (
+        <>
+          <Image
+            source={optionsState[0].pathMonstruo}
+            style={style.OptionImageStyle}
+          />
+          <Text fontSize={18} textAlign="center" flex={1}>
+            {`¿Cual de estos personajes refleja ${optionsState[0].name}?`}
+          </Text>
+          <View style={style.containerOptions}>
+            <OptionItem
+              onPress={() => reload(optionsState[indicesRandomsOpciones[0]])}
+              source={optionsState[indicesRandomsOpciones[0]].pathOpciones}
             />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{flex: 1}} activeOpacity={0.5} onPress={() => reload(options[randOption2])}>
-            <Image 
-              source={options[randOption2].pathOpciones}
-              style={style.OptionImageStyle}
+            <OptionItem
+              onPress={() => reload(optionsState[indicesRandomsOpciones[1]])}
+              source={optionsState[indicesRandomsOpciones[1]].pathOpciones}
             />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={{flex: 1}} activeOpacity={0.5} onPress={() => reload(options[randOption3])}>
-            <Image 
-              source={options[randOption3].pathOpciones}
-              style={style.OptionImageStyle}
+            <OptionItem
+              onPress={() => reload(optionsState[indicesRandomsOpciones[2]])}
+              source={optionsState[indicesRandomsOpciones[2]].pathOpciones}
             />
-        </TouchableOpacity>
-      </View>
+          </View>
+        </>
+      )}
     </View>
   );
 };

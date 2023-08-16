@@ -1,11 +1,10 @@
 import React, {FC, useState} from 'react';
 import {Alert, FlatList, View} from 'react-native';
 import {Button, Text} from 'react-native-magnus';
-import {emociones, emocionType} from '../../components';
+import {emociones} from '../../components';
 import {HomeRoutes, RegisterEmotionCalendarType} from '../../stacks/HomeParams';
-import {makeMirrorScreenStyles} from '../MirrorScreen/MirrorScreen.style';
-import {HorarioEnum, HorarioType, horarios} from '../../types/horarios';
-import {makeCalendarCardContainerStyles} from '../../components/Home/CalendarCardSection/CalendarCardSection.style';
+import {HorarioEnum, horarios} from '../../types/horarios';
+import {makeCalendarRegisterScreenStyles} from './CalendarRegisterScreen.style';
 import {
   useGetCalendarByUser,
   useUpdateEmotionTodayByUser,
@@ -18,12 +17,12 @@ import {
   horarioConfigUTC,
 } from '../../types/calendario';
 import {useUserAuth} from '../../contexts';
+import ButtonCalendarItem from './ButtonCalendarItem';
 
 const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
   navigation,
 }) => {
-  const styleMirror = makeMirrorScreenStyles();
-  const styleCalendar = makeCalendarCardContainerStyles();
+  const style = makeCalendarRegisterScreenStyles();
 
   const {uid} = useUserAuth();
   const {data: calendar} = useGetCalendarByUser({uid: uid});
@@ -41,7 +40,7 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
     },
   };
 
-  // Obtengo las emosiones de la fecha, en caso de ser la primera del dia, traigo defaultCalendarItemType
+  // Obtengo las emociones de la fecha, en caso de ser la primera del dia, traigo defaultCalendarItemType
   const getCurrentDateItem = (
     calendar: CalendarioType,
   ): CalendarItemType | undefined => {
@@ -132,65 +131,27 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
     navigation.replace(HomeRoutes.CALENDAR);
   };
 
-  const ButtonEmotionItem = ({
-    item,
-    updateEmotionTime,
-  }: {
-    item: emocionType;
-    updateEmotionTime: () => void;
-  }) => {
-    return (
-      <Button
-        mb={4}
-        rounded={8}
-        style={{width: 120}}
-        bg={emotionSelected === item.name ? '#370928' : item.color}
-        color={emotionSelected === item.name ? '#FFFFFF' : '#524b6b'}
-        onPress={updateEmotionTime}>
-        {item.name}
-      </Button>
-    );
-  };
-
-  const ButtonTimeItem = ({
-    item,
-    updateStateTime,
-  }: {
-    item: HorarioType;
-    updateStateTime: () => void;
-  }) => {
-    return (
-      <Button
-        mb={4}
-        rounded={8}
-        style={{width: 120}}
-        bg={timeSelected === item.name ? '#370928' : item.color}
-        color={timeSelected === item.name ? '#FFFFFF' : '#524b6b'}
-        onPress={updateStateTime}>
-        {item.name}
-      </Button>
-    );
-  };
-
   return (
     <>
-      <View style={styleMirror.containerView}>
+      <View style={style.containerView}>
         <Text style={{alignSelf: 'center'}} fontSize={20}>
           {getCurrentDate()}
         </Text>
-        <View style={styleCalendar.calendarCardContainer}>
+        <View style={style.calendarCardContainer}>
           <Text fontSize={16} textAlign="auto" mt={10}>
             Elegi la emosion que queres registrar en el dia de hoy
           </Text>
           <FlatList
-            style={styleMirror.list}
+            style={style.list}
             data={emotions}
             numColumns={2}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => `${item.name}${index.toString()}`}
             renderItem={({item}) => (
-              <ButtonEmotionItem
+              <ButtonCalendarItem
+                action={() => setEmotionSelected(item.name)}
                 item={item}
-                updateEmotionTime={() => setEmotionSelected(item.name)}
+                bg={emotionSelected === item.name ? '#370928' : item.color}
+                color={emotionSelected === item.name ? '#FFFFFF' : '#524b6b'}
               />
             )}
             contentContainerStyle={{gap}}
@@ -198,22 +159,24 @@ const CalendarRegisterScreen: FC<RegisterEmotionCalendarType> = ({
           />
         </View>
       </View>
-      <View style={styleMirror.containerView}>
-        <View style={styleCalendar.calendarCardContainer}>
+      <View style={style.containerView}>
+        <View style={style.calendarCardContainer}>
           <Text fontSize={16} textAlign="auto" mt={10}>
             Marca el momento del dia en el que sentiste esta emosion
           </Text>
           <FlatList
-            style={styleMirror.list}
+            style={style.list}
             data={times}
             numColumns={2}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => (
-              <ButtonTimeItem
-                item={item}
-                updateStateTime={() => {
+              <ButtonCalendarItem
+                action={() => {
                   setTimeSelected(item.name);
                 }}
+                item={item}
+                bg={timeSelected === item.name ? '#370928' : item.color}
+                color={timeSelected === item.name ? '#FFFFFF' : '#524b6b'}
               />
             )}
             contentContainerStyle={{gap}}

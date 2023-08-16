@@ -16,9 +16,13 @@ export enum HomeRoutes {
   REAL_FEEL = 'RealFeel',
   LOG_IN = 'HomeLogin',
   PROFILE = 'Profile',
-  FEEDBACK_POS = 'FeedbackPos',
-  FEEDBACK_NEG = 'FeedbackNeg',
-  ARCADE = 'Arcade'
+  FEEDBACK_POS_MIRROR_RULETA = 'FeedbackPosMirrorRuleta',
+  FEEDBACK_NEG_MIRROR_RULETA = 'FeedbackNegMirrorRuleta',
+  FEEDBACK_POS_ASO = 'FeedbackPosAso',
+  FEEDBACK_NEG_ASO = 'FeedbackNegAso',
+  FEEDBACK_POS_ARCADE = 'FeedbackPosArcade',
+  FEEDBACK_NEG_ARCADE = 'FeedbackNegArcade',
+  ARCADE = 'Arcade',
 }
 
 export type HomeStackParamList = {
@@ -37,13 +41,31 @@ export type HomeStackParamList = {
   [HomeRoutes.LOG_IN]: undefined;
   [HomeRoutes.REGISTEREMOTIONCALENDAR]: undefined;
   [HomeRoutes.PROFILE]: undefined;
-  [HomeRoutes.FEEDBACK_POS]: {
+  [HomeRoutes.FEEDBACK_POS_MIRROR_RULETA]: {
+    emotion?: emocionType;
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
+  };
+  [HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA]: {
     emotion: emocionType;
     type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   };
-  [HomeRoutes.FEEDBACK_NEG]: {
+  [HomeRoutes.FEEDBACK_POS_ARCADE]: {
+    emotion?: emocionType;
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
+  };
+  [HomeRoutes.FEEDBACK_NEG_ARCADE]: {
     emotion: emocionType;
     type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
+  };
+  [HomeRoutes.FEEDBACK_POS_ASO]: {
+    emotion?: emocionType;
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
+    aciertos: number;
+  };
+  [HomeRoutes.FEEDBACK_NEG_ASO]: {
+    emotion: emocionType;
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
+    aciertos: number;
   };
   [HomeRoutes.ARCADE]: undefined;
 };
@@ -132,24 +154,63 @@ export type ProfileType = {
   route: ProfileScreenRouteType;
 };
 
-type FeedbackPosScreenRouteType = RouteProp<
+type FeedbackPosMirrorRuletaScreenRouteType = RouteProp<
   HomeStackParamList,
-  HomeRoutes.FEEDBACK_POS
+  HomeRoutes.FEEDBACK_POS_MIRROR_RULETA
 >;
 
-export type FeedbackPosType = {
+export type FeedbackPosMirrorRuletaType = {
   navigation: HomeStackNavigationsProp;
-  route: FeedbackPosScreenRouteType;
+  route: FeedbackPosMirrorRuletaScreenRouteType;
 };
 
-type FeedbackNegScreenRouteType = RouteProp<
+type FeedbackNegMirrorRuletaScreenRouteType = RouteProp<
   HomeStackParamList,
-  HomeRoutes.FEEDBACK_NEG
+  HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA
 >;
 
-export type FeedbackNegType = {
+type FeedbackPosAsoScreenRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.FEEDBACK_POS_ASO
+>;
+
+export type FeedbackPosAsoType = {
   navigation: HomeStackNavigationsProp;
-  route: FeedbackNegScreenRouteType;
+  route: FeedbackPosAsoScreenRouteType;
+};
+
+type FeedbackNegAsoScreenRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.FEEDBACK_NEG_ASO
+>;
+
+export type FeedbackNegAsoType = {
+  navigation: HomeStackNavigationsProp;
+  route: FeedbackNegAsoScreenRouteType;
+};
+type FeedbackPosArcadeScreenRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.FEEDBACK_POS_ARCADE
+>;
+
+export type FeedbackPosArcadeType = {
+  navigation: HomeStackNavigationsProp;
+  route: FeedbackPosArcadeScreenRouteType;
+};
+
+type FeedbackNegArcadeScreenRouteType = RouteProp<
+  HomeStackParamList,
+  HomeRoutes.FEEDBACK_NEG_ARCADE
+>;
+
+export type FeedbackNegArcadeType = {
+  navigation: HomeStackNavigationsProp;
+  route: FeedbackNegArcadeScreenRouteType;
+};
+
+export type FeedbackNegMirrorRuletaType = {
+  navigation: HomeStackNavigationsProp;
+  route: FeedbackNegMirrorRuletaScreenRouteType;
 };
 
 export type ArcadeType = {
@@ -157,10 +218,7 @@ export type ArcadeType = {
   route: ArcadeRouteType;
 };
 
-type ArcadeRouteType = RouteProp<
-  HomeStackParamList,
-  HomeRoutes.ARCADE
->;
+type ArcadeRouteType = RouteProp<HomeStackParamList, HomeRoutes.ARCADE>;
 
 export const HomeStackNavigator =
   createNativeStackNavigator<HomeStackParamList>();

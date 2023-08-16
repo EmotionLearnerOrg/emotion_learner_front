@@ -1,17 +1,18 @@
 import {StyleSheet} from 'react-native';
 
-export const makeCalendarScreenStyles = () =>
+export const makeCalendarRegisterScreenStyles = () =>
   StyleSheet.create({
-    containerView: {flex: 1},
-    container: {
-      flex: 1,
+    containerView: {flex: 1, padding: 10},
+    list: {
+      alignSelf: 'center',
+      marginTop: 16,
     },
-    item: {
-      flex: 1,
-      borderRadius: 5,
-      padding: 5,
-      marginRight: 5,
-      marginTop: 25,
-      marginEnd: 25,
+    calendarCardContainer: {
+      margin: 10,
+      marginVertical: 20,
+      padding: 10,
+      elevation: 5,
+      borderRadius: 8,
+      backgroundColor: 'white',
     },
   });
