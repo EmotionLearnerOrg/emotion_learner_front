@@ -57,5 +57,5 @@ export const insigniasColor: typeInsigniasColor = {
   [insigniasEnum.ARCADE_SORPRESA]: '#BBBBBB',
   [insigniasEnum.ARCADE_ENOJO]: '#FC4D4A',
   [insigniasEnum.ARCADE_CALMA]: '#88EA5A',
-  [insigniasEnum.ASOCIACION]: '#pink',
+  [insigniasEnum.ASOCIACION]: 'pink',
 };

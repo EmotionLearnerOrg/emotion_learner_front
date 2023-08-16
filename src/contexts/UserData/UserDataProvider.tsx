@@ -6,21 +6,20 @@ import React, {
   useReducer,
   useMemo,
 } from 'react';
-import {
-  InsigniasTypeNames,
-  insigniasDefault,
-  typeInsignias,
-} from '../../types/insignias';
+import {InsigniasTypeNames, insigniasDefault, typeInsignias} from '../../types';
 import {
   useCreateInsigniaByUser,
   useGetInsigniasByUser,
   useUpdateInsigniaByUser,
+  useGetNicknameByUser,
+  useUpdateDisplayName,
+  useUpdateSubscriptionType,
+  useGetSubscriptionTypeByUser,
 } from '../../hooks';
 import {IUserDataContext} from './UserData.model';
 import {DEFAULT_STATE_DATA, userInsigniasReducer} from './UserData.reducer';
 import {UserDataActionKind} from './UserData.actions';
 import {useUserAuth} from '../UserAuth';
-import {useGetNicknameByUser, useUpdateDisplayName, useUpdateSubscriptionType, useGetSubscriptionTypeByUser} from '../../hooks/account';
 
 type objectInsignias = {
   [key: string]: boolean;
@@ -107,13 +106,21 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
   }, [dataNickname, isLoadingGetNickname, isRefetchingGetNickname]);
 
   useEffect(() => {
-    if (!isLoadingGetSubscriptionType && dataSubscriptionType && !isRefetchingGetSubscriptionType) {
+    if (
+      !isLoadingGetSubscriptionType &&
+      dataSubscriptionType &&
+      !isRefetchingGetSubscriptionType
+    ) {
       dispatch({
         type: UserDataActionKind.SET_SUBSCRIPTION_TYPE,
         subscriptionType: dataSubscriptionType,
       });
     }
-  }, [dataSubscriptionType, isLoadingGetSubscriptionType, isRefetchingGetSubscriptionType]);
+  }, [
+    dataSubscriptionType,
+    isLoadingGetSubscriptionType,
+    isRefetchingGetSubscriptionType,
+  ]);
 
   useEffect(() => {
     if (!isLoading && dataInsignias && !isRefetching) {
@@ -179,12 +186,14 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
         type: UserDataActionKind.SET_UPDATING_SUBSCRIPTION_TYPE,
         isLoadingUpdateSubscriptionType: true,
       });
-      mutateUpdateSubscriptionType({subscriptionType: subscriptionType}).then(() => {
-        dispatch({
-          type: UserDataActionKind.SET_SUBSCRIPTION_TYPE,
-          subscriptionType: subscriptionType,
-        });
-      });
+      mutateUpdateSubscriptionType({subscriptionType: subscriptionType}).then(
+        () => {
+          dispatch({
+            type: UserDataActionKind.SET_SUBSCRIPTION_TYPE,
+            subscriptionType: subscriptionType,
+          });
+        },
+      );
     },
     [mutateUpdateSubscriptionType],
   );
@@ -244,7 +253,14 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
       updateSubscriptionType,
       refetch,
     }),
-    [initData, refetch, state, updateInsignias, updateNickname, updateSubscriptionType],
+    [
+      initData,
+      refetch,
+      state,
+      updateInsignias,
+      updateNickname,
+      updateSubscriptionType,
+    ],
   );
 
   return (

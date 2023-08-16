@@ -13,9 +13,11 @@ import {
   CalendarRegisterScreen,
   HomeScreen,
   ProfileScreen,
-  FeedbackPosScreen,
-  FeedbackNegScreen,
+  FeedbackPosMirrorRuletaScreen,
+  FeedbackNegMirrorRuletaScreen,
   ArcadeScreen,
+  FeedbackNegAsoScreen,
+  FeedbackPosAsoScreen,
 } from '../screens';
 import {HeaderCommon} from '../components';
 
@@ -72,12 +74,20 @@ const HomeStack = () => {
           options={{headerShown: false}}
         />
         <HomeStackNavigator.Screen
-          name={HomeRoutes.FEEDBACK_POS}
-          component={FeedbackPosScreen}
+          name={HomeRoutes.FEEDBACK_POS_MIRROR_RULETA}
+          component={FeedbackPosMirrorRuletaScreen}
         />
         <HomeStackNavigator.Screen
-          name={HomeRoutes.FEEDBACK_NEG}
-          component={FeedbackNegScreen}
+          name={HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA}
+          component={FeedbackNegMirrorRuletaScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.FEEDBACK_POS_ASO}
+          component={FeedbackPosAsoScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.FEEDBACK_NEG_ASO}
+          component={FeedbackNegAsoScreen}
         />
         <HomeStackNavigator.Screen
           name={HomeRoutes.ARCADE}

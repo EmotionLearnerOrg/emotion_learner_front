@@ -8,7 +8,7 @@ import {
   InsigniaAso,
   InsigniaRuleta,
 } from '../../../assets';
-import {insigniasColor, insigniasEnum} from '../../types/insignias';
+import {insigniasColor, insigniasEnum} from '../../types';
 import {useUserData} from '../../contexts';
 
 const capitalizeFirstLetter = ({str}: {str: string}) => {
@@ -108,7 +108,11 @@ const InsigniaItem = ({
 
   return (
     <View style={style}>
-      <Text mb={8}>{capitalizeFirstLetter({str: title[1]})}</Text>
+      <Text mb={8}>
+        {category === 'Asociacion'
+          ? ''
+          : capitalizeFirstLetter({str: title[1]})}
+      </Text>
       {InsigniaPorCategoria({category: category, item: item})}
     </View>
   );

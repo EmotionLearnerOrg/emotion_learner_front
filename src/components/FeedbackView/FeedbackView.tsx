@@ -2,8 +2,8 @@ import React from 'react';
 import {Image, View} from 'react-native';
 import {makeFeedbackViewStyles} from './FeedbackView.style';
 import {Button, Text} from 'react-native-magnus';
-import {emocionType} from '..';
 import {InsigniaPorCategoria} from '../../screens/InsigniasScreen/InsigniasScreen';
+import {emocionType} from '../RuletaContainer';
 
 const FeedbackView = ({
   title,
@@ -17,7 +17,7 @@ const FeedbackView = ({
   title?: string;
   description?: string;
   textButton?: string;
-  emotion: emocionType;
+  emotion?: emocionType;
   goTo?: () => void;
   type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   success: boolean;
@@ -26,27 +26,24 @@ const FeedbackView = ({
 
   return (
     <View style={style.containerView}>
-      <Text fontSize={18} textAlign="center" mt={20}>
-        {title ?? success
-          ? 'Felicitaciones'
-          : `No pudimos reconocer la expresión ${emotion.name}, probá nuevamente!`}
+      <Text fontSize={32} textAlign="center" mt={20}>
+        {title}
       </Text>
-      <Text fontSize={18} textAlign="center" mt={20}>
-      Excelente trabajo, ganaste una medalla!
+      <Text fontSize={24} textAlign="center" mt={20}>
+        {description}
       </Text>
-      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+      <View style={style.containerImage}>
         {success ? (
           InsigniaPorCategoria({
-            category: 'Mirror',
-            item: [type + '_' + emotion.name, true],
+            category: type,
+            item: [type + `${emotion ? '_' + emotion.name : ''}`, true],
             height: 200,
             width: 200,
           })
+        ) : type === 'Ruleta' || type === 'Mirror' ? (
+          <Image source={emotion?.pathGuia} style={style.image} />
         ) : (
-          <Image
-            source={emotion.pathGuia}
-            style={{alignSelf: 'center', flex: 1, resizeMode: 'contain'}}
-          />
+          <></>
         )}
       </View>
       <View style={style.buttonContainer}>

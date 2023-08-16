@@ -3,13 +3,12 @@ import {View} from 'react-native';
 import {Button, Text} from 'react-native-magnus';
 import {makePerformEmotionScreenStyles} from './PerformEmotionScreen.style';
 import {Camera} from 'react-native-vision-camera';
-import {useAuthorizedCamera} from '../../components/Camera/useAuthorizedCamera';
+import {useAuthorizedCamera, CameraComponent} from '../../components';
 import {HomeRoutes, PerformEmotionType} from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
-import {CameraComponent} from '../../components/Camera';
 import {useUserData} from '../../contexts';
-import {insigniasEnum} from '../../types/insignias';
+import {insigniasEnum} from '../../types';
 
 interface Prediction {
   emocion: string;
@@ -92,12 +91,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
           idInsignia:
             `${type}_${emotionParam.name}` as unknown as insigniasEnum,
         });
-        navigation.navigate(HomeRoutes.FEEDBACK_POS, {
+        navigation.navigate(HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
           emotion: emotionParam,
           type,
         });
       } else {
-        navigation.navigate(HomeRoutes.FEEDBACK_NEG, {
+        navigation.navigate(HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
           emotion: emotionParam,
           type,
         });

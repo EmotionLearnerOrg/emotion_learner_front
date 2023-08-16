@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {makeLoginScreenStyle} from './LoginScreen.style';
 import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
 import {useUserAuth} from '../../contexts';
-import {useLoginWithEmailAndPassword} from '../../hooks/account';
+import {useLoginWithEmailAndPassword} from '../../hooks';
 import {Button, Text} from 'react-native-magnus';
 import {Control, FieldValues, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';

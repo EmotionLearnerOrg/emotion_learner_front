@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import { Button } from 'react-native-magnus';
-import { makeCalendarScreenStyles } from './CalendarScreen.style';
-import { useGetCalendarByUser } from '../../hooks/calendar';
-import { useUserAuth } from '../../contexts';
-import { convertToEventItems, getCurrentDate } from '../../types/calendario';
-import { TimelineCalendar, EventItem } from '@howljs/calendar-kit';
-import { CalendarType, HomeRoutes } from '../../stacks/HomeParams';
+import React, {useState, useEffect} from 'react';
+import {View} from 'react-native';
+import {Button} from 'react-native-magnus';
+import {makeCalendarScreenStyles} from './CalendarScreen.style';
+import {useGetCalendarByUser} from '../../hooks';
+import {useUserAuth} from '../../contexts';
+import {convertToEventItems, getCurrentDate} from '../../types';
+import {TimelineCalendar, EventItem} from '@howljs/calendar-kit';
+import {CalendarType, HomeRoutes} from '../../stacks/HomeParams';
 
-const CalendarScreen: React.FC<CalendarType> = ({ navigation }) => {
-
+const CalendarScreen: React.FC<CalendarType> = ({navigation}) => {
   const style = makeCalendarScreenStyles();
   const [items, setItems] = useState<EventItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { uid } = useUserAuth();
-  const { data: calendar } = useGetCalendarByUser({ uid: uid });
+  const {uid} = useUserAuth();
+  const {data: calendar} = useGetCalendarByUser({uid: uid});
   const minDate = `${new Date().getFullYear()}-01-01`;
   const maxDate = `${new Date().getFullYear()}-12-31`;
 
@@ -64,7 +63,7 @@ const CalendarScreen: React.FC<CalendarType> = ({ navigation }) => {
           Nueva emocion
         </Button>
       </View>
-    </View >
+    </View>
   );
 };
 

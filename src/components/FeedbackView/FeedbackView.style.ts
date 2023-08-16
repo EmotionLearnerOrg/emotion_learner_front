@@ -11,18 +11,10 @@ export const makeFeedbackViewStyles = () =>
       backgroundColor: 'white',
       alignSelf: 'center',
     },
-    cardContainer: {
-      marginTop: 20,
-      rowGap: 16,
-      alignSelf: 'center',
-      borderRadius: 20,
-      padding: 10,
-    },
-    buttonEmotion: {
-      width: 120,
-    },
+    containerImage: {justifyContent: 'center', alignItems: 'center', flex: 1},
     image: {
       alignSelf: 'center',
       flex: 1,
+      resizeMode: 'contain',
     },
   });
