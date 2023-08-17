@@ -1,5 +1,5 @@
-import { auth, db } from '../../configs/config.firebase';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import {auth, db} from '../../configs/config.firebase';
+import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,8 +10,8 @@ import {
   clearPreferenceData,
   savePreferenceData,
 } from '../preference/preference.service';
-import { insigniasDefault } from '../../types/insignias';
-import { createInsigniaByUser } from '../insignia/insignia.service';
+import {insigniasDefault} from '../../types';
+import {createInsigniaByUser} from '../insignia/insignia.service';
 export const loginWithEmailAndPassword = async ({
   email,
   password,
@@ -22,8 +22,10 @@ export const loginWithEmailAndPassword = async ({
   try {
     await signInWithEmailAndPassword(auth, email, password)
       .then(async response => {
-        const nickName = await getDisplayName({ uid: response.user.uid });
-        const subscriptionType = await getSubscriptionType({ uid: response.user.uid });
+        const nickName = await getDisplayName({uid: response.user.uid});
+        const subscriptionType = await getSubscriptionType({
+          uid: response.user.uid,
+        });
         await savePreferenceData(nickName, subscriptionType, response.user.uid);
         return response.user.uid;
       })
@@ -48,7 +50,7 @@ export const signUpWithEmailAndPassword = async ({
       email,
       password,
     );
-    await updateProfile(auth.currentUser!!, { displayName: nickName });
+    await updateProfile(auth.currentUser!!, {displayName: nickName});
     await createInsigniaByUser({
       uid: response.user.uid,
       nuevasInsignias: insigniasDefault,
@@ -61,7 +63,11 @@ export const signUpWithEmailAndPassword = async ({
   }
 };
 
-export const setInitialData = async (nickName: string, subscriptionType: string, uid: string) => {
+export const setInitialData = async (
+  nickName: string,
+  subscriptionType: string,
+  uid: string,
+) => {
   try {
     await setDoc(doc(db, 'users', uid!), {
       nickName: nickName,
@@ -75,7 +81,7 @@ export const setInitialData = async (nickName: string, subscriptionType: string,
   return uid;
 };
 
-export const getDisplayName = async ({ uid }: { uid: string }): Promise<any> => {
+export const getDisplayName = async ({uid}: {uid: string}): Promise<any> => {
   const docRef = doc(db, 'users', uid!);
   return getDoc(docRef)
     .then(docSnap => {
@@ -108,7 +114,11 @@ export const updateDisplayName = async ({
   }
 };
 
-export const getSubscriptionType = async ({ uid }: { uid: string }): Promise<any> => {
+export const getSubscriptionType = async ({
+  uid,
+}: {
+  uid: string;
+}): Promise<any> => {
   const docRef = doc(db, 'users', uid!);
   return getDoc(docRef)
     .then(docSnap => {

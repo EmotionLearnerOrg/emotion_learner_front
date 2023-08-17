@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-magnus';
-import { makeCalendarScreenStyles } from './CalendarScreen.style';
-import { useGetCalendarByUser } from '../../hooks/calendar';
-import { useUserAuth } from '../../contexts';
-import { convertToEventItems, getCurrentDate } from '../../types/calendario';
-import { TimelineCalendar, EventItem } from '@howljs/calendar-kit';
-import { CalendarType, HomeRoutes } from '../../stacks/HomeParams';
+import React, {useState, useEffect} from 'react';
+import {View} from 'react-native';
+import {Button, Text} from 'react-native-magnus';
+import {makeCalendarScreenStyles} from './CalendarScreen.style';
+import {useGetCalendarByUser} from '../../hooks';
+import {useUserAuth} from '../../contexts';
+import {convertToEventItems, getCurrentDate} from '../../types';
+import {TimelineCalendar, EventItem} from '@howljs/calendar-kit';
+import {CalendarType, HomeRoutes} from '../../stacks/HomeParams';
 
-const CalendarScreen: React.FC<CalendarType> = ({ navigation }) => {
-
+const CalendarScreen: React.FC<CalendarType> = ({navigation}) => {
   const style = makeCalendarScreenStyles();
   const [items, setItems] = useState<EventItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { uid } = useUserAuth();
-  const { data: calendar } = useGetCalendarByUser({ uid: uid });
+  const {uid} = useUserAuth();
+  const {data: calendar} = useGetCalendarByUser({uid: uid});
   const minDate = `${new Date().getFullYear()}-01-01`;
   const maxDate = `${new Date().getFullYear()}-12-31`;
 
@@ -52,18 +51,18 @@ const CalendarScreen: React.FC<CalendarType> = ({ navigation }) => {
         maxDate={maxDate}
         isLoading={isLoading}
       />
-      <Button
-        style={style.button}
-        alignSelf="center"
-        bg="#FCCDCE"
-        m={25}
-        rounded={16}
-        onPress={() => {
-          goToRegisterEmotionCalendar();
-        }}>
-        <Text style={style.buttonText}>Registrar nueva emoción</Text>
-      </Button>
-    </View >
+      <View style={style.buttonContainer}>
+        <Button
+          style={style.button}
+          alignSelf="center"
+          bg="#FCCDCE"
+          m={25}
+          rounded={16}
+          onPress={goToRegisterEmotionCalendar}>
+          <Text style={style.buttonText}>Registrar nueva emoción</Text>
+        </Button>
+      </View>
+    </View>
   );
 };
 

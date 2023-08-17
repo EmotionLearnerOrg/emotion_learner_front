@@ -11,16 +11,6 @@ export const makeMirrorScreenStyles = () =>
       borderRadius: 16,
       backgroundColor: 'white',
     },
-    // cardContainer: {
-    //   marginTop: 20,
-    //   rowGap: 16,
-    //   alignSelf: 'center',
-    //   borderRadius: 20,
-    //   padding: 10,
-    // },
-    // buttonEmotion: {
-    //   width: 120,
-    // },
     list: {
       alignSelf: 'center',
       marginTop: 16,

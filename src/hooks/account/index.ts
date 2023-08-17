@@ -6,7 +6,7 @@ import {
   signUpWithEmailAndPassword,
   updateDisplayName,
   updateSubscriptionType,
-} from '../../services/account/account.service';
+} from '../../services';
 import {ResponseType} from '../../contexts';
 
 export const useLoginWithEmailAndPassword = (props: ResponseType) => {
@@ -62,7 +62,9 @@ export const useGetNicknameByUser = (props: ResponseType & {uid: string}) => {
   });
 };
 
-export const useUpdateSubscriptionType = (props: ResponseType & {uid: string}) => {
+export const useUpdateSubscriptionType = (
+  props: ResponseType & {uid: string},
+) => {
   return useMutation(
     'useUpdateSubscriptionType',
     (data: {subscriptionType: string}) =>
@@ -77,9 +79,11 @@ export const useUpdateSubscriptionType = (props: ResponseType & {uid: string}) =
   );
 };
 
-export const useGetSubscriptionTypeByUser = (props: ResponseType & {uid: string}) => {
+export const useGetSubscriptionTypeByUser = (
+  props: ResponseType & {uid: string},
+) => {
   return useQuery({
     queryKey: `useGetSubscriptionTypeByUser${props.uid}`,
-    queryFn: () => getSubscriptionType({uid: props.uid}),
+    queryFn: () => getSubscriptionType(),
   });
 };

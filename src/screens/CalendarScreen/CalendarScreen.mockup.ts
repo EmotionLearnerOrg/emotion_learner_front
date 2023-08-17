@@ -1,6 +1,5 @@
-import { emocionesEnum } from "../../components/RuletaContainer/emociones";
-import { CalendarItemType } from "../../types/calendario";
-import { HorarioEnum } from "../../types/horarios";
+import {emocionesEnum} from '../../components';
+import {CalendarItemType, HorarioEnum} from '../../types';
 
 type emocionType = {
   emocion: string;
@@ -18,10 +17,10 @@ export const generateRandomCalendario: () => CalendarItemType[] = () => {
     const currentDateFormatted = currentDate.toISOString().split('T')[0];
 
     const emociones: Record<HorarioEnum, emocionType> = {
-      [HorarioEnum.MANIANA]: { emocion: getRandomEmocion() },
-      [HorarioEnum.MEDIODIA]: { emocion: getRandomEmocion() },
-      [HorarioEnum.TARDE]: { emocion: getRandomEmocion() },
-      [HorarioEnum.NOCHE]: { emocion: getRandomEmocion() },
+      [HorarioEnum.MANIANA]: {emocion: getRandomEmocion()},
+      [HorarioEnum.MEDIODIA]: {emocion: getRandomEmocion()},
+      [HorarioEnum.TARDE]: {emocion: getRandomEmocion()},
+      [HorarioEnum.NOCHE]: {emocion: getRandomEmocion()},
     };
 
     const calendarioItem: CalendarItemType = {

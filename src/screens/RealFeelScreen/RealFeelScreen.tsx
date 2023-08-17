@@ -1,13 +1,12 @@
-import React, { FC } from 'react';
-import { Image, View } from 'react-native';
-import { makeRealFeelScreenStyles } from './RealFeelScreen.style';
-import { Button, Text } from 'react-native-magnus';
-import { RealFeelType } from '../../stacks/HomeParams';
-import { HomeRoutes } from '../../stacks/HomeParams';
+import React, {FC} from 'react';
+import {Image, View} from 'react-native';
+import {makeRealFeelScreenStyles} from './RealFeelScreen.style';
+import {Button, Text} from 'react-native-magnus';
+import {RealFeelType, HomeRoutes} from '../../stacks/HomeParams';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const RealFeelScreen: FC<RealFeelType> = ({ route, navigation }) => {
-  const { emotion } = route.params;
+const RealFeelScreen: FC<RealFeelType> = ({route, navigation}) => {
+  const {emotion} = route.params;
   const style = makeRealFeelScreenStyles();
 
   return (
@@ -33,8 +32,9 @@ const RealFeelScreen: FC<RealFeelType> = ({ route, navigation }) => {
             navigation.navigate(HomeRoutes.PERFORM_EMOTION, {
               emotion: emotion,
               type: 'Mirror',
-            })}>
-          <Icon name="arrow-right" size={34} color='white' />
+            })
+          }>
+          <Icon name="arrow-right" size={34} color="white" />
         </Button>
       </View>
     </View>

@@ -29,8 +29,10 @@ export const makeFeedbackViewStyles = () =>
     buttonEmotion: {
       width: 120,
     },
+    containerImage: {justifyContent: 'center', alignItems: 'center', flex: 1},
     image: {
       alignSelf: 'center',
       flex: 1,
+      resizeMode: 'contain',
     },
   });

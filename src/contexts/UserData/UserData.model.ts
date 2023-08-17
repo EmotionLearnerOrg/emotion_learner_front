@@ -1,4 +1,4 @@
-import {InsigniasTypeNames} from '../../types/insignias';
+import {InsigniasTypeNames} from '../../types';
 import {UserDataAction} from './UserData.actions';
 
 export interface IUserDataContext {
@@ -14,7 +14,11 @@ export interface IUserDataContext {
   refetch: () => void;
   updateInsignias: ({idInsignia}: {idInsignia: InsigniasTypeNames}) => void;
   updateNickname: ({nickname}: {nickname: string}) => void;
-  updateSubscriptionType: ({subscriptionType}: {subscriptionType: string}) => void;
+  updateSubscriptionType: ({
+    subscriptionType,
+  }: {
+    subscriptionType: string;
+  }) => void;
 }
 
 export interface UserDataState {

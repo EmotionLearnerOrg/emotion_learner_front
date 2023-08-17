@@ -1,7 +1,7 @@
 import {useMutation, useQuery} from 'react-query';
 import {ResponseType} from '../../contexts';
-import {getCalendarByUser, updateCalendarByUser} from '../../services/calendar';
-import {CalendarioType, defaultCalendar} from '../../types/calendario';
+import {getCalendarByUser, updateCalendarByUser} from '../../services';
+import {CalendarioType, defaultCalendar} from '../../types';
 
 export const useGetCalendarByUser = (
   props: ResponseType<CalendarioType> & {uid: string},
