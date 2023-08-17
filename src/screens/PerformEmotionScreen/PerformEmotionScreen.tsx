@@ -223,10 +223,10 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
           <Button
             style={style.button}
             opacity={0.5}
-            bg="white"
+            bg="#56CD54"
             rounded={16}
             onPress={() => setUserReady(true)}>
-            <Text fontSize={32}>Estoy listo!</Text>
+            <Text color='black' fontSize={32}>¡Estoy listo!</Text>
           </Button>
         ) : !finishedCountDown ? (
           <Countdown

@@ -8,11 +8,19 @@ export const makeMirrorScreenStyles = () =>
       marginVertical: 20,
       padding: 10,
       elevation: 5,
-      borderRadius: 8,
+      borderRadius: 16,
       backgroundColor: 'white',
     },
     list: {
       alignSelf: 'center',
       marginTop: 16,
+    },
+    buttonText: {
+      color: '#524B6B',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    button: {
+      width: '100%',
     },
   });

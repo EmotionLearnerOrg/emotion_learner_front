@@ -14,19 +14,19 @@ export type HorarioType = {
 
 export const horarios: {[K in HorarioEnum]: HorarioType} = {
   [HorarioEnum.MANIANA]: {
-    color: '#FFA500',
+    color: '#D4CAF7',
     name: HorarioEnum.MANIANA,
   },
   [HorarioEnum.MEDIODIA]: {
-    color: '#C8A2C8',
+    color: '#D4CAF7',
     name: HorarioEnum.MEDIODIA,
   },
   [HorarioEnum.TARDE]: {
-    color: '#D2B48C',
+    color: '#D4CAF7',
     name: HorarioEnum.TARDE,
   },
   [HorarioEnum.NOCHE]: {
-    color: '#ADD8E6',
+    color: '#D4CAF7',
     name: HorarioEnum.NOCHE,
   },
 };

@@ -15,4 +15,12 @@ export const makeCalendarRegisterScreenStyles = () =>
       borderRadius: 8,
       backgroundColor: 'white',
     },
+    button: {
+      width: '100%',
+    },
+    buttonText: {
+      color: '#524B6B',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
   });

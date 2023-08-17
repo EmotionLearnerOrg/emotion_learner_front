@@ -1,7 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {makeCalendarCardContainerStyles} from './CalendarCardSection.style';
-import {Text} from 'react-native-magnus';
+import { TouchableOpacity, View } from 'react-native';
+import { makeCalendarCardContainerStyles } from './CalendarCardSection.style';
+import { Text } from 'react-native-magnus';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Card from '../SelectorGameSection/Card/Card';
 
@@ -17,34 +17,34 @@ const CalendarCardSection = ({
   return (
     <View style={style.calendarCardContainer}>
       <View>
-        <Text fontWeight="700" fontSize={16}>
-          Como te sentiste hoy?
+        <Text style={{ color: '#150B3D', fontWeight: "700", fontSize: 16, paddingTop: 15 }}>
+          ¿Cómo te sentiste hoy?
         </Text>
       </View>
-      <TouchableOpacity style={style.labelContainer}>
+      {/* <TouchableOpacity style={style.labelContainer}>
         <Icon name="label-variant-outline" size={34} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={style.cardContainer}>
-        <View style={{flex: 0.5}}>
+        <View style={{ flex: 0.5 }}>
           <TouchableOpacity
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             activeOpacity={0.4}
             onPress={goToRegisterEmotionCalendar}>
             <Card
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               color={'#D4CAF7'}
-              text={'Registrar emocion'}
+              text={'Registrar emoción'}
               icon={<Icon name="mirror" size={34} />}
             />
           </TouchableOpacity>
         </View>
-        <View style={{flex: 0.5}}>
+        <View style={{ flex: 0.5 }}>
           <TouchableOpacity
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             activeOpacity={0.4}
             onPress={goToCalendar}>
             <Card
-              style={{flex: 1}}
+              style={{ flex: 1 }}
               color={'#D4CAF7'}
               text={'Calendario de emociones'}
               icon={<Icon name="calendar" size={34} />}

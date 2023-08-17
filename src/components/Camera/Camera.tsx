@@ -1,4 +1,4 @@
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import React, {
   Dispatch,
   forwardRef,
@@ -16,9 +16,9 @@ import {
   useCameraDevices,
 } from 'react-native-vision-camera';
 import 'react-native-reanimated';
-import {makeCameraStyles} from './Camera.styles';
-import {Text} from 'react-native-magnus';
-import {emocionType} from '../RuletaContainer/emociones';
+import { makeCameraStyles } from './Camera.styles';
+import { Text } from 'react-native-magnus';
+import { emocionType } from '../RuletaContainer/emociones';
 
 type CameraProps = {
   cameraPosition?: CameraPosition;
@@ -98,11 +98,12 @@ const CameraComponent: ForwardRefExoticComponent<
           device={currentDevice}
           onInitialized={() => setIsInitialized?.(true)}
         />
-        <Text fontSize={32}>Emocion : {emotion.name}</Text>
+        <Text style={{ textAlign: 'center', fontSize: 32, marginTop: 10 }}>Emoción: {emotion.displayname}</Text>
+        <Text style={{ textAlign: 'center', fontSize: 12, marginTop: 10 }}>Cuando estes listo, presioná el botón y realiza la expresión seleccionada</Text>
       </>
     ) : (
       <TouchableOpacity style={styles.button} onPress={requestCameraPermission}>
-        <Text>dale a los permisos</Text>
+        <Text>Dale a los permisos</Text>
       </TouchableOpacity>
     );
   },

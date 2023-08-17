@@ -1,16 +1,7 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 export const makeGuideFeelScreenStyles = () =>
   StyleSheet.create({
-    containerView: {flex: 1, padding: 10},
-    buttonContainer: {
-      margin: 10,
-      marginVertical: 20,
-      padding: 10,
-      elevation: 5,
-      borderRadius: 8,
-      backgroundColor: 'white',
-      alignSelf: 'center',
-    },
+    containerView: { flex: 1, padding: 10 },
     image: {
       alignSelf: 'center',
       flex: 1,
@@ -20,5 +11,10 @@ export const makeGuideFeelScreenStyles = () =>
       justifyContent: 'center',
       alignItems: 'center',
       flex: 1,
+    },
+    floatingButtonContainer: {
+      position: 'absolute',
+      bottom: 20,
+      right: 20,
     },
   });

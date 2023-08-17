@@ -1,11 +1,11 @@
-import React, {FC} from 'react';
-import {View} from 'react-native';
-import {makeRuletaScreenStyles} from './RuletaScreen.style';
-import {Text} from 'react-native-magnus';
-import {HomeRoutes, RuletaType} from '../../stacks/HomeParams';
-import {RuletaContainer, emocionType} from '../../components';
+import React, { FC } from 'react';
+import { View } from 'react-native';
+import { makeRuletaScreenStyles } from './RuletaScreen.style';
+import { Text } from 'react-native-magnus';
+import { HomeRoutes, RuletaType } from '../../stacks/HomeParams';
+import { RuletaContainer, emocionType } from '../../components';
 
-const RuletaScreen: FC<RuletaType> = ({navigation}) => {
+const RuletaScreen: FC<RuletaType> = ({ navigation }) => {
   const style = makeRuletaScreenStyles();
 
   const goToPerformEmotion = (emotion: emocionType) => {
@@ -18,12 +18,12 @@ const RuletaScreen: FC<RuletaType> = ({navigation}) => {
   return (
     <View style={style.container}>
       <Text textAlign="center" fontSize={32}>
-        Gira la Ruleta
+        ¡Girá la ruleta!
       </Text>
-      <Text fontSize={16} textAlign="center" mt={20}>
+      {/* <Text fontSize={16} textAlign="center" mt={20}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum
         dolor sit amet.
-      </Text>
+      </Text> */}
       <RuletaContainer divisions={5} goToPerformEmotion={goToPerformEmotion} />
     </View>
   );

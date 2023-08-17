@@ -11,10 +11,10 @@ const HeaderSection = ({goToProfile}: {goToProfile: () => void}) => {
   return (
     <View style={style.headerContainer}>
       <View>
-        <Text fontWeight="700" fontSize={32}>
+        <Text color='#150B3D' fontWeight="700" fontSize={32}>
           Hola
         </Text>
-        <Text fontWeight="700" fontSize={32}>
+        <Text color='#150B3D' fontWeight="700" fontSize={32}>
           {nickName}!
         </Text>
       </View>

@@ -20,7 +20,7 @@ export const makeCalendarCardContainerStyles = () =>
       gap: 10,
       flexDirection: 'row',
       height: 120,
-      marginTop: 25,
+      marginTop: 20,
       rowGap: 4,
       alignSelf: 'center',
       borderRadius: 20,
