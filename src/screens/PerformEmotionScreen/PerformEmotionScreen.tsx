@@ -84,6 +84,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     [emotionParam.name],
   );
 
+  //TODO: Estaria bueno que esta funcion se divida y quede mas prolija y dividida por tipo de juego
   const navigateToFeedback = useCallback(
     (detection: boolean) => {
       if (detection) {

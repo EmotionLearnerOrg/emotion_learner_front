@@ -97,8 +97,7 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
       setCorrectAnswers(correctAnswers + 1);
     }
     if (respuestas === 5) {
-      console.log("Tipo en asociacion screen-> " + type);
-
+      //TODO: Estaria bueno dividir esta funcion o encapsularlo en un metodo para cuando sea de tipo "Arcade" quede mas simple de entender y modificar en caso de necesitarlo.
       if (type == 'Arcade') {
         if (respuestasCorrectas >= 3) {
           let idInsignia = `${type}_${route.params.emotion?.name}`;
