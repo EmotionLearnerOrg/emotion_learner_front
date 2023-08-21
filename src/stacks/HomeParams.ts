@@ -39,7 +39,7 @@ export type HomeStackParamList = {
   [HomeRoutes.CALENDAR]: undefined;
   [HomeRoutes.PERFORM_EMOTION]: {
     emotion: emocionType;
-    type: 'Mirror' | 'Ruleta' | 'Arcade';
+    type: 'Mirror' | 'Ruleta' | 'Arcade' | 'Asociacion';
   };
   [HomeRoutes.GUIDE_FEEL]: { emotion: emocionType };
   [HomeRoutes.REAL_FEEL]: { emotion: emocionType };

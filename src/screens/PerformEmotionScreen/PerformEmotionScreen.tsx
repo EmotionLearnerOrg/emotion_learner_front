@@ -88,7 +88,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     (detection: boolean) => {
       if (detection) {
         if (type == 'Arcade') {
-          navigation.navigate(HomeRoutes.ASOCIATION, {
+          navigation.replace (HomeRoutes.ASOCIATION, {
             emotion: emotionParam,
             type,
           });
@@ -98,19 +98,19 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
             idInsignia:
               `${type}_${emotionParam.name}` as unknown as insigniasEnum,
           });
-          navigation.navigate(HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
+          navigation.replace (HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
             emotion: emotionParam,
             type,
           });
         }
       } else {
         if (type == 'Arcade') {
-          navigation.navigate(HomeRoutes.FEEDBACK_NEG_ARCADE, {
+          navigation.replace (HomeRoutes.FEEDBACK_NEG_ARCADE, {
             emotion: emotionParam,
             type,
           });
         } else {
-          navigation.navigate(HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
+          navigation.replace (HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
             emotion: emotionParam,
             type,
           });
