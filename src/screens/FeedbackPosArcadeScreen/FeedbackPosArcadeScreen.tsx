@@ -14,7 +14,7 @@ const FeedbackPosArcadeScreen: FC<FeedbackPosArcadeType> = ({
       type={type}
       success
       goTo={() => {
-        navigation.navigate(HomeRoutes.HOME_S);
+        navigation.navigate(HomeRoutes.INSIGNIAS);
       }}
       title={`Superaste el arcade de ${emotion?.name}`}
       description="Ganaste una medalla!"

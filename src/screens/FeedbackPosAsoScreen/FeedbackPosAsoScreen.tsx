@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
-import {FeedbackPosAsoType, HomeRoutes} from '../../stacks/HomeParams';
-import {FeedbackView} from '../../components';
+import React, { FC } from 'react';
+import { FeedbackPosAsoType, HomeRoutes } from '../../stacks/HomeParams';
+import { FeedbackView } from '../../components';
 
-const FeedbackPosAsoScreen: FC<FeedbackPosAsoType> = ({route, navigation}) => {
-  const {emotion, type, aciertos} = route.params;
+const FeedbackPosAsoScreen: FC<FeedbackPosAsoType> = ({ route, navigation }) => {
+  const { emotion, type, aciertos } = route.params;
 
   return (
     <FeedbackView
@@ -11,7 +11,7 @@ const FeedbackPosAsoScreen: FC<FeedbackPosAsoType> = ({route, navigation}) => {
       type={type}
       success
       goTo={() => {
-        navigation.navigate(HomeRoutes.HOME_S);
+        navigation.navigate(HomeRoutes.INSIGNIAS);
       }}
       title={`Excelente trabajo, acertaste ${aciertos}/5`}
       description="Ganaste una medalla!"
