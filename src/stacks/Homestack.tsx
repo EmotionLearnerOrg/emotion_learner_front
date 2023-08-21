@@ -20,6 +20,8 @@ import {
   FeedbackPosAsoScreen,
 } from '../screens';
 import {HeaderCommon} from '../components';
+import FeedbackPosArcadeScreen from '../screens/FeedbackPosArcadeScreen/FeedbackPosArcadeScreen';
+import FeedbackNegArcadeScreen from '../screens/FeedbackNegArcadeScreen/FeedbackNegArcadeScreen';
 
 const HomeStack = () => {
   return (
@@ -35,6 +37,7 @@ const HomeStack = () => {
         <HomeStackNavigator.Screen
           name={HomeRoutes.RULETA}
           component={RuletaScreen}
+          initialParams={{type: 'Ruleta'}}
         />
         <HomeStackNavigator.Screen
           name={HomeRoutes.MIRROR}
@@ -92,6 +95,14 @@ const HomeStack = () => {
         <HomeStackNavigator.Screen
           name={HomeRoutes.ARCADE}
           component={ArcadeScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.FEEDBACK_POS_ARCADE}
+          component={FeedbackPosArcadeScreen}
+        />
+        <HomeStackNavigator.Screen
+          name={HomeRoutes.FEEDBACK_NEG_ARCADE}
+          component={FeedbackNegArcadeScreen}
         />
       </HomeStackNavigator.Navigator>
     </UserDataProvider>

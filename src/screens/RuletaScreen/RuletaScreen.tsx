@@ -5,13 +5,14 @@ import { Text } from 'react-native-magnus';
 import { HomeRoutes, RuletaType } from '../../stacks/HomeParams';
 import { RuletaContainer, emocionType } from '../../components';
 
-const RuletaScreen: FC<RuletaType> = ({ navigation }) => {
+const RuletaScreen: FC<RuletaType> = ({ route, navigation }) => {
   const style = makeRuletaScreenStyles();
+  const { type } = route.params;
 
   const goToPerformEmotion = (emotion: emocionType) => {
     navigation.navigate(HomeRoutes.PERFORM_EMOTION, {
       emotion: emotion,
-      type: 'Ruleta',
+      type: type,
     });
   };
 

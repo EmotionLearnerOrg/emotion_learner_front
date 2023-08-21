@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
-import {ScrollView} from 'react-native';
-import {makeHomeScreenStyles} from './HomeScreen.style';
-import {HomeRoutes, HomeType} from '../../stacks/HomeParams';
+import React, { FC } from 'react';
+import { ScrollView } from 'react-native';
+import { makeHomeScreenStyles } from './HomeScreen.style';
+import { HomeRoutes, HomeType } from '../../stacks/HomeParams';
 import {
   CalendarCardSection,
   HeaderSection,
@@ -9,7 +9,7 @@ import {
   InsigniasAccessSection,
 } from '../../components';
 
-const HomeScreen: FC<HomeType> = ({navigation}) => {
+const HomeScreen: FC<HomeType> = ({ navigation }) => {
   const style = makeHomeScreenStyles();
 
   const goToMirror = () => {
@@ -17,11 +17,15 @@ const HomeScreen: FC<HomeType> = ({navigation}) => {
   };
 
   const goToRuleta = () => {
-    navigation.navigate(HomeRoutes.RULETA);
+    navigation.navigate(HomeRoutes.RULETA, {
+      type: 'Ruleta',
+    });
   };
 
   const goToAsociation = () => {
-    navigation.navigate(HomeRoutes.ASOCIATION);
+    navigation.navigate(HomeRoutes.ASOCIATION, {
+      type: 'Asociacion',
+    });
   };
 
   const goToInsignias = () => {

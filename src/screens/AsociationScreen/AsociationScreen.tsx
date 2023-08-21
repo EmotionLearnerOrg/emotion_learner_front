@@ -1,15 +1,16 @@
-import React, {FC, useCallback, useState} from 'react';
-import {Image, View} from 'react-native';
-import {makeAsociationScreenStyles} from './AsociationScreen.style';
-import {Text} from 'react-native-magnus';
-import {HomeRoutes, AsociationType} from '../../stacks/HomeParams';
-import {emocionType, emociones} from '../../components';
-import {useUserData} from '../../contexts';
-import {insigniasEnum} from '../../types';
-import {useFocusEffect} from '@react-navigation/native';
+import React, { FC, useCallback, useState } from 'react';
+import { Image, View } from 'react-native';
+import { makeAsociationScreenStyles } from './AsociationScreen.style';
+import { Text } from 'react-native-magnus';
+import { HomeRoutes, AsociationType } from '../../stacks/HomeParams';
+import { emocionType, emociones } from '../../components';
+import { useUserData } from '../../contexts';
+import { insigniasEnum } from '../../types';
+import { useFocusEffect } from '@react-navigation/native';
 import OptionItem from './OptionItem';
 
-const AsociationScreen: FC<AsociationType> = ({navigation}) => {
+const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
+  const { type } = route.params;
   const style = makeAsociationScreenStyles();
   const emotions = Object.values(emociones);
   const [answers, setAnswers] = useState(0);
@@ -17,7 +18,7 @@ const AsociationScreen: FC<AsociationType> = ({navigation}) => {
   const [optionsState, setOptions] = useState<any>();
   const [indicesRandomsOpciones, setIndicesRandomsOpciones] = useState<any>();
   const [usadas, setUsadas] = useState<number[]>([]);
-  const {updateInsignias} = useUserData();
+  const { updateInsignias } = useUserData();
 
   const generateRandom = useCallback(
     ({
@@ -33,7 +34,7 @@ const AsociationScreen: FC<AsociationType> = ({navigation}) => {
     }): number => {
       const num = Math.floor(Math.random() * (max - min + 1)) + min;
       return num === exception1 || num === exception2
-        ? generateRandom({min, max, exception1, exception2})
+        ? generateRandom({ min, max, exception1, exception2 })
         : num;
     },
     [],
@@ -59,7 +60,7 @@ const AsociationScreen: FC<AsociationType> = ({navigation}) => {
       exception1: randEmotion1,
       exception2: randEmotion2,
     });
-    const randOption1 = generateRandom({min: 0, max: 2});
+    const randOption1 = generateRandom({ min: 0, max: 2 });
     const randOption2 = generateRandom({
       min: 0,
       max: 2,
@@ -96,20 +97,43 @@ const AsociationScreen: FC<AsociationType> = ({navigation}) => {
       setCorrectAnswers(correctAnswers + 1);
     }
     if (respuestas === 5) {
-      if (respuestasCorrectas >= 3) {
-        updateInsignias({
-          idInsignia: 'Asociacion' as unknown as insigniasEnum,
-        });
-        navigation.navigate(HomeRoutes.FEEDBACK_POS_ASO, {
-          type: 'Asociacion',
-          aciertos: respuestasCorrectas,
-        });
-      } else {
-        navigation.navigate(HomeRoutes.FEEDBACK_NEG_ASO, {
-          emotion: emotionSelected,
-          type: 'Asociacion',
-          aciertos: respuestasCorrectas,
-        });
+      console.log("Tipo en asociacion screen-> " + type);
+
+      if (type == 'Arcade') {
+        if (respuestasCorrectas >= 3) {
+          let idInsignia = `${type}_${route.params.emotion?.name}`;
+          updateInsignias({
+            idInsignia: idInsignia as unknown as insigniasEnum,
+          });
+          navigation.navigate(HomeRoutes.FEEDBACK_POS_ARCADE, {
+            emotion: route.params.emotion,
+            type: type,
+          });
+        } else {
+          navigation.navigate(HomeRoutes.FEEDBACK_NEG_ARCADE, {
+            emotion: emotionSelected,
+            type: type,
+          });
+        }
+      }
+      else {
+        if (respuestasCorrectas >= 3) {
+          updateInsignias({
+            idInsignia: 'Asociacion' as unknown as insigniasEnum,
+          });
+
+          navigation.navigate(HomeRoutes.FEEDBACK_POS_ASO, {
+            type: type,
+            aciertos: respuestasCorrectas,
+          });
+        }
+        else {
+          navigation.navigate(HomeRoutes.FEEDBACK_NEG_ASO, {
+            emotion: emotionSelected,
+            type: type,
+            aciertos: respuestasCorrectas,
+          });
+        }
       }
     } else {
       generateIndicesYOptionsRandomsEmociones();

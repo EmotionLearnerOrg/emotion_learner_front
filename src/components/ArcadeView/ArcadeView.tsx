@@ -3,13 +3,7 @@ import { View } from 'react-native';
 import { makeFeedbackViewStyles } from './ArcadeView.style';
 import { Button, Text } from 'react-native-magnus';
 
-const ArcadeView = ({
-    goToRuleta,
-    goToAsociation,
-}: {
-    goToRuleta?: () => void;
-    goToAsociation?: () => void;
-}) => {
+const ArcadeView = ({ goToRuleta }: { goToRuleta?: () => void; }) => {
     const style = makeFeedbackViewStyles();
     return (
         <View style={style.containerView}>

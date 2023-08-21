@@ -1,7 +1,7 @@
-import {RouteProp} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {emocionType} from '../components';
+import { RouteProp } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { emocionType } from '../components';
 
 export enum HomeRoutes {
   HOME_S = 'Home',
@@ -27,17 +27,22 @@ export enum HomeRoutes {
 
 export type HomeStackParamList = {
   [HomeRoutes.HOME_S]: undefined;
-  [HomeRoutes.RULETA]: undefined;
+  [HomeRoutes.RULETA]: {
+    type: 'Ruleta' | 'Arcade';
+  };
   [HomeRoutes.MIRROR]: undefined;
-  [HomeRoutes.ASOCIATION]: undefined;
+  [HomeRoutes.ASOCIATION]: {
+    emotion?: emocionType;
+    type: 'Asociacion' | 'Arcade';
+  };
   [HomeRoutes.INSIGNIAS]: undefined;
   [HomeRoutes.CALENDAR]: undefined;
   [HomeRoutes.PERFORM_EMOTION]: {
     emotion: emocionType;
-    type: 'Mirror' | 'Ruleta';
+    type: 'Mirror' | 'Ruleta' | 'Arcade';
   };
-  [HomeRoutes.GUIDE_FEEL]: {emotion: emocionType};
-  [HomeRoutes.REAL_FEEL]: {emotion: emocionType};
+  [HomeRoutes.GUIDE_FEEL]: { emotion: emocionType };
+  [HomeRoutes.REAL_FEEL]: { emotion: emocionType };
   [HomeRoutes.LOG_IN]: undefined;
   [HomeRoutes.REGISTEREMOTIONCALENDAR]: undefined;
   [HomeRoutes.PROFILE]: undefined;
@@ -76,7 +81,7 @@ type RuletaScreenRouteType = RouteProp<HomeStackParamList, HomeRoutes.RULETA>;
 
 export type RuletaType = {
   navigation: HomeStackNavigationsProp;
-  route: RuletaScreenRouteType;
+  route: RuletaScreenRouteType;  
 };
 
 type HomeScreenRouteType = RouteProp<HomeStackParamList, HomeRoutes.HOME_S>;
@@ -144,7 +149,7 @@ type PerformEmotionScreenRouteType = RouteProp<
 
 export type PerformEmotionType = {
   navigation: HomeStackNavigationsProp;
-  route: PerformEmotionScreenRouteType;
+  route: PerformEmotionScreenRouteType;  
 };
 
 type ProfileScreenRouteType = RouteProp<HomeStackParamList, HomeRoutes.PROFILE>;
@@ -220,5 +225,4 @@ export type ArcadeType = {
 
 type ArcadeRouteType = RouteProp<HomeStackParamList, HomeRoutes.ARCADE>;
 
-export const HomeStackNavigator =
-  createNativeStackNavigator<HomeStackParamList>();
+export const HomeStackNavigator = createNativeStackNavigator<HomeStackParamList>();

@@ -1,12 +1,12 @@
-import React, {FC} from 'react';
-import {FeedbackPosAsoType, HomeRoutes} from '../../stacks/HomeParams';
-import {FeedbackView} from '../../components';
+import React, { FC } from 'react';
+import { FeedbackPosArcadeType, HomeRoutes } from '../../stacks/HomeParams';
+import { FeedbackView } from '../../components';
 
-const FeedbackPosArcadeScreen: FC<FeedbackPosAsoType> = ({
+const FeedbackPosArcadeScreen: FC<FeedbackPosArcadeType> = ({
   route,
   navigation,
 }) => {
-  const {emotion, type} = route.params;
+  const { emotion, type } = route.params;
 
   return (
     <FeedbackView

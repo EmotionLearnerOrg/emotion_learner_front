@@ -1,24 +1,24 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {View} from 'react-native';
-import {Button, Text} from 'react-native-magnus';
-import {makePerformEmotionScreenStyles} from './PerformEmotionScreen.style';
-import {Camera} from 'react-native-vision-camera';
-import {useAuthorizedCamera, CameraComponent} from '../../components';
-import {HomeRoutes, PerformEmotionType} from '../../stacks/HomeParams';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-magnus';
+import { makePerformEmotionScreenStyles } from './PerformEmotionScreen.style';
+import { Camera } from 'react-native-vision-camera';
+import { useAuthorizedCamera, CameraComponent } from '../../components';
+import { HomeRoutes, PerformEmotionType } from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
-import {useUserData} from '../../contexts';
-import {insigniasEnum} from '../../types';
+import { useUserData } from '../../contexts';
+import { insigniasEnum } from '../../types';
 
 interface Prediction {
   emocion: string;
 }
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
-  const {emotion: emotionParam, type} = route.params;
+const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => {
+  const { emotion: emotionParam, type } = route.params;
   const style = makePerformEmotionScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
+  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
   const [imageBase64, setImageBase64] = useState('');
   const [refresh, setRefresh] = useState(true);
   const [response, setResponse] = useState('');
@@ -27,7 +27,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const predictionsCant = 15;
-  const {updateInsignias} = useUserData();
+  const { updateInsignias } = useUserData();
 
   const analyzeEmotion = useCallback(
     (
@@ -87,19 +87,34 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
   const navigateToFeedback = useCallback(
     (detection: boolean) => {
       if (detection) {
-        updateInsignias({
-          idInsignia:
-            `${type}_${emotionParam.name}` as unknown as insigniasEnum,
-        });
-        navigation.navigate(HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
-          emotion: emotionParam,
-          type,
-        });
+        if (type == 'Arcade') {
+          navigation.navigate(HomeRoutes.ASOCIATION, {
+            emotion: emotionParam,
+            type,
+          });
+        } else {
+          // Ruleta y Mirror
+          updateInsignias({
+            idInsignia:
+              `${type}_${emotionParam.name}` as unknown as insigniasEnum,
+          });
+          navigation.navigate(HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
+            emotion: emotionParam,
+            type,
+          });
+        }
       } else {
-        navigation.navigate(HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
-          emotion: emotionParam,
-          type,
-        });
+        if (type == 'Arcade') {
+          navigation.navigate(HomeRoutes.FEEDBACK_NEG_ARCADE, {
+            emotion: emotionParam,
+            type,
+          });
+        } else {
+          navigation.navigate(HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
+            emotion: emotionParam,
+            type,
+          });
+        }
       }
     },
     [emotionParam, navigation, type, updateInsignias],
@@ -150,10 +165,10 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
     if (imageBase64 && imageBase64 !== '') {
       detectEmotionsApi(imageBase64).then(predict => {
         // TODO: Revisar cuando emotion es undefined para que tome otra imagen, esto sucede porque la api no reconoce una cara (creo)
-        const {emotion} = JSON.parse(JSON.stringify(predict));
+        const { emotion } = JSON.parse(JSON.stringify(predict));
         setPredictions(prevPredictions => [
           ...prevPredictions,
-          {emocion: emotion},
+          { emocion: emotion },
         ]);
 
         console.log(emotion);

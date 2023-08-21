@@ -1,21 +1,21 @@
-import React, {FC} from 'react';
-import {FeedbackNegAsoType, HomeRoutes} from '../../stacks/HomeParams';
-import {FeedbackView} from '../../components';
+import React, { FC } from 'react';
+import { FeedbackNegArcadeType, HomeRoutes } from '../../stacks/HomeParams';
+import { FeedbackView } from '../../components';
 
-const FeedbackNegArcadeScreen: FC<FeedbackNegAsoType> = ({
+const FeedbackNegArcadeScreen: FC<FeedbackNegArcadeType> = ({
   route,
   navigation,
 }) => {
-  const {emotion, type, aciertos} = route.params;
+  const { emotion, type } = route.params;
   return (
     <FeedbackView
       emotion={emotion}
       type={type}
       success={false}
       goTo={() => {
-        navigation.navigate(HomeRoutes.REAL_FEEL, {...route.params});
+        navigation.navigate(HomeRoutes.ARCADE);
       }}
-      title={`Acertaste ${aciertos}/5   :(`}
+      title={`No pudiste completar el modo arcade :(`}
       description="Queres volver a intentar?"
     />
   );
