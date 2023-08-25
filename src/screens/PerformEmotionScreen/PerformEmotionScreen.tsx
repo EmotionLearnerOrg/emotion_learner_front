@@ -122,7 +122,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   );
 
   const detectEmotionsApi = (imageData: string) => {
-    const url = 'http://192.168.0.99:3001/detect-emotion';
+    const url = 'http://192.168.1.36:3001/detect-emotion';
     const body = {
       image: imageData,
     };

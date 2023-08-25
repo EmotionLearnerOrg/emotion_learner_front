@@ -5,4 +5,5 @@ export {
   updateSubscriptionType,
   getDisplayName,
   loginWithEmailAndPassword,
+  sendPassResetEmail,
 } from './account.service';

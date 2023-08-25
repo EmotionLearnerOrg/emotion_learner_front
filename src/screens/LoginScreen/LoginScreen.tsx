@@ -1,25 +1,26 @@
-import React, {FC} from 'react';
-import {View} from 'react-native';
-import {makeLoginScreenStyle} from './LoginScreen.style';
-import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
-import {useUserAuth} from '../../contexts';
-import {useLoginWithEmailAndPassword} from '../../hooks';
-import {Button, Text} from 'react-native-magnus';
-import {Control, FieldValues, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
+import React, { FC } from 'react';
+import { View, Alert } from 'react-native';
+import { makeLoginScreenStyle } from './LoginScreen.style';
+import { HomeLoginType, LoginRoutes } from '../../stacks/LoginParams';
+import { useUserAuth } from '../../contexts';
+import { useLoginWithEmailAndPassword } from '../../hooks';
+import { Button, Text } from 'react-native-magnus';
+import { Control, FieldValues, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import {SchemaOf} from 'yup';
-import {validations} from '../../utils/formValidations/validations';
-import {FormInput} from '../../components';
+import { SchemaOf } from 'yup';
+import { validations } from '../../utils/formValidations/validations';
+import { FormInput } from '../../components';
+import { sendPassResetEmail } from '../../services';
 
 export type LoginForm = {
   email: string;
   password: string;
 };
 
-const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
+const LoginScreen: FC<HomeLoginType> = ({ navigation }) => {
   const style = makeLoginScreenStyle();
-  const {initData} = useUserAuth();
+  const { initData } = useUserAuth();
   const cleanData = () => {
     reset();
   };
@@ -31,7 +32,7 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const {
     mutateAsync: mutateLoginWithEmailAndPassword,
     isLoading: isLoadingLoginWithEmailAndPassword,
-  } = useLoginWithEmailAndPassword({onSuccess: handleLogin});
+  } = useLoginWithEmailAndPassword({ onSuccess: handleLogin });
 
   const schema: SchemaOf<LoginForm> = yup.object().shape({
     email: validations().email.required(),
@@ -40,7 +41,7 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
 
   const {
     control,
-    formState: {isValid, errors},
+    formState: { isValid, errors },
     getValues,
     reset,
   } = useForm<LoginForm>({
@@ -104,6 +105,25 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
           });
         }}>
         <Text style={style.buttonText}>Ingresar</Text>
+      </Button>
+      <Text style={{ color: '#0D0140', fontWeight: '700', fontSize: 15 }}>¿Olvidaste tu Contraseña?</Text>
+      <Button
+        style={style.button}
+        alignSelf="center"
+        bg="#FCCDCE"
+        mx={10}
+        mb={12}
+        rounded={16}
+        onPress={async () => {
+          try {
+            await sendPassResetEmail({ email: 'maxialexan36@gmail.com' })
+            Alert.alert('Correo enviado', 'Se ha enviado un correo de restablecimiento de contraseña a tu dirección de email.');
+          } catch (error) {
+            Alert.alert('Error', 'No se pudo enviar el correo de restablecimiento de contraseña. Verifica tu dirección de email.');
+            console.log('Error sendPasswordResetEmail: ', error);
+          }
+        }}>
+        <Text style={style.buttonText}>Recuperar contraseña</Text>
       </Button>
       <Button
         style={style.button}
