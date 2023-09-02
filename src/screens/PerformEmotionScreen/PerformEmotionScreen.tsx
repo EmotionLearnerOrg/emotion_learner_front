@@ -123,6 +123,8 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
 
   const detectEmotionsApi = (imageData: string) => {
     const url = 'http://192.168.0.99:3001/detect-emotion';
+    // const url = 'https://api-emotion-recognition-ia-dbcgar3efa-uc.a.run.app/detect-emotion';
+    // const url = 'http://192.168.1.99:3001/detect-emotion';
     const body = {
       image: imageData,
     };
@@ -166,6 +168,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     if (imageBase64 && imageBase64 !== '') {
       detectEmotionsApi(imageBase64).then(predict => {
         // TODO: Revisar cuando emotion es undefined para que tome otra imagen, esto sucede porque la api no reconoce una cara (creo)
+        console.log(JSON.stringify(predict));
         const { emotion } = JSON.parse(JSON.stringify(predict));
         setPredictions(prevPredictions => [
           ...prevPredictions,
