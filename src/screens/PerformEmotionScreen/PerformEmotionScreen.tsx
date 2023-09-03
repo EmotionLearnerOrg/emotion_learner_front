@@ -9,6 +9,7 @@ import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
 import { useUserData } from '../../contexts';
 import { insigniasEnum } from '../../types';
+import axios from 'axios';
 
 interface Prediction {
   emocion: string;
@@ -89,7 +90,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     (detection: boolean) => {
       if (detection) {
         if (type == 'Arcade') {
-          navigation.replace (HomeRoutes.ASOCIATION, {
+          navigation.replace(HomeRoutes.ASOCIATION, {
             emotion: emotionParam,
             type,
           });
@@ -99,19 +100,19 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
             idInsignia:
               `${type}_${emotionParam.name}` as unknown as insigniasEnum,
           });
-          navigation.replace (HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
+          navigation.replace(HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
             emotion: emotionParam,
             type,
           });
         }
       } else {
         if (type == 'Arcade') {
-          navigation.replace (HomeRoutes.FEEDBACK_NEG_ARCADE, {
+          navigation.replace(HomeRoutes.FEEDBACK_NEG_ARCADE, {
             emotion: emotionParam,
             type,
           });
         } else {
-          navigation.replace (HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
+          navigation.replace(HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
             emotion: emotionParam,
             type,
           });
@@ -121,6 +122,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     [emotionParam, navigation, type, updateInsignias],
   );
 
+
   const detectEmotionsApi = (imageData: string) => {
     const url = 'http://192.168.0.99:3001/detect-emotion';
     // const url = 'https://api-emotion-recognition-ia-dbcgar3efa-uc.a.run.app/detect-emotion';
@@ -128,22 +130,23 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     const body = {
       image: imageData,
     };
-    return new Promise((resolve, reject) => {
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
+
+    return axios.post(url, body, {
+      timeout: 50000, // 50 segundos (ajusta este valor según tus necesidades)
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(responseApi => {
+        return responseApi.data;
       })
-        .then(responseApi => responseApi.json())
-        .then(data => {
-          resolve(data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+      .catch(error => {
+        if (axios.isCancel(error)) {
+          throw new Error('Timeout: La API no está disponible');
+        } else {
+          throw error;
+        }
+      });
   };
 
   const takePicture = useCallback(async () => {
@@ -174,8 +177,6 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
           ...prevPredictions,
           { emocion: emotion },
         ]);
-
-        console.log(emotion);
         setResponse(emotion);
       });
     }
