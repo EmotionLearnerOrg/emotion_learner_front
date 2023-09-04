@@ -143,6 +143,8 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
       .catch(error => {
         if (axios.isCancel(error)) {
           throw new Error('Timeout: La API no está disponible');
+        } else if (error.response && error.response.status === 400) {
+          return 'undefined';
         } else {
           throw error;
         }
