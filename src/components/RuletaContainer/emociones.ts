@@ -29,7 +29,7 @@ export type emocionType = {
   pathReal: any;
   pathGuia: any;
   pathMonstruo: any;
-  pathOpciones: any;
+  pathOpciones: any[];
 };
 
 export const emociones: {[K in emocionesEnum]: emocionType} = {
@@ -41,7 +41,13 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: AlegriaGuia,
     pathReal: AlegriaReal,
     pathMonstruo: require('./../../../assets/ilustraciones/Alegria/monstruo_feliz.png'),
-    pathOpciones: require('./../../../assets/ilustraciones/Alegria/opciones/1.png'),
+    pathOpciones: [
+      require('./../../../assets/ilustraciones/Alegria/opciones/1.png'),
+      require('./../../../assets/ilustraciones/Alegria/opciones/2.png'),
+      require('./../../../assets/ilustraciones/Alegria/opciones/3.png'),
+      require('./../../../assets/ilustraciones/Alegria/opciones/4.png'),
+      require('./../../../assets/ilustraciones/Alegria/opciones/5.png'),
+    ],
   },
   [emocionesEnum.TRISTEZA]: {
     color: '#65ADFC',
@@ -51,7 +57,13 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: TristezaGuia,
     pathReal: TristezaReal,
     pathMonstruo: require('./../../../assets/ilustraciones/Tristeza/monstruo_triste.png'),
-    pathOpciones: require('./../../../assets/ilustraciones/Tristeza/opciones/1.png'),
+    pathOpciones: [
+      require('./../../../assets/ilustraciones/Tristeza/opciones/1.png'),
+      require('./../../../assets/ilustraciones/Tristeza/opciones/2.png'),
+      require('./../../../assets/ilustraciones/Tristeza/opciones/3.png'),
+      require('./../../../assets/ilustraciones/Tristeza/opciones/4.png'),
+      require('./../../../assets/ilustraciones/Tristeza/opciones/5.png'),
+    ],
   },
   [emocionesEnum.SORPRESA]: {
     color: '#BBBBBB',
@@ -61,7 +73,13 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: SorpresaGuia,
     pathReal: SorpresaReal,
     pathMonstruo: require('./../../../assets/ilustraciones/Sorpresa/monstruo_sorprendido.png'),
-    pathOpciones: require('./../../../assets/ilustraciones/Sorpresa/opciones/1.png'),
+    pathOpciones: [
+      require('./../../../assets/ilustraciones/Sorpresa/opciones/1.png'),
+      require('./../../../assets/ilustraciones/Sorpresa/opciones/2.png'),
+      require('./../../../assets/ilustraciones/Sorpresa/opciones/3.png'),
+      require('./../../../assets/ilustraciones/Sorpresa/opciones/4.png'),
+      require('./../../../assets/ilustraciones/Sorpresa/opciones/5.png'),
+    ],
   },
   [emocionesEnum.ENOJO]: {
     color: '#FC4D4A',
@@ -71,7 +89,13 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: EnojoGuia,
     pathReal: EnojoReal,
     pathMonstruo: require('./../../../assets/ilustraciones/Enojo/monstruo_enojado.png'),
-    pathOpciones: require('./../../../assets/ilustraciones/Enojo/opciones/1.png'),
+    pathOpciones: [
+      require('./../../../assets/ilustraciones/Enojo/opciones/1.png'),
+      require('./../../../assets/ilustraciones/Enojo/opciones/2.png'),
+      require('./../../../assets/ilustraciones/Enojo/opciones/3.png'),
+      require('./../../../assets/ilustraciones/Enojo/opciones/4.png'),
+      require('./../../../assets/ilustraciones/Enojo/opciones/5.png'),
+    ],
   },
   [emocionesEnum.CALMA]: {
     color: '#88EA5A',
@@ -81,6 +105,12 @@ export const emociones: {[K in emocionesEnum]: emocionType} = {
     pathGuia: CalmaGuia,
     pathReal: CalmaReal,
     pathMonstruo: require('./../../../assets/ilustraciones/Calma/monstruo_calmado.png'),
-    pathOpciones: require('./../../../assets/ilustraciones/Calma/opciones/1.png'),
+    pathOpciones: [
+      require('./../../../assets/ilustraciones/Calma/opciones/1.png'),
+      require('./../../../assets/ilustraciones/Calma/opciones/2.png'),
+      require('./../../../assets/ilustraciones/Calma/opciones/3.png'),
+      require('./../../../assets/ilustraciones/Calma/opciones/4.png'),
+      require('./../../../assets/ilustraciones/Calma/opciones/5.png'),
+    ],
   },
 };

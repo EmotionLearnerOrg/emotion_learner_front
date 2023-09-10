@@ -1,16 +1,16 @@
-import React, { FC, useCallback, useState } from 'react';
-import { Image, View } from 'react-native';
-import { makeAsociationScreenStyles } from './AsociationScreen.style';
-import { Text } from 'react-native-magnus';
-import { HomeRoutes, AsociationType } from '../../stacks/HomeParams';
-import { emocionType, emociones } from '../../components';
-import { useUserData } from '../../contexts';
-import { insigniasEnum } from '../../types';
-import { useFocusEffect } from '@react-navigation/native';
+import React, {FC, useCallback, useEffect, useState} from 'react';
+import {Image, View} from 'react-native';
+import {makeAsociationScreenStyles} from './AsociationScreen.style';
+import {Text} from 'react-native-magnus';
+import {HomeRoutes, AsociationType} from '../../stacks/HomeParams';
+import {emocionType, emociones} from '../../components';
+import {useUserData} from '../../contexts';
+import {insigniasEnum} from '../../types';
+import {useFocusEffect} from '@react-navigation/native';
 import OptionItem from './OptionItem';
 
-const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
-  const { type } = route.params;
+const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
+  const {type, emotion} = route.params;
   const style = makeAsociationScreenStyles();
   const emotions = Object.values(emociones);
   const [answers, setAnswers] = useState(0);
@@ -18,7 +18,15 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
   const [optionsState, setOptions] = useState<any>();
   const [indicesRandomsOpciones, setIndicesRandomsOpciones] = useState<any>();
   const [usadas, setUsadas] = useState<number[]>([]);
-  const { updateInsignias } = useUserData();
+  const [optionRandom, setOptionRandom] = useState<number>();
+  const {updateInsignias} = useUserData();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    // Simulación de 2 segundos de carga
+  }, []);
 
   const generateRandom = useCallback(
     ({
@@ -34,7 +42,7 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
     }): number => {
       const num = Math.floor(Math.random() * (max - min + 1)) + min;
       return num === exception1 || num === exception2
-        ? generateRandom({ min, max, exception1, exception2 })
+        ? generateRandom({min, max, exception1, exception2})
         : num;
     },
     [],
@@ -46,7 +54,48 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
     return resultado[indiceAleatorio];
   }, [usadas]);
 
+  const generateIndicesYOptionsRandomsEmocionesArcade = useCallback(() => {
+    const randArcade = generateRandomFirst();
+    setOptionRandom(randArcade);
+    const nuevoArrayArcade = [...usadas, randArcade];
+    const randEmotion1 = emotions.findIndex(
+      emocion => emocion.displayname === emotion?.displayname,
+    );
+    const randEmotion2 = generateRandom({
+      min: 0,
+      max: 4,
+      exception1: randEmotion1,
+    });
+    const randEmotion3 = generateRandom({
+      min: 0,
+      max: 4,
+      exception1: randEmotion1,
+      exception2: randEmotion2,
+    });
+    const randOption1 = generateRandom({min: 0, max: 2});
+    const randOption2 = generateRandom({
+      min: 0,
+      max: 2,
+      exception1: randOption1,
+    });
+    const randOption3 = generateRandom({
+      min: 0,
+      max: 2,
+      exception1: randOption1,
+      exception2: randOption2,
+    });
+    setIndicesRandomsOpciones([randOption1, randOption2, randOption3]);
+    setOptions([
+      emotions[randEmotion1],
+      emotions[randEmotion2],
+      emotions[randEmotion3],
+    ]);
+    setUsadas(nuevoArrayArcade);
+  }, [emotions, generateRandom, generateRandomFirst, usadas]);
+
   const generateIndicesYOptionsRandomsEmociones = useCallback(() => {
+    console.log('emocion', emotion);
+
     const randEmotion1 = generateRandomFirst();
     const nuevoArray = [...usadas, randEmotion1];
     const randEmotion2 = generateRandom({
@@ -60,7 +109,7 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
       exception1: randEmotion1,
       exception2: randEmotion2,
     });
-    const randOption1 = generateRandom({ min: 0, max: 2 });
+    const randOption1 = generateRandom({min: 0, max: 2});
     const randOption2 = generateRandom({
       min: 0,
       max: 2,
@@ -85,9 +134,17 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
     React.useCallback(() => {
       setAnswers(0);
       setCorrectAnswers(0);
-      generateIndicesYOptionsRandomsEmociones();
+      if (type === 'Arcade') {
+        generateIndicesYOptionsRandomsEmocionesArcade();
+      } else {
+        generateIndicesYOptionsRandomsEmociones();
+      }
     }, []),
   );
+
+  if (isLoading && type === 'Arcade') {
+    return <Text>cargando</Text>;
+  }
 
   const reload = (emotionSelected: emocionType) => {
     let respuestasCorrectas = correctAnswers;
@@ -98,7 +155,7 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
     }
     if (respuestas === 5) {
       //TODO: Estaria bueno dividir esta funcion o encapsularlo en un metodo para cuando sea de tipo "Arcade" quede mas simple de entender y modificar en caso de necesitarlo.
-      if (type == 'Arcade') {
+      if (type === 'Arcade') {
         if (respuestasCorrectas >= 3) {
           let idInsignia = `${type}_${route.params.emotion?.name}`;
           updateInsignias({
@@ -114,8 +171,7 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
             type: type,
           });
         }
-      }
-      else {
+      } else {
         if (respuestasCorrectas >= 3) {
           updateInsignias({
             idInsignia: 'Asociacion' as unknown as insigniasEnum,
@@ -125,8 +181,7 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
             type: type,
             aciertos: respuestasCorrectas,
           });
-        }
-        else {
+        } else {
           navigation.navigate(HomeRoutes.FEEDBACK_NEG_ASO, {
             emotion: emotionSelected,
             type: type,
@@ -135,7 +190,11 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
         }
       }
     } else {
-      generateIndicesYOptionsRandomsEmociones();
+      if (type === 'Arcade') {
+        generateIndicesYOptionsRandomsEmocionesArcade();
+      } else {
+        generateIndicesYOptionsRandomsEmociones();
+      }
     }
     setAnswers(answers + 1);
   };
@@ -150,19 +209,32 @@ const AsociationScreen: FC<AsociationType> = ({ route, navigation }) => {
           />
           <Text fontSize={18} textAlign="center" flex={1}>
             {`¿Cual de estos personajes refleja ${optionsState[0].name}?`}
+            {optionRandom}
           </Text>
           <View style={style.containerOptions}>
             <OptionItem
               onPress={() => reload(optionsState[indicesRandomsOpciones[0]])}
-              source={optionsState[indicesRandomsOpciones[0]].pathOpciones}
+              source={
+                optionsState[indicesRandomsOpciones[0]].pathOpciones[
+                  optionRandom || 0
+                ]
+              }
             />
             <OptionItem
               onPress={() => reload(optionsState[indicesRandomsOpciones[1]])}
-              source={optionsState[indicesRandomsOpciones[1]].pathOpciones}
+              source={
+                optionsState[indicesRandomsOpciones[1]].pathOpciones[
+                  optionRandom ?? 0
+                ]
+              }
             />
             <OptionItem
               onPress={() => reload(optionsState[indicesRandomsOpciones[2]])}
-              source={optionsState[indicesRandomsOpciones[2]].pathOpciones}
+              source={
+                optionsState[indicesRandomsOpciones[2]].pathOpciones[
+                  optionRandom ?? 0
+                ]
+              }
             />
           </View>
         </>
