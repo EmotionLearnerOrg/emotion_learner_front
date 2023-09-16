@@ -15,12 +15,18 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
   const emotions = Object.values(emociones);
   const [answers, setAnswers] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [optionsState, setOptions] = useState<any>();
-  const [indicesRandomsOpciones, setIndicesRandomsOpciones] = useState<any>();
-  const [usadas, setUsadas] = useState<number[]>([]);
-  const [optionRandom, setOptionRandom] = useState<number>();
   const {updateInsignias} = useUserData();
   const [isLoading, setIsLoading] = useState(true);
+
+  const [group3Emotions, setGroup3Emotions] = useState<any[]>();
+  //grupo de 3 emociones donde se preguntara por la primera (0) para matchear imagen con respuesta opcion correcta
+  const [indicesRandomsOpciones, setIndicesRandomsOpciones] = useState<any>();
+  //indica el orden en que las opciones de emociones van a aparecer
+  const [used, setUsed] = useState<number[]>([]);
+  //usado para guardar y no repetir emociones en asociacion normal,tambien usado para no repetir opcion correcta de la emocion arcade
+  const [optionRandom, setOptionRandom] = useState<number>();
+  //usado para saber cual opcion de manera random mostrar como correcta en asociacion
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
@@ -48,97 +54,74 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
     [],
   );
   const generateRandomFirst = useCallback((): number => {
-    const resultado = [0, 1, 2, 3, 4].filter(item => !usadas.includes(item));
+    const resultado = [0, 1, 2, 3, 4].filter(item => !used.includes(item));
 
     const indiceAleatorio = Math.floor(Math.random() * resultado.length);
     return resultado[indiceAleatorio];
-  }, [usadas]);
+  }, [used]);
 
-  const generateIndicesYOptionsRandomsEmocionesArcade = useCallback(() => {
-    const randArcade = generateRandomFirst();
-    setOptionRandom(randArcade);
-    const nuevoArrayArcade = [...usadas, randArcade];
-    const randEmotion1 = emotions.findIndex(
-      emocion => emocion.displayname === emotion?.displayname,
-    );
-    const randEmotion2 = generateRandom({
+  const generateIndicesYOptionsRandomsEmocionesMerge = useCallback(() => {
+    const esArcade = type === 'Arcade';
+    if (esArcade) {
+      const randomOptionArcade = generateRandomFirst();
+      setOptionRandom(randomOptionArcade);
+    }
+    const randomEmotion1 = esArcade
+      ? emotions.findIndex(
+          emocion => emocion.displayname === emotion?.displayname,
+        )
+      : generateRandomFirst();
+    const arrayToCheck = [...used, randomEmotion1];
+    const randomEmotion2 = generateRandom({
       min: 0,
       max: 4,
-      exception1: randEmotion1,
+      exception1: randomEmotion1,
     });
-    const randEmotion3 = generateRandom({
+    const randomEmotion3 = generateRandom({
       min: 0,
       max: 4,
-      exception1: randEmotion1,
-      exception2: randEmotion2,
+      exception1: randomEmotion1,
+      exception2: randomEmotion2,
     });
-    const randOption1 = generateRandom({min: 0, max: 2});
-    const randOption2 = generateRandom({
+    const randomOption1 = generateRandom({min: 0, max: 2});
+    const randomOption2 = generateRandom({
       min: 0,
       max: 2,
-      exception1: randOption1,
+      exception1: randomOption1,
     });
-    const randOption3 = generateRandom({
+    const randomOption3 = generateRandom({
       min: 0,
       max: 2,
-      exception1: randOption1,
-      exception2: randOption2,
+      exception1: randomOption1,
+      exception2: randomOption2,
     });
-    setIndicesRandomsOpciones([randOption1, randOption2, randOption3]);
-    setOptions([
-      emotions[randEmotion1],
-      emotions[randEmotion2],
-      emotions[randEmotion3],
+    setIndicesRandomsOpciones([randomOption1, randomOption2, randomOption3]);
+    setGroup3Emotions([
+      emotions[randomEmotion1],
+      emotions[randomEmotion2],
+      emotions[randomEmotion3],
     ]);
-    setUsadas(nuevoArrayArcade);
-  }, [emotions, generateRandom, generateRandomFirst, usadas]);
-
-  const generateIndicesYOptionsRandomsEmociones = useCallback(() => {
-    console.log('emocion', emotion);
-
-    const randEmotion1 = generateRandomFirst();
-    const nuevoArray = [...usadas, randEmotion1];
-    const randEmotion2 = generateRandom({
-      min: 0,
-      max: 4,
-      exception1: randEmotion1,
-    });
-    const randEmotion3 = generateRandom({
-      min: 0,
-      max: 4,
-      exception1: randEmotion1,
-      exception2: randEmotion2,
-    });
-    const randOption1 = generateRandom({min: 0, max: 2});
-    const randOption2 = generateRandom({
-      min: 0,
-      max: 2,
-      exception1: randOption1,
-    });
-    const randOption3 = generateRandom({
-      min: 0,
-      max: 2,
-      exception1: randOption1,
-      exception2: randOption2,
-    });
-    setIndicesRandomsOpciones([randOption1, randOption2, randOption3]);
-    setOptions([
-      emotions[randEmotion1],
-      emotions[randEmotion2],
-      emotions[randEmotion3],
+    setIndicesRandomsOpciones([randomOption1, randomOption2, randomOption3]);
+    setGroup3Emotions([
+      emotions[randomEmotion1],
+      emotions[randomEmotion2],
+      emotions[randomEmotion3],
     ]);
-    setUsadas(nuevoArray);
-  }, [emotions, generateRandom, generateRandomFirst, usadas]);
+    setUsed(arrayToCheck);
+  }, [
+    emotion?.displayname,
+    emotions,
+    generateRandom,
+    generateRandomFirst,
+    type,
+    used,
+  ]);
 
   useFocusEffect(
     React.useCallback(() => {
       setAnswers(0);
       setCorrectAnswers(0);
-      if (type === 'Arcade') {
-        generateIndicesYOptionsRandomsEmocionesArcade();
-      } else {
-        generateIndicesYOptionsRandomsEmociones();
-      }
+      generateIndicesYOptionsRandomsEmocionesMerge();
     }, []),
   );
 
@@ -149,12 +132,13 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
   const reload = (emotionSelected: emocionType) => {
     let respuestasCorrectas = correctAnswers;
     let respuestas = answers + 1;
-    if (emotionSelected.name === optionsState[0].name) {
+    if (emotionSelected.name === group3Emotions[0].name) {
       respuestasCorrectas++;
       setCorrectAnswers(correctAnswers + 1);
     }
     if (respuestas === 5) {
-      //TODO: Estaria bueno dividir esta funcion o encapsularlo en un metodo para cuando sea de tipo "Arcade" quede mas simple de entender y modificar en caso de necesitarlo.
+      //TODO: Estaria bueno dividir esta funcion o encapsularlo en un metodo para cuando sea de tipo "Arcade"
+      //quede mas simple de entender y modificar en caso de necesitarlo.
       if (type === 'Arcade') {
         if (respuestasCorrectas >= 3) {
           let idInsignia = `${type}_${route.params.emotion?.name}`;
@@ -171,68 +155,63 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
             type: type,
           });
         }
-      } else {
-        if (respuestasCorrectas >= 3) {
-          updateInsignias({
-            idInsignia: 'Asociacion' as unknown as insigniasEnum,
-          });
+      } else if (respuestasCorrectas >= 3) {
+        updateInsignias({
+          idInsignia: 'Asociacion' as unknown as insigniasEnum,
+        });
 
-          navigation.navigate(HomeRoutes.FEEDBACK_POS_ASO, {
-            type: type,
-            aciertos: respuestasCorrectas,
-          });
-        } else {
-          navigation.navigate(HomeRoutes.FEEDBACK_NEG_ASO, {
-            emotion: emotionSelected,
-            type: type,
-            aciertos: respuestasCorrectas,
-          });
-        }
+        navigation.navigate(HomeRoutes.FEEDBACK_POS_ASO, {
+          type: type,
+          aciertos: respuestasCorrectas,
+        });
+      } else {
+        navigation.navigate(HomeRoutes.FEEDBACK_NEG_ASO, {
+          emotion: emotionSelected,
+          type: type,
+          aciertos: respuestasCorrectas,
+        });
       }
     } else {
-      if (type === 'Arcade') {
-        generateIndicesYOptionsRandomsEmocionesArcade();
-      } else {
-        generateIndicesYOptionsRandomsEmociones();
-      }
+      generateIndicesYOptionsRandomsEmocionesMerge();
     }
+
     setAnswers(answers + 1);
   };
+  const randomNumber = optionRandom ?? 0;
 
   return (
     <View style={style.containerView}>
-      {!!optionsState && !!indicesRandomsOpciones && (
+      {!!group3Emotions && !!indicesRandomsOpciones && (
         <>
           <Image
-            source={optionsState[0].pathMonstruo}
+            source={group3Emotions[0].pathMonstruo}
             style={style.OptionImageStyle}
           />
           <Text fontSize={18} textAlign="center" flex={1}>
-            {`¿Cual de estos personajes refleja ${optionsState[0].name}?`}
-            {optionRandom}
+            {`¿Cual de estos personajes refleja ${group3Emotions[0].name}?`}
           </Text>
           <View style={style.containerOptions}>
             <OptionItem
-              onPress={() => reload(optionsState[indicesRandomsOpciones[0]])}
+              onPress={() => reload(group3Emotions[indicesRandomsOpciones[0]])}
               source={
-                optionsState[indicesRandomsOpciones[0]].pathOpciones[
-                  optionRandom || 0
+                group3Emotions[indicesRandomsOpciones[0]].pathOpciones[
+                  randomNumber
                 ]
               }
             />
             <OptionItem
-              onPress={() => reload(optionsState[indicesRandomsOpciones[1]])}
+              onPress={() => reload(group3Emotions[indicesRandomsOpciones[1]])}
               source={
-                optionsState[indicesRandomsOpciones[1]].pathOpciones[
-                  optionRandom ?? 0
+                group3Emotions[indicesRandomsOpciones[1]].pathOpciones[
+                  randomNumber
                 ]
               }
             />
             <OptionItem
-              onPress={() => reload(optionsState[indicesRandomsOpciones[2]])}
+              onPress={() => reload(group3Emotions[indicesRandomsOpciones[2]])}
               source={
-                optionsState[indicesRandomsOpciones[2]].pathOpciones[
-                  optionRandom ?? 0
+                group3Emotions[indicesRandomsOpciones[2]].pathOpciones[
+                  randomNumber
                 ]
               }
             />

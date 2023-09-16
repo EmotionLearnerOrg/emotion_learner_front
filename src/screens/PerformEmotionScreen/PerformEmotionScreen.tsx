@@ -9,6 +9,7 @@ import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
 import {useUserData} from '../../contexts';
 import {insigniasEnum} from '../../types';
+import axios from 'axios';
 
 interface Prediction {
   emocion: string;
@@ -120,28 +121,32 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
     },
     [emotionParam, navigation, type, updateInsignias],
   );
-
+  // 192.168.56.1
   const detectEmotionsApi = (imageData: string) => {
-    const url = 'http://192.168.1.100:3001/detect-emotion';
+    const url = 'http://192.168.56.1:3001/detect-emotion';
     const body = {
       image: imageData,
     };
-    return new Promise((resolve, reject) => {
-      fetch(url, {
-        method: 'POST',
+
+    return axios
+      .post(url, body, {
+        timeout: 50000, // 50 segundos (ajusta este valor según tus necesidades)
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
       })
-        .then(responseApi => responseApi.json())
-        .then(data => {
-          resolve(data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
+      .then(responseApi => {
+        return responseApi.data;
+      })
+      .catch(error => {
+        if (axios.isCancel(error)) {
+          throw new Error('Timeout: La API no está disponible');
+        } else if (error.response && error.response.status === 400) {
+          return 'undefined';
+        } else {
+          throw error;
+        }
+      });
   };
 
   const takePicture = useCallback(async () => {
@@ -166,13 +171,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
     if (imageBase64 && imageBase64 !== '') {
       detectEmotionsApi(imageBase64).then(predict => {
         // TODO: Revisar cuando emotion es undefined para que tome otra imagen, esto sucede porque la api no reconoce una cara (creo)
+        console.log(JSON.stringify(predict));
         const {emotion} = JSON.parse(JSON.stringify(predict));
         setPredictions(prevPredictions => [
           ...prevPredictions,
           {emocion: emotion},
         ]);
-
-        console.log(emotion);
         setResponse(emotion);
       });
     }
@@ -236,28 +240,27 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
       />
       <View style={style.containerButton}>
         {!userReady ? (
-          //   <Button
-          //     style={style.button}
-          //     opacity={0.5}
-          //     bg="#56CD54"
-          //     rounded={16}
-          //     onPress={() => navigateToFeedback(true)}>
-          //     <Text color="black" fontSize={32}>
-          //       ¡Estoy listo!
-          //     </Text>
-          //   </Button>
-          // ) :
           <Button
             style={style.button}
             opacity={0.5}
             bg="#56CD54"
             rounded={16}
-            onPress={() => setUserReady(true)}>
+            onPress={() => navigateToFeedback(true)}>
             <Text color="black" fontSize={32}>
               ¡Estoy listo!
             </Text>
           </Button>
-        ) : !finishedCountDown ? (
+        ) : // <Button
+        //   style={style.button}
+        //   opacity={0.5}
+        //   bg="#56CD54"
+        //   rounded={16}
+        //   onPress={() => setUserReady(true)}>
+        //   <Text color="black" fontSize={32}>
+        //     ¡Estoy listo!
+        //   </Text>
+        // </Button>
+        !finishedCountDown ? (
           <Countdown
             duration={3}
             size={40}
