@@ -29,9 +29,9 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   const [userReady, setUserReady] = useState(false);
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
   const { updateInsignias } = useUserData();
-  const percentage = '70'; // Porcentaje minimo de aciertos (Primer criterio de aceptacion)
-  const consecutiveRecognitionSuccess = '6' // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
-  const numImagesToCapture = 10; // Cantidad de fotos para el muestreo
+  const percentage = '75'; // Porcentaje minimo de aciertos (Primer criterio de aceptacion)
+  const consecutiveRecognitionSuccess = '3' // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
+  const numImagesToCapture = 5; // Cantidad de fotos para el muestreo
   let pathsImages = ['']; // Solo se usa para almacenar el path de la imagen para eliminarla despues del proceso
 
   const navigateToFeedback = useCallback(
