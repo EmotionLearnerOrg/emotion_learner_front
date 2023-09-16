@@ -1,12 +1,12 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {makeHeaderSectionStyles} from './HeaderSection.style';
-import {Icon, Text} from 'react-native-magnus';
-import {useUserData} from '../../../contexts';
+import { TouchableOpacity, View } from 'react-native';
+import { makeHeaderSectionStyles } from './HeaderSection.style';
+import { Icon, Text } from 'react-native-magnus';
+import { useUserData } from '../../../contexts';
 
-const HeaderSection = ({goToProfile}: {goToProfile: () => void}) => {
+const HeaderSection = ({ goToProfile }: { goToProfile: () => void }) => {
   const style = makeHeaderSectionStyles();
-  const {nickName} = useUserData();
+  const { nickName } = useUserData();
 
   return (
     <View style={style.headerContainer}>
@@ -19,19 +19,22 @@ const HeaderSection = ({goToProfile}: {goToProfile: () => void}) => {
         </Text>
       </View>
       <View style={style.configContainer}>
-        <Icon
+        {/* Lo comento ya que puse el de usuario en configuracion para que sea mas amigable, ademas solo estaba de vista */}
+        {/* <Icon
           rounded="circle"
           name="user"
           fontFamily="Feather"
-          top={-15}
+          color="black"
+          top={-10}
           fontSize={40}
-        />
+        /> */}
         <TouchableOpacity onPress={goToProfile}>
           <Icon
             top={10}
-            name="cog"
+            name="user"
             color="black"
             fontSize={40}
+            right={4}
             fontFamily="FontAwesome"
           />
         </TouchableOpacity>
