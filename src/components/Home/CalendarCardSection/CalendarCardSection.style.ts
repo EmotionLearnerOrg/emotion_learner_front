@@ -4,7 +4,6 @@ export const makeCalendarCardContainerStyles = () =>
   StyleSheet.create({
     calendarCardContainer: {
       margin: 10,
-      marginVertical: 20,
       padding: 10,
       elevation: 5,
       borderRadius: 8,

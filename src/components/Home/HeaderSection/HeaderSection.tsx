@@ -15,23 +15,14 @@ const HeaderSection = ({ goToProfile }: { goToProfile: () => void }) => {
           Hola
         </Text>
         <Text color='#150B3D' fontWeight="700" fontSize={32}>
-          {nickName}!
+          {nickName} !
         </Text>
       </View>
       <View style={style.configContainer}>
-        {/* Lo comento ya que puse el de usuario en configuracion para que sea mas amigable, ademas solo estaba de vista */}
-        {/* <Icon
-          rounded="circle"
-          name="user"
-          fontFamily="Feather"
-          color="black"
-          top={-10}
-          fontSize={40}
-        /> */}
         <TouchableOpacity onPress={goToProfile}>
           <Icon
             top={10}
-            name="user"
+            name="cog"
             color="black"
             fontSize={40}
             right={4}
