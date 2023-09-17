@@ -1,14 +1,14 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-magnus';
-import { makePerformEmotionScreenStyles } from './PerformEmotionScreen.style';
-import { Camera } from 'react-native-vision-camera';
-import { useAuthorizedCamera, CameraComponent } from '../../components';
-import { HomeRoutes, PerformEmotionType } from '../../stacks/HomeParams';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {View} from 'react-native';
+import {Button, Text} from 'react-native-magnus';
+import {makePerformEmotionScreenStyles} from './PerformEmotionScreen.style';
+import {Camera} from 'react-native-vision-camera';
+import {useAuthorizedCamera, CameraComponent} from '../../components';
+import {HomeRoutes, PerformEmotionType} from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
-import { useUserData } from '../../contexts';
-import { insigniasEnum } from '../../types';
+import {useUserData} from '../../contexts';
+import {insigniasEnum} from '../../types';
 import axios from 'axios';
 
 interface EmotionResponse {
@@ -19,25 +19,25 @@ interface EmotionResponse {
   success: boolean;
 }
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => {
-  const { emotion: emotionParam, type } = route.params;
+const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
+  const {emotion: emotionParam, type} = route.params;
   const style = makePerformEmotionScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
+  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
   const [information, setInformation] = useState('');
   const [finishedCountDown, setFinishedCountDown] = useState(false);
   const [userReady, setUserReady] = useState(false);
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
-  const { updateInsignias } = useUserData();
+  const {updateInsignias} = useUserData();
   const percentage = '75'; // Porcentaje minimo de aciertos (Primer criterio de aceptacion)
-  const consecutiveRecognitionSuccess = '3' // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
+  const consecutiveRecognitionSuccess = '3'; // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
   const numImagesToCapture = 5; // Cantidad de fotos para el muestreo
   let pathsImages = ['']; // Solo se usa para almacenar el path de la imagen para eliminarla despues del proceso
 
   const navigateToFeedback = useCallback(
     (detection: boolean) => {
       if (detection) {
-        if (type == 'Arcade') {
+        if (type === 'Arcade') {
           navigation.replace(HomeRoutes.ASOCIATION, {
             emotion: emotionParam,
             type,
@@ -54,7 +54,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
           });
         }
       } else {
-        if (type == 'Arcade') {
+        if (type === 'Arcade') {
           navigation.replace(HomeRoutes.FEEDBACK_NEG_ARCADE, {
             emotion: emotionParam,
             type,
@@ -88,19 +88,20 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   const getFormData = async () => {
     const formData = new FormData();
     formData.append('percentage', percentage);
-    formData.append('consecutiveRecognitionSuccess', consecutiveRecognitionSuccess);
+    formData.append(
+      'consecutiveRecognitionSuccess',
+      consecutiveRecognitionSuccess,
+    );
     formData.append('emotionPrediction', emotionParam.name);
 
     for (let i = 0; i < numImagesToCapture; i++) {
       let image = await takePicture();
       if (image && image.path) {
-        formData.append('images',
-          {
-            uri: `file://${image.path}`,
-            type: `image/${image.path.split('.').pop()}`,
-            name: image.path.split('/').pop(),
-          }
-        );
+        formData.append('images', {
+          uri: `file://${image.path}`,
+          type: `image/${image.path.split('.').pop()}`,
+          name: image.path.split('/').pop(),
+        });
         pathsImages.push(image.path);
       }
     }
@@ -108,7 +109,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   };
 
   const detectEmotionsApi = async (formData: FormData) => {
-    const url = 'http://192.168.0.99:3001/detect-emotion';
+    const url = 'http://192.168.0.101:3001/detect-emotion';
     // const url = 'https://api-emotion-recognition-ia-dbcgar3efa-uc.a.run.app/detect-emotion';
     // const url = 'http://192.168.1.99:3001/detect-emotion';
     try {
@@ -130,8 +131,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     for (const path of pathsImages) {
       try {
         await RNFS.unlink(path);
-      }
-      catch {
+      } catch {
         // Negrada para que no explote si no existe la url
       }
     }
@@ -171,13 +171,25 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
       />
       <View style={style.containerButton}>
         {!userReady ? (
+          // <Button
+          //   style={style.button}
+          //   opacity={0.5}
+          //   bg="#56CD54"
+          //   rounded={16}
+          //   onPress={() => navigateToFeedback(true)}>
+          //   <Text color="black" fontSize={32}>
+          //     ¡Estoy listo!
+          //   </Text>
+          // </Button>
           <Button
             style={style.button}
             opacity={0.5}
             bg="#56CD54"
             rounded={16}
             onPress={() => setUserReady(true)}>
-            <Text color='black' fontSize={32}>¡Estoy listo!</Text>
+            <Text color="black" fontSize={32}>
+              ¡Estoy listo!
+            </Text>
           </Button>
         ) : !finishedCountDown ? (
           <Countdown
