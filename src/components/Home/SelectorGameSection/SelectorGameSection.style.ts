@@ -1,17 +1,16 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const makeSelectorGameSectionStyles = () =>
   StyleSheet.create({
     selectorGameContainer: {
-      height: 314,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 10,
-      marginBottom: 10,
-      paddingHorizontal: 10,
+      margin: 10,
+      padding: 10,
+      elevation: 5,
+      borderRadius: 8,
+      backgroundColor: 'white',
     },
     titleContainer: {
-      alignSelf: 'flex-start',
+      alignSelf: 'center',
       marginBottom: 10,
     },
     gamesGrid: {

@@ -9,22 +9,17 @@ const InsigniasAccessSection = ({
   goToInsignias: () => void;
 }) => {
   const style = makeInsigniasAccessSectionStyles();
-
   return (
     <View style={style.insigniasContainer}>
-      <View>
-        <Text color='#150B3D' fontWeight="700" fontSize={16}>
-          Insignias ganadas
-        </Text>
-      </View>
       <Button
         alignSelf="center"
         bg="#FCCDCE"
-        mt={15}
+        mt={5}
+        mb={5}
         rounded={16}
         style={style.button}
         onPress={goToInsignias}>
-        <Text style={style.buttonText}>Acceder a mis insignias</Text>
+        <Text style={style.buttonText}>Mis insignias</Text>
       </Button>
     </View>
   );
