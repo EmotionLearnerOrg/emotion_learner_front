@@ -1,10 +1,13 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const makeInsigniasAccessSectionStyles = () =>
   StyleSheet.create({
     insigniasContainer: {
-      marginBottom: 10,
-      paddingHorizontal: 10,
+      margin: 10,
+      padding: 10,
+      elevation: 5,
+      borderRadius: 8,
+      backgroundColor: 'white',
     },
     buttonText: {
       color: '#524B6B',

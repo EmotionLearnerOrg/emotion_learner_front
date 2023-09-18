@@ -56,8 +56,8 @@ const CalendarScreen: React.FC<CalendarType> = ({navigation}) => {
           style={style.button}
           alignSelf="center"
           bg="#FCCDCE"
-          m={25}
-          rounded={16}
+          m={5}
+          rounded={20}
           onPress={goToRegisterEmotionCalendar}>
           <Text style={style.buttonText}>Registrar nueva emoción</Text>
         </Button>

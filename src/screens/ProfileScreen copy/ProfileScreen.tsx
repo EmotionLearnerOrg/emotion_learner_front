@@ -1,20 +1,20 @@
-import React, { FC, useState } from 'react';
-import { Alert, ScrollView, Text, View } from 'react-native';
-import { makeProfileScreenStyles } from './ProfileScreen.style';
-import { Button, Icon } from 'react-native-magnus';
-import { HomeRoutes, ProfileType } from '../../stacks/HomeParams';
-import { Dialog } from '@rneui/themed';
-import { CommonActions, useNavigation } from '@react-navigation/native';
-import { HeaderCommon, PaymentSection } from '../../components';
-import { Input } from '@rneui/base';
-import { useUserAuth, useUserData } from '../../contexts';
-import { logout } from '../../services';
+import React, {FC, useState} from 'react';
+import {Alert, ScrollView, Text, View} from 'react-native';
+import {makeProfileScreenStyles} from './ProfileScreen.style';
+import {Button, Icon} from 'react-native-magnus';
+import {HomeRoutes, ProfileType} from '../../stacks/HomeParams';
+import {Dialog} from '@rneui/themed';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+import {HeaderCommon, PaymentSection} from '../../components';
+import {Input} from '@rneui/base';
+import {useUserAuth, useUserData} from '../../contexts';
+import {logout} from '../../services';
 
-const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
+const ProfileScreen: FC<ProfileType> = ({navigation}) => {
   const [visible, setVisible] = useState(false);
-  const { getParent } = useNavigation();
+  const {getParent} = useNavigation();
   const style = makeProfileScreenStyles();
-  const { clearData: clearUserData } = useUserAuth();
+  const {clearData: clearUserData} = useUserAuth();
   const {
     nickName: nickName,
     updateNickname,
@@ -27,7 +27,7 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
   };
 
   const handleNewNickname = () => {
-    updateNickname({ nickname: newNickname! });
+    updateNickname({nickname: newNickname!});
     cleanData();
   };
 
@@ -41,12 +41,12 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
         parent.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: parent.getState().routeNames[0] }],
+            routes: [{name: parent.getState().routeNames[0]}],
           }),
         );
       }
     } catch (error) {
-      Alert.alert('Error', 'Usuario o contraseña incorrectos', [{ text: 'OK' }]);
+      Alert.alert('Error', 'Usuario o contraseña incorrectos', [{text: 'OK'}]);
     }
   };
 
@@ -63,7 +63,6 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
             rounded="circle"
             name="user"
             fontFamily="Feather"
-            color="black"
             fontSize={40}
           />
           <Text style={style.nickname}>{nickName}</Text>

@@ -21,7 +21,7 @@ const SelectorGameSection = ({
   return (
     <View style={style.selectorGameContainer}>
       <View style={style.titleContainer}>
-        <Text style={{color: 'black', fontWeight: '700', fontSize: 16}}>
+        <Text style={{ color: '#150B3D', fontWeight: "700", fontSize: 18, paddingTop: 15 }}>
           ¡Elegí un juego!
         </Text>
       </View>
@@ -35,7 +35,7 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#AFECFE'}
               text={'Espejo Inteligente'}
-              icon={<Icon name="mirror" size={34} />}
+              icon={<Icon name="mirror" size={34} color={"#000000"} />}
             />
           </TouchableOpacity>
         </View>
@@ -48,7 +48,7 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#BEAFFE'}
               text={'Ruleta'}
-              icon={<Icon name="emoticon-tongue-outline" size={34} />}
+              icon={<Icon name="help" size={34} color={"#000000"} />}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -59,7 +59,7 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#FFD6AD'}
               text={'Asociación de Emociones'}
-              icon={<Icon name="emoticon-tongue-outline" size={34} />}
+              icon={<Icon name="emoticon-tongue-outline" size={34} color={"#000000"} />}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -70,7 +70,7 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#FFB8B8'}
               text={'Modo Arcade'}
-              icon={<Icon name="emoticon-tongue-outline" size={34} />}
+              icon={<Icon name="star-outline" size={34} color={"#000000"} />}
             />
           </TouchableOpacity>
         </View>

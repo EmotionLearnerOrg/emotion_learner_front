@@ -1,95 +1,44 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-magnus';
-import { makePerformEmotionScreenStyles } from './PerformEmotionScreen.style';
-import { Camera } from 'react-native-vision-camera';
-import { useAuthorizedCamera, CameraComponent } from '../../components';
-import { HomeRoutes, PerformEmotionType } from '../../stacks/HomeParams';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {View} from 'react-native';
+import {Button, Text} from 'react-native-magnus';
+import {makePerformEmotionScreenStyles} from './PerformEmotionScreen.style';
+import {Camera} from 'react-native-vision-camera';
+import {useAuthorizedCamera, CameraComponent} from '../../components';
+import {HomeRoutes, PerformEmotionType} from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
-import { useUserData } from '../../contexts';
-import { insigniasEnum } from '../../types';
+import {useUserData} from '../../contexts';
+import {insigniasEnum} from '../../types';
+import axios from 'axios';
 
-interface Prediction {
-  emocion: string;
+interface EmotionResponse {
+  consecutive_recognition: number;
+  emotion_prediction: string;
+  reliability: number;
+  results: Record<string, string>;
+  success: boolean;
 }
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => {
-  const { emotion: emotionParam, type } = route.params;
+const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
+  const {emotion: emotionParam, type} = route.params;
   const style = makePerformEmotionScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
-  const [imageBase64, setImageBase64] = useState('');
-  const [refresh, setRefresh] = useState(true);
-  const [response, setResponse] = useState('');
+  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
+  const [information, setInformation] = useState('');
   const [finishedCountDown, setFinishedCountDown] = useState(false);
   const [userReady, setUserReady] = useState(false);
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
-  const [predictions, setPredictions] = useState<Prediction[]>([]);
-  const predictionsCant = 15;
-  const { updateInsignias } = useUserData();
+  const {updateInsignias} = useUserData();
+  const percentage = '75'; // Porcentaje minimo de aciertos (Primer criterio de aceptacion)
+  const consecutiveRecognitionSuccess = '3'; // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
+  const numImagesToCapture = 5; // Cantidad de fotos para el muestreo
+  let pathsImages = ['']; // Solo se usa para almacenar el path de la imagen para eliminarla despues del proceso
 
-  const analyzeEmotion = useCallback(
-    (
-      predictionsData: Prediction[],
-      percentage: number,
-      consecutiveRecognitionSuccess: number,
-    ) => {
-      console.log('Comienza el analisis');
-      console.log(JSON.stringify(predictionsData));
-
-      const emotionSelected = emotionParam.name;
-      let numberOfHits = 0;
-      let consecutiveEmotions = 0;
-
-      // Primer criterio: Obtener el x% de predicciones correctas
-      for (const prediction of predictionsData) {
-        if (prediction.emocion && emotionSelected) {
-          if (
-            prediction.emocion.toLocaleLowerCase() ===
-            emotionSelected.toLowerCase()
-          ) {
-            numberOfHits++;
-          }
-        } else {
-          console.log('ERROR ', prediction.emocion, ' ', emotionSelected);
-        }
-      }
-
-      const percentageEmotions = (numberOfHits / predictionsData.length) * 100;
-
-      // Segundo criterio: Obtener x cantidad de detecciones consecutivas correctas
-      for (const prediction of predictionsData) {
-        if (prediction.emocion) {
-          if (
-            prediction.emocion.toLowerCase() === emotionSelected.toLowerCase()
-          ) {
-            consecutiveEmotions++;
-            if (consecutiveEmotions >= consecutiveRecognitionSuccess) {
-              break;
-            }
-          } else {
-            consecutiveEmotions = 0;
-          }
-        } else {
-          console.log('ERROR: Prediccion no detectada', prediction.emocion);
-        }
-      }
-
-      return (
-        percentageEmotions >= percentage ||
-        consecutiveEmotions >= consecutiveRecognitionSuccess
-      );
-    },
-    [emotionParam.name],
-  );
-
-  //TODO: Estaria bueno que esta funcion se divida y quede mas prolija y dividida por tipo de juego
   const navigateToFeedback = useCallback(
     (detection: boolean) => {
       if (detection) {
-        if (type == 'Arcade') {
-          navigation.replace (HomeRoutes.ASOCIATION, {
+        if (type === 'Arcade') {
+          navigation.replace(HomeRoutes.ASOCIATION, {
             emotion: emotionParam,
             type,
           });
@@ -99,19 +48,19 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
             idInsignia:
               `${type}_${emotionParam.name}` as unknown as insigniasEnum,
           });
-          navigation.replace (HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
+          navigation.replace(HomeRoutes.FEEDBACK_POS_MIRROR_RULETA, {
             emotion: emotionParam,
             type,
           });
         }
       } else {
-        if (type == 'Arcade') {
-          navigation.replace (HomeRoutes.FEEDBACK_NEG_ARCADE, {
+        if (type === 'Arcade') {
+          navigation.replace(HomeRoutes.FEEDBACK_NEG_ARCADE, {
             emotion: emotionParam,
             type,
           });
         } else {
-          navigation.replace (HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
+          navigation.replace(HomeRoutes.FEEDBACK_NEG_MIRROR_RULETA, {
             emotion: emotionParam,
             type,
           });
@@ -121,38 +70,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     [emotionParam, navigation, type, updateInsignias],
   );
 
-  const detectEmotionsApi = (imageData: string) => {
-    const url = 'http://192.168.1.36:3001/detect-emotion';
-    const body = {
-      image: imageData,
-    };
-    return new Promise((resolve, reject) => {
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
-        .then(responseApi => responseApi.json())
-        .then(data => {
-          resolve(data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  };
-
   const takePicture = useCallback(async () => {
     try {
       if (isAuthorized && cameraRef.current) {
         const image = await cameraRef.current.takePhoto();
         if (image && image.path) {
-          const base64 = await RNFS.readFile(image.path, 'base64');
-          setImageBase64(base64);
-          // Elimino la imagen luego de obtener la cadena para no incrementar la cache
-          await RNFS.unlink(image.path);
+          return image;
         } else {
           console.error('Error al capturar la imagen');
         }
@@ -162,60 +85,72 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
     }
   }, [isAuthorized]);
 
-  useEffect(() => {
-    if (imageBase64 && imageBase64 !== '') {
-      detectEmotionsApi(imageBase64).then(predict => {
-        // TODO: Revisar cuando emotion es undefined para que tome otra imagen, esto sucede porque la api no reconoce una cara (creo)
-        const { emotion } = JSON.parse(JSON.stringify(predict));
-        setPredictions(prevPredictions => [
-          ...prevPredictions,
-          { emocion: emotion },
-        ]);
+  const getFormData = async () => {
+    const formData = new FormData();
+    formData.append('percentage', percentage);
+    formData.append(
+      'consecutiveRecognitionSuccess',
+      consecutiveRecognitionSuccess,
+    );
+    formData.append('emotionPrediction', emotionParam.name);
 
-        console.log(emotion);
-        setResponse(emotion);
+    for (let i = 0; i < numImagesToCapture; i++) {
+      let image = await takePicture();
+      if (image && image.path) {
+        formData.append('images', {
+          uri: `file://${image.path}`,
+          type: `image/${image.path.split('.').pop()}`,
+          name: image.path.split('/').pop(),
+        });
+        pathsImages.push(image.path);
+      }
+    }
+    return formData;
+  };
+
+  const detectEmotionsApi = async (formData: FormData) => {
+    const url = 'http://192.168.0.101:3001/detect-emotion';
+    // const url = 'https://api-emotion-recognition-ia-dbcgar3efa-uc.a.run.app/detect-emotion';
+    // const url = 'http://192.168.1.99:3001/detect-emotion';
+    try {
+      const response = await axios.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
+      const data: EmotionResponse = response.data;
+      return data;
+    } catch (error) {
+      console.error('Error al enviar la imagen: ' + error);
+      throw error;
     }
-  }, [imageBase64]);
+  };
 
-  useEffect(() => {
-    // Se realizan dos mediciones intermedia para acelerar el resultado positivo
-    let updateRefresh = true;
-    if (predictions) {
-      if (predictions.length === 5 || predictions.length === 10) {
-        let percentage = 70;
-        let detectionsConsecutive = 5;
-        const analyzeResult = analyzeEmotion(
-          predictions,
-          percentage,
-          detectionsConsecutive,
-        );
-        if (analyzeResult) {
-          navigateToFeedback(analyzeResult);
-          updateRefresh = false;
-        }
-      }
-      if (predictions.length === predictionsCant) {
-        const lastAnalyze = analyzeEmotion(predictions, 65, 6);
-        navigateToFeedback(lastAnalyze);
-        updateRefresh = false;
+  // Hay que mejorar la eliminacion, estaria bueno que se obtenga los path desde formData pero no lo consegui facil
+  const deleteImagesInFormData = async (formData: FormData) => {
+    for (const path of pathsImages) {
+      try {
+        await RNFS.unlink(path);
+      } catch {
+        // Negrada para que no explote si no existe la url
       }
     }
+  };
 
-    if (updateRefresh) {
-      setRefresh(!refresh);
-    }
-  }, [predictions]);
+  const startProcess = async () => {
+    setInformation('Comienza el muestreo');
+    const formData = await getFormData();
+    setInformation('Procesando...');
+    let response = await detectEmotionsApi(formData);
+    await deleteImagesInFormData(formData);
+    navigateToFeedback(response.success);
+  };
 
   useEffect(() => {
     if (startDetectionEmotion) {
-      takePicture();
+      startProcess();
     }
-  }, [startDetectionEmotion, takePicture]);
-
-  useEffect(() => {
-    takePicture();
-  }, [refresh, takePicture]);
+  }, [startDetectionEmotion]);
 
   useEffect(() => {
     if (userReady && finishedCountDown) {
@@ -236,13 +171,25 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
       />
       <View style={style.containerButton}>
         {!userReady ? (
+          // <Button
+          //   style={style.button}
+          //   opacity={0.5}
+          //   bg="#56CD54"
+          //   rounded={16}
+          //   onPress={() => navigateToFeedback(true)}>
+          //   <Text color="black" fontSize={32}>
+          //     ¡Estoy listo!
+          //   </Text>
+          // </Button>
           <Button
             style={style.button}
             opacity={0.5}
             bg="#56CD54"
             rounded={16}
             onPress={() => setUserReady(true)}>
-            <Text color='black' fontSize={32}>¡Estoy listo!</Text>
+            <Text color="black" fontSize={32}>
+              ¡Estoy listo!
+            </Text>
           </Button>
         ) : !finishedCountDown ? (
           <Countdown
@@ -257,9 +204,9 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
           </Text>
         )}
       </View>
-      {response ? (
+      {information ? (
         <Text fontSize={32} color="#ff00ff">
-          {JSON.stringify(response)}
+          {JSON.stringify(information)}
         </Text>
       ) : null}
     </View>
