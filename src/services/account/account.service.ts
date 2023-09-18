@@ -76,7 +76,7 @@ export const sendPassResetEmail = async ({
       .then()
       .catch();
   } catch (error) {
-    throw new Error('Error sendPassResetEmail function: ' + error);
+    throw new Error('Error sendPassResetEmail function conection: ' + error);
   }
 };
 

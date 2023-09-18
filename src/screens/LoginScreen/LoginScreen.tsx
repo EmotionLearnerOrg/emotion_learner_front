@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { View, Alert } from 'react-native';
+import React, { FC, useState } from 'react';
+import { View } from 'react-native';
 import { makeLoginScreenStyle } from './LoginScreen.style';
 import { HomeLoginType, LoginRoutes } from '../../stacks/LoginParams';
 import { useUserAuth } from '../../contexts';
@@ -10,8 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { SchemaOf } from 'yup';
 import { validations } from '../../utils/formValidations/validations';
-import { FormInput } from '../../components';
-import { sendPassResetEmail } from '../../services';
+import { FormInput, ModalPasswordReset } from '../../components';
 
 export type LoginForm = {
   email: string;
@@ -71,9 +70,19 @@ const LoginScreen: FC<HomeLoginType> = ({ navigation }) => {
     }
   };
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [titleModal, setTitleModal] = useState('');
+  const [messageModal, setMessageModal] = useState('');
+
+  const handlePasswordReset = () => {
+    setTitleModal('Recuperar contraseña');
+    setMessageModal('Ingrese su correo:');
+    setModalVisible(true);
+  };
+
   return (
     <View style={style.container}>
-      <Text style={style.title}>Iniciar Sesión</Text>
+      <Text style={style.title}>Iniciá sesión para comenzar a jugar</Text>
       <FormInput
         name={'email'}
         control={control as unknown as Control<FieldValues>}
@@ -106,25 +115,17 @@ const LoginScreen: FC<HomeLoginType> = ({ navigation }) => {
         }}>
         <Text style={style.buttonText}>Ingresar</Text>
       </Button>
-      <Text style={{ color: '#0D0140', fontWeight: '700', fontSize: 15 }}>¿Olvidaste tu Contraseña?</Text>
+      <Text style={{ color: '#0D0140', fontWeight: 'bold', fontSize: 15, marginTop: 20, marginBottom: 20 }}>¿Olvidaste tu Contraseña?</Text>
       <Button
         style={style.button}
         alignSelf="center"
         bg="#FCCDCE"
         mx={10}
-        mb={12}
         rounded={16}
-        onPress={async () => {
-          try {
-            await sendPassResetEmail({ email: 'maxialexan36@gmail.com' })
-            Alert.alert('Correo enviado', 'Se ha enviado un correo de restablecimiento de contraseña a tu dirección de email.');
-          } catch (error) {
-            Alert.alert('Error', 'No se pudo enviar el correo de restablecimiento de contraseña. Verifica tu dirección de email.');
-            console.log('Error sendPasswordResetEmail: ', error);
-          }
-        }}>
+        onPress={handlePasswordReset}>
         <Text style={style.buttonText}>Recuperar contraseña</Text>
       </Button>
+      <Text style={{ color: '#0D0140', fontWeight: 'bold', fontSize: 15, marginTop: 20, marginBottom: 20 }}>¿No tenes cuenta?</Text>
       <Button
         style={style.button}
         alignSelf="center"
@@ -134,6 +135,12 @@ const LoginScreen: FC<HomeLoginType> = ({ navigation }) => {
         onPress={goToRegister}>
         <Text style={style.buttonText}>Registrarse</Text>
       </Button>
+      <ModalPasswordReset
+        isModalVisible={isModalVisible}
+        title={titleModal}
+        message={messageModal}
+        setModalVisible={() => setModalVisible(false)}
+      />
     </View>
   );
 };

@@ -8,3 +8,4 @@ export * from './FeedbackView';
 export * from './RuletaContainer';
 export * from './Home';
 export * from './ArcadeView';
+export * from './PasswordReset';
