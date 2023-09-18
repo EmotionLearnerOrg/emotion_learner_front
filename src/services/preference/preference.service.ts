@@ -43,7 +43,7 @@ export const getUID = async () => {
   } catch (e) {}
 };
 
-export const getSubscriptionType = async () => {
+export const getSubscriptionTypeLocal = async () => {
   try {
     const subscriptionType = await AsyncStorage.getItem('subscriptionType');
     return subscriptionType || '';
