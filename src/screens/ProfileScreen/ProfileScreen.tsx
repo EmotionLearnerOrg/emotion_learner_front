@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Alert, ScrollView, Text, View } from 'react-native';
 import { makeProfileScreenStyles } from './ProfileScreen.style';
-import { Button, Icon } from 'react-native-magnus';
+import { Button } from 'react-native-magnus';
 import { HomeRoutes, ProfileType } from '../../stacks/HomeParams';
 import { Dialog } from '@rneui/themed';
 import { CommonActions, useNavigation } from '@react-navigation/native';
@@ -58,29 +58,33 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
     <ScrollView style={style.containerView}>
       <View style={style.cardProfile}>
         <View style={style.cardProfileHeader}>
-          <Icon
-            style={style.nickname}
-            rounded="circle"
-            name="user"
-            fontFamily="Feather"
-            color="black"
-            fontSize={40}
-          />
           <Text style={style.nickname}>{nickName}</Text>
           <HeaderCommon />
         </View>
         <Text style={style.subtitle}>Editá tu perfil</Text>
         <View style={style.cardEditProfile}>
-          <Text style={style.subtitle}>Nombre y Apellido</Text>
+          <View style={style.cardProfileHeader}>
+            <Text style={{ fontSize: 14, color: 'white', fontWeight: 'bold', marginStart: 13 }}>Nombre y Apellido</Text>
+          </View>
           <Input
-            style={style.input}
+            style={{ marginTop: 10, color: 'white' }}
             placeholder={nickName}
             placeholderTextColor="#AEB6BF"
             onChangeText={setNewNickName}
             value={newNickname}
           />
-          <Button loading={isLoadingUpdateNickname} onPress={handleNewNickname}>
-            Guardar nuevo nickname
+          <Button
+            loading={isLoadingUpdateNickname}
+            style={style.button}
+            alignSelf="center"
+            bg="#FCCDCE"
+            mx={10}
+            mb={12}
+            rounded={16}
+            onPress={() => {
+              handleNewNickname();
+            }}>
+            <Text style={style.buttonText}>Guardar nuevo nickname</Text>
           </Button>
         </View>
       </View>
@@ -89,7 +93,7 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
         style={style.button}
         alignSelf="center"
         bg="#FCCDCE"
-        mx={10}
+        mx={15}
         mb={12}
         rounded={16}
         onPress={() => {
