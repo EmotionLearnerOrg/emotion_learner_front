@@ -24,6 +24,9 @@ export const loginWithEmailAndPassword = async ({
   try {
     await signInWithEmailAndPassword(auth, email, password)
       .then(async response => {
+        if (!response.user.emailVerified) {
+          throw new Error('Error not verified email');
+        }
         const nickName = await getDisplayName({ uid: response.user.uid });
         const subscriptionType = await getSubscriptionType({
           uid: response.user.uid,

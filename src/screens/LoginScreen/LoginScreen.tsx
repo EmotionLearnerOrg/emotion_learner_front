@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { makeLoginScreenStyle } from './LoginScreen.style';
 import { HomeLoginType, LoginRoutes } from '../../stacks/LoginParams';
 import { useUserAuth } from '../../contexts';
