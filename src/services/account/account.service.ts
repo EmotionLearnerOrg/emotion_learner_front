@@ -1,17 +1,19 @@
-import {auth, db} from '../../configs/config.firebase';
-import {doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
+import { auth, db } from '../../configs/config.firebase';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  sendEmailVerification,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import {
   clearPreferenceData,
   savePreferenceData,
 } from '../preference/preference.service';
-import {insigniasDefault} from '../../types';
-import {createInsigniaByUser} from '../insignia/insignia.service';
+import { insigniasDefault } from '../../types';
+import { createInsigniaByUser } from '../insignia/insignia.service';
 export const loginWithEmailAndPassword = async ({
   email,
   password,
@@ -22,7 +24,10 @@ export const loginWithEmailAndPassword = async ({
   try {
     await signInWithEmailAndPassword(auth, email, password)
       .then(async response => {
-        const nickName = await getDisplayName({uid: response.user.uid});
+        if (!response.user.emailVerified) {
+          throw new Error('Error not verified email');
+        }
+        const nickName = await getDisplayName({ uid: response.user.uid });
         const subscriptionType = await getSubscriptionType({
           uid: response.user.uid,
         });
@@ -31,7 +36,7 @@ export const loginWithEmailAndPassword = async ({
       })
       .catch();
   } catch (error) {
-    throw new Error('Error creating document: ' + error);
+    throw new Error('Error signInWithEmailAndPassword function: ' + error);
   }
 };
 
@@ -50,7 +55,8 @@ export const signUpWithEmailAndPassword = async ({
       email,
       password,
     );
-    await updateProfile(auth.currentUser!!, {displayName: nickName});
+    await sendEmailVerification(auth.currentUser!!);
+    await updateProfile(auth.currentUser!!, { displayName: nickName });
     await createInsigniaByUser({
       uid: response.user.uid,
       nuevasInsignias: insigniasDefault,
@@ -59,7 +65,21 @@ export const signUpWithEmailAndPassword = async ({
     await savePreferenceData(nickName, 'PRUEBA', response.user.uid);
     return response.user.uid;
   } catch (error) {
-    throw new Error('Error creating document: ' + error);
+    throw new Error('Error signUpWithEmailAndPassword function: ' + error);
+  }
+};
+
+export const sendPassResetEmail = async ({
+  email
+}: {
+  email: string;
+}) => {
+  try {
+    await sendPasswordResetEmail(auth, email)
+      .then()
+      .catch();
+  } catch (error) {
+    throw new Error('Error sendPassResetEmail function conection: ' + error);
   }
 };
 
@@ -81,7 +101,7 @@ export const setInitialData = async (
   return uid;
 };
 
-export const getDisplayName = async ({uid}: {uid: string}): Promise<any> => {
+export const getDisplayName = async ({ uid }: { uid: string }): Promise<any> => {
   const docRef = doc(db, 'users', uid!);
   return getDoc(docRef)
     .then(docSnap => {

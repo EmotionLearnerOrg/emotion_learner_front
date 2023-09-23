@@ -109,7 +109,8 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
   };
 
   const detectEmotionsApi = async (formData: FormData) => {
-    const url = 'http://192.168.0.101:3001/detect-emotion';
+    // const url = 'http://192.168.0.101:3001/detect-emotion';
+    const url = 'https://cod-proven-formally.ngrok-free.app/detect-emotion';
     // const url = 'https://api-emotion-recognition-ia-dbcgar3efa-uc.a.run.app/detect-emotion';
     // const url = 'http://192.168.1.99:3001/detect-emotion';
     try {

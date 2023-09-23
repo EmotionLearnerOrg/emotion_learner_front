@@ -84,6 +84,6 @@ export const useGetSubscriptionTypeByUser = (
 ) => {
   return useQuery({
     queryKey: `useGetSubscriptionTypeByUser${props.uid}`,
-    queryFn: () => getSubscriptionType(),
+    queryFn: () => getSubscriptionType({uid: props.uid}),
   });
 };

@@ -1,25 +1,25 @@
-import React, {FC} from 'react';
-import {View} from 'react-native';
-import {makeLoginScreenStyle} from './LoginScreen.style';
-import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
-import {useUserAuth} from '../../contexts';
-import {useLoginWithEmailAndPassword} from '../../hooks';
-import {Button, Text} from 'react-native-magnus';
-import {Control, FieldValues, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
+import React, { FC, useState } from 'react';
+import { View, Alert } from 'react-native';
+import { makeLoginScreenStyle } from './LoginScreen.style';
+import { HomeLoginType, LoginRoutes } from '../../stacks/LoginParams';
+import { useUserAuth } from '../../contexts';
+import { useLoginWithEmailAndPassword } from '../../hooks';
+import { Button, Text } from 'react-native-magnus';
+import { Control, FieldValues, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import {SchemaOf} from 'yup';
-import {validations} from '../../utils/formValidations/validations';
-import {FormInput} from '../../components';
+import { SchemaOf } from 'yup';
+import { validations } from '../../utils/formValidations/validations';
+import { FormInput, ModalPasswordReset } from '../../components';
 
 export type LoginForm = {
   email: string;
   password: string;
 };
 
-const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
+const LoginScreen: FC<HomeLoginType> = ({ navigation }) => {
   const style = makeLoginScreenStyle();
-  const {initData} = useUserAuth();
+  const { initData } = useUserAuth();
   const cleanData = () => {
     reset();
   };
@@ -31,7 +31,7 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const {
     mutateAsync: mutateLoginWithEmailAndPassword,
     isLoading: isLoadingLoginWithEmailAndPassword,
-  } = useLoginWithEmailAndPassword({onSuccess: handleLogin});
+  } = useLoginWithEmailAndPassword({ onSuccess: handleLogin });
 
   const schema: SchemaOf<LoginForm> = yup.object().shape({
     email: validations().email.required(),
@@ -40,7 +40,7 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
 
   const {
     control,
-    formState: {isValid, errors},
+    formState: { isValid, errors },
     getValues,
     reset,
   } = useForm<LoginForm>({
@@ -70,9 +70,19 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
     }
   };
 
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [titleModal, setTitleModal] = useState('');
+  const [messageModal, setMessageModal] = useState('');
+
+  const handlePasswordReset = () => {
+    setTitleModal('Recuperar contraseña');
+    setMessageModal('Ingrese su correo:');
+    setModalVisible(true);
+  };
+
   return (
     <View style={style.container}>
-      <Text style={style.title}>Iniciar Sesión</Text>
+      <Text style={style.title}>Iniciá sesión para comenzar a jugar</Text>
       <FormInput
         name={'email'}
         control={control as unknown as Control<FieldValues>}
@@ -105,6 +115,17 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
         }}>
         <Text style={style.buttonText}>Ingresar</Text>
       </Button>
+      <Text style={{ color: '#0D0140', fontWeight: 'bold', fontSize: 15, marginTop: 20, marginBottom: 20 }}>¿Olvidaste tu Contraseña?</Text>
+      <Button
+        style={style.button}
+        alignSelf="center"
+        bg="#FCCDCE"
+        mx={10}
+        rounded={16}
+        onPress={handlePasswordReset}>
+        <Text style={style.buttonText}>Recuperar contraseña</Text>
+      </Button>
+      <Text style={{ color: '#0D0140', fontWeight: 'bold', fontSize: 15, marginTop: 20, marginBottom: 20 }}>¿No tenes cuenta?</Text>
       <Button
         style={style.button}
         alignSelf="center"
@@ -114,6 +135,12 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
         onPress={goToRegister}>
         <Text style={style.buttonText}>Registrarse</Text>
       </Button>
+      <ModalPasswordReset
+        isModalVisible={isModalVisible}
+        title={titleModal}
+        message={messageModal}
+        setModalVisible={() => setModalVisible(false)}
+      />
     </View>
   );
 };

@@ -33,10 +33,10 @@ const PaymentSection = () => {
   };
 
   const handleCanceledSubscription = () => {
-    updateSubscriptionType({subscriptionType: 'PRUEBA'});
+    updateSubscriptionType({subscriptionType: 'CANCELED_SUBSCRIPTION'});
     setTitleModal('Subscripción cancelada');
     setMessageModal(
-      'Se cancelo la subscripción, podes volver a subscribirte a premium cuando quieras!',
+      'Se cancelo la subscripción, podes volver a subscribirte a premium cuando quieras',
     );
     setModalVisible(true);
   };
@@ -54,7 +54,7 @@ const PaymentSection = () => {
             : SubscriptionEnum.PRUEBA}
         </Text>
       </View>
-      {subscriptionType === 'PRUEBA' && (
+      {(subscriptionType === 'PRUEBA' || subscriptionType === 'CANCELED_SUBSCRIPTION' ) && (
         <View style={style.cardPayment}>
           <Text
             style={{
@@ -93,7 +93,7 @@ const PaymentSection = () => {
           </Button>
         </View>
       )}
-      {subscriptionType !== 'PRUEBA' && (
+      {subscriptionType !== 'PRUEBA' && subscriptionType !== 'CANCELED_SUBSCRIPTION' && (
         <View style={style.cardPayment}>
           <Text
             style={{

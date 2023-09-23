@@ -5,6 +5,6 @@ export {
   getUID,
   savePreferenceData,
   setNickName,
-  getSubscriptionType,
+  getSubscriptionTypeLocal,
   setSubscriptionType,
 } from './preference.service';

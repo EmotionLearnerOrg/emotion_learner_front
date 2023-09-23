@@ -1,17 +1,26 @@
-import React, {FC, useEffect, useState} from 'react';
-import {ScrollView, View} from 'react-native';
-import {makeInsigniasScreenStyles} from './InsigniasScreen.style';
-import {Text} from 'react-native-magnus';
+import React, { FC, useEffect, useState } from 'react';
+import { ScrollView, View } from 'react-native';
+import { makeInsigniasScreenStyles } from './InsigniasScreen.style';
+import { Text } from 'react-native-magnus';
 import {
   InsigniaMirror,
   InsigniaArcade,
   InsigniaAso,
   InsigniaRuleta,
 } from '../../../assets';
-import {insigniasColor, insigniasEnum} from '../../types';
-import {useUserData} from '../../contexts';
+import { insigniasColor, insigniasEnum } from '../../types';
+import { useUserData } from '../../contexts';
 
-const capitalizeFirstLetter = ({str}: {str: string}) => {
+const DISPLAY_NAME_MAP: {
+  [key: string]: string
+} = {
+  Mirror: 'Espejo Inteligente',
+  Ruleta: 'Ruleta',
+  Arcade: 'Arcade',
+  Asociacion: 'Asociación',
+};
+
+const capitalizeFirstLetter = ({ str }: { str: string }) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
@@ -82,7 +91,7 @@ const groupStringsByPrefix = (
 ): {
   [key: string]: [string, boolean][];
 } => {
-  const groupedStrings: {[key: string]: [string, boolean][]} = {};
+  const groupedStrings: { [key: string]: [string, boolean][] } = {};
 
   insignias.forEach(insignia => {
     const prefix = insignia[0].split('_')[0]; // Obtenemos la cadena inicial hasta el primer '_'
@@ -111,16 +120,16 @@ const InsigniaItem = ({
       <Text mb={8}>
         {category === 'Asociacion'
           ? ''
-          : capitalizeFirstLetter({str: title[1]})}
+          : capitalizeFirstLetter({ str: title[1] })}
       </Text>
-      {InsigniaPorCategoria({category: category, item: item})}
+      {InsigniaPorCategoria({ category: category, item: item })}
     </View>
   );
 };
 
 const InsigniasScreen: FC<{}> = () => {
   const styles = makeInsigniasScreenStyles();
-  const {insignias} = useUserData();
+  const { insignias } = useUserData();
   const [groupedInsignias, setGroupedInsignias] = useState<{
     [key: string]: [string, boolean][];
   }>();
@@ -130,14 +139,14 @@ const InsigniasScreen: FC<{}> = () => {
 
   return (
     <ScrollView nestedScrollEnabled>
-      <Text p={8} fontSize={32}>
-        Estas son las insignias que ganaste!
+      <Text color='#0D0140' textAlign='center' fontWeight='bold' p={8} fontSize={30}>
+        Estas son las insignias que ganaste
       </Text>
       {groupedInsignias &&
         Object.keys(groupedInsignias).map(key => (
           <View key={key} style={styles.sectionContainer}>
             <Text textAlign="center" style={styles.titleSection} fontSize={24}>
-              {capitalizeFirstLetter({str: key})}
+              {DISPLAY_NAME_MAP[key]}
             </Text>
             {groupedInsignias[key].map(elemento => (
               <View key={elemento[0]} style={styles.item}>

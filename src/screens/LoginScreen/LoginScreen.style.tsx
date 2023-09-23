@@ -12,7 +12,7 @@ export const makeLoginScreenStyle = () =>
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 20,
-      color: '#2C3E50',
+      color: '#0D0140',
     },
     input: {
       width: '80%',

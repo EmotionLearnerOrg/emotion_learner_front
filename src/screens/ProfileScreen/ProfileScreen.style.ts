@@ -7,8 +7,9 @@ export const makeProfileScreenStyles = () =>
       alignSelf: 'center',
     },
     cardProfile: {
-      backgroundColor: '#7551FF',
-      borderRadius: 20,
+      backgroundColor: '#rgba(117, 81, 255, 0.9)',
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
       marginBottom: 20,
     },
     cardProfileHeader: {
@@ -48,12 +49,6 @@ export const makeProfileScreenStyles = () =>
       marginBottom: 20,
       marginStart: 17,
       marginEnd: 17,
-    },
-    input: {
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-      borderRadius: 5,
-      paddingHorizontal: 10,
-      color: 'white',
     },
     buttonText: {
       color: '#524B6B',
