@@ -30,8 +30,8 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
   const {updateInsignias} = useUserData();
   const percentage = '75'; // Porcentaje minimo de aciertos (Primer criterio de aceptacion)
-  const consecutiveRecognitionSuccess = '3'; // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
-  const numImagesToCapture = 5; // Cantidad de fotos para el muestreo
+  const consecutiveRecognitionSuccess = '2'; // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
+  const numImagesToCapture = 3; // Cantidad de fotos para el muestreo
   let pathsImages = ['']; // Solo se usa para almacenar el path de la imagen para eliminarla despues del proceso
 
   const navigateToFeedback = useCallback(
@@ -110,7 +110,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
 
   const detectEmotionsApi = async (formData: FormData) => {
     // const url = 'http://192.168.0.101:3001/detect-emotion';
-    const url = 'https://cod-proven-formally.ngrok-free.app/detect-emotion';
+    const url = 'https://c200-2800-810-506-6dc-4751-6990-2ef2-97af.ngrok-free.app/detect-emotion';
     // const url = 'https://api-emotion-recognition-ia-dbcgar3efa-uc.a.run.app/detect-emotion';
     // const url = 'http://192.168.1.99:3001/detect-emotion';
     try {
