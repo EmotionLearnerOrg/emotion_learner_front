@@ -11,6 +11,7 @@ export const makeCalendarScreenStyles = () =>
     buttonContainer: {
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: 'white',
     },
     buttonText: {
       color: '#524B6B',

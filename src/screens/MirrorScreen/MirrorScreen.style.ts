@@ -4,7 +4,6 @@ export const makeMirrorScreenStyles = () =>
   StyleSheet.create({
     containerView: {flex: 1, padding: 10},
     buttonsContainer: {
-      margin: 10,
       marginVertical: 20,
       padding: 10,
       elevation: 5,
