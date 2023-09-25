@@ -111,7 +111,6 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
 
   const detectEmotionsApi = async (formData: FormData) => {
     const url = urlApi!; // Reemplazar hardcodeado si no funcion al updateUrlApi
-    console.log(url);
     try {
       const response = await axios.post(url, formData, {
         headers: {

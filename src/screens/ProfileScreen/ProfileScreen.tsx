@@ -39,7 +39,6 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
 
   const handleNewUrlApi = () => {
     updateUrlApi({ urlApi: newUrlApi! });
-    console.log(newUrlApi);
     setVisibleUrl(false);
     cleanData();
   };

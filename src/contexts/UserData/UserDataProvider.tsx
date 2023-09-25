@@ -16,7 +16,7 @@ import {
   useUpdateSubscriptionType,
   useGetSubscriptionTypeByUser,
   useUpdateUrlApi,
-  useGetUrlApi,
+  useGetUrlApiByUser,
 } from '../../hooks';
 import { IUserDataContext } from './UserData.model';
 import { DEFAULT_STATE_DATA, userInsigniasReducer } from './UserData.reducer';
@@ -70,7 +70,7 @@ export const UserDataProvider: React.FC<any> = ({ children }) => {
 
   const {
     mutateAsync: mutateUpdateUrlApi,
-    isLoading: isLoadingUrlApi,
+    isLoading: isLoadingUpdateUrlApi,
   } = useUpdateUrlApi({ uid: uid });
 
   const {
@@ -110,7 +110,7 @@ export const UserDataProvider: React.FC<any> = ({ children }) => {
     data: dataUrlApi,
     isLoading: isLoadingGetUrlApi,
     isRefetching: isRefetchingGetUrlApi,
-  } = useGetUrlApi({ uid: uid });
+  } = useGetUrlApiByUser({ uid: uid });
 
   useEffect(() => {
     if (!isLoadingGetNickname && dataNickname && !isRefetchingGetNickname) {
@@ -183,13 +183,13 @@ export const UserDataProvider: React.FC<any> = ({ children }) => {
   }, [isLoadingUpdateSubscriptionType]);
 
   useEffect(() => {
-    if (!isLoadingUrlApi) {
+    if (!isLoadingUpdateUrlApi) {
       dispatch({
         type: UserDataActionKind.SET_UPDATING_URL_API,
         isLoadingUrlApi: false,
       });
     }
-  }, [isLoadingUrlApi]);
+  }, [isLoadingUpdateUrlApi]);
 
   useEffect(() => {
     if (!isLoadingCreateInsignias && !isLoadingUpdateInsignias) {

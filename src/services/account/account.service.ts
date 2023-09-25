@@ -29,7 +29,8 @@ export const loginWithEmailAndPassword = async ({
         }
         const nickName = await getDisplayName({ uid: response.user.uid });
         const subscriptionType = await getSubscriptionType({ uid: response.user.uid, });
-        await savePreferenceData(nickName, subscriptionType, response.user.uid);
+        const urlApi = await getUrlApi({ uid: response.user.uid, });
+        await savePreferenceData(nickName, subscriptionType, urlApi, response.user.uid);
         return response.user.uid;
       })
       .catch();
@@ -60,7 +61,7 @@ export const signUpWithEmailAndPassword = async ({
       nuevasInsignias: insigniasDefault,
     });
     await setInitialData(nickName, 'PRUEBA', response.user.uid!!);
-    await savePreferenceData(nickName, 'PRUEBA', response.user.uid);
+    await savePreferenceData(nickName, 'PRUEBA', 'https://many-sole-solely.ngrok-free.app/detect-emotion', response.user.uid);
     return response.user.uid;
   } catch (error) {
     throw new Error('Error signUpWithEmailAndPassword function: ' + error);

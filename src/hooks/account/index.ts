@@ -98,11 +98,11 @@ export const useUpdateUrlApi = (
   );
 };
 
-export const useGetUrlApi = (
+export const useGetUrlApiByUser = (
   props: ResponseType & { uid: string },
 ) => {
   return useQuery({
-    queryKey: `useGetUrlApi${props.uid}`,
+    queryKey: `useGetUrlApiByUser${props.uid}`,
     queryFn: () => getUrlApi({ uid: props.uid }),
   });
 };
