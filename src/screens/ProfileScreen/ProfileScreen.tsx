@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
-import { Alert, ScrollView, Text, View } from 'react-native';
+import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { makeProfileScreenStyles } from './ProfileScreen.style';
-import { Button } from 'react-native-magnus';
+import { Button, Icon } from 'react-native-magnus';
 import { HomeRoutes, ProfileType } from '../../stacks/HomeParams';
 import { Dialog } from '@rneui/themed';
 import { CommonActions, useNavigation } from '@react-navigation/native';
@@ -12,22 +12,35 @@ import { logout } from '../../services';
 
 const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
+  const [visibleUrl, setVisibleUrl] = useState(false);
   const { getParent } = useNavigation();
   const style = makeProfileScreenStyles();
   const { clearData: clearUserData } = useUserAuth();
   const {
     nickName: nickName,
+    urlApi: urlApi,
     updateNickname,
+    updateUrlApi,
     isLoadingUpdateNickname,
+    isLoadingUrlApi
   } = useUserData();
   const [newNickname, setNewNickName] = useState(nickName);
+  const [newUrlApi, setNewUrlApi] = useState('');
 
   const cleanData = () => {
     setNewNickName('');
+    setNewUrlApi('');
   };
 
   const handleNewNickname = () => {
     updateNickname({ nickname: newNickname! });
+    cleanData();
+  };
+
+  const handleNewUrlApi = () => {
+    updateUrlApi({ urlApi: newUrlApi! });
+    console.log(newUrlApi);
+    setVisibleUrl(false);
     cleanData();
   };
 
@@ -124,6 +137,54 @@ const ProfileScreen: FC<ProfileType> = ({ navigation }) => {
           Si
         </Button>
       </Dialog>
+      {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
+      <TouchableOpacity onPress={() => { setVisibleUrl(true); }}>
+        <Icon
+          name="cog"
+          color="white"
+          fontSize={30}
+          right={4}
+          fontFamily="FontAwesome"
+        />
+      </TouchableOpacity>
+      <Dialog isVisible={visibleUrl}>
+        <Input
+          style={{ marginTop: 10, color: 'black' }}
+          placeholderTextColor="black"
+          value={urlApi}
+          disabled={false}
+        />
+        <Input
+          style={{ marginTop: 10, color: 'black' }}
+          placeholder={newUrlApi}
+          placeholderTextColor="black"
+          onChangeText={setNewUrlApi}
+          value={newUrlApi}
+        />
+        <Button
+          loading={isLoadingUrlApi}
+          style={style.button}
+          alignSelf="center"
+          bg="#FCCDCE"
+          mx={10}
+          mb={12}
+          rounded={16}
+          onPress={() => { handleNewUrlApi(); }}>
+          <Text style={style.buttonText}>Guardar nueva URL</Text>
+        </Button>
+        <Button
+          loading={isLoadingUrlApi}
+          style={style.button}
+          alignSelf="center"
+          bg="#FCCDCE"
+          mx={10}
+          mb={12}
+          rounded={16}
+          onPress={() => { setVisibleUrl(false); }}>
+          <Text style={style.buttonText}>Cancelar</Text>
+        </Button>
+      </Dialog>
+      {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
     </ScrollView>
   );
 };

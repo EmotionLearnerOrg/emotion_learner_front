@@ -8,16 +8,20 @@ const {
   CLEAR_DATA,
   SET_UPDATING_INSIGNIAS,
   SET_SUBSCRIPTION_TYPE,
-  SET_UPDATING_SUBSCRIPTION_TYPE
+  SET_UPDATING_SUBSCRIPTION_TYPE,
+  SET_URL_API,
+  SET_UPDATING_URL_API,
 } = UserDataActionKind;
 
 export const DEFAULT_STATE_DATA: UserDataState = {
   isLoadingUpdateNickname: false,
   isLoadingPostInsignias: false,
   isLoadingUpdateSubscriptionType: false,
+  isLoadingUrlApi: false,
   insignias: [],
   nickName: '',
   subscriptionType: 'PRUEBA',
+  urlApi: '',
 };
 
 export const userInsigniasReducer = (
@@ -58,7 +62,18 @@ export const userInsigniasReducer = (
       return {
         ...prevState,
         isLoadingUpdateSubscriptionType: action.isLoadingUpdateSubscriptionType,
+      }
+    case SET_UPDATING_URL_API:
+      return {
+        ...prevState,
+        isLoadingUrlApi: action.isLoadingUrlApi,
       };
+    case SET_URL_API:
+      return {
+        ...prevState,
+        urlApi: action.urlApi,
+      };
+
     default:
       return prevState;
   }

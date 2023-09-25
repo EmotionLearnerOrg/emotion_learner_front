@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
-import {makePaymentSectionStyles} from './PaymentSection.style';
-import {ScrollView, Text, View} from 'react-native';
-import {Button} from 'react-native-magnus';
+import React, { useState } from 'react';
+import { makePaymentSectionStyles } from './PaymentSection.style';
+import { ScrollView, Text, View } from 'react-native';
+import { Button } from 'react-native-magnus';
 import ModalPayment from './ModalPayment';
-import {SubscriptionEnum} from '../../../types';
-import {useUserData} from '../../../contexts';
+import { SubscriptionEnum } from '../../../types';
+import { useUserData } from '../../../contexts';
 import RadioButton from './RadioButton';
 
 const PaymentSection = () => {
   const style = makePaymentSectionStyles();
   const {
     subscriptionType: subscriptionType,
+    urlApi: urlApi,
     updateSubscriptionType,
     isLoadingUpdateSubscriptionType,
   } = useUserData();
@@ -26,14 +27,14 @@ const PaymentSection = () => {
   };
 
   const handlePayment = () => {
-    updateSubscriptionType({subscriptionType: selectedSubscriptionType!});
+    updateSubscriptionType({ subscriptionType: selectedSubscriptionType! });
     setTitleModal('¡Pago exitoso!');
     setMessageModal('Felicidades, ahora sos usuario Premium');
     setModalVisible(true);
   };
 
   const handleCanceledSubscription = () => {
-    updateSubscriptionType({subscriptionType: 'CANCELED_SUBSCRIPTION'});
+    updateSubscriptionType({ subscriptionType: 'CANCELED_SUBSCRIPTION' });
     setTitleModal('Subscripción cancelada');
     setMessageModal(
       'Se cancelo la subscripción, podes volver a subscribirte a premium cuando quieras',
@@ -44,17 +45,17 @@ const PaymentSection = () => {
   return (
     <ScrollView style={style.containerView}>
       <View style={style.cardPayment}>
-        <Text style={{color: '#150B3D', fontSize: 16, fontWeight: 'bold'}}>
+        <Text style={{ color: '#150B3D', fontSize: 16, fontWeight: 'bold' }}>
           Tu subscripción actual es:
         </Text>
         <View style={style.line} />
-        <Text style={{color: '#524B6B', fontSize: 18}}>
+        <Text style={{ color: '#524B6B', fontSize: 18 }}>
           {subscriptionType !== undefined
             ? SubscriptionEnum[subscriptionType]
             : SubscriptionEnum.PRUEBA}
         </Text>
       </View>
-      {(subscriptionType === 'PRUEBA' || subscriptionType === 'CANCELED_SUBSCRIPTION' ) && (
+      {(subscriptionType === 'PRUEBA' || subscriptionType === 'CANCELED_SUBSCRIPTION') && (
         <View style={style.cardPayment}>
           <Text
             style={{
@@ -70,7 +71,7 @@ const PaymentSection = () => {
             selected={selectedSubscriptionType === 'PREMIUM_ANUAL'}
             handleOnPress={() => handleSubscriptionTypeChange('PREMIUM_ANUAL')}
           />
-          <Text style={{color: '#AAA6B9'}}>Podés cancelar cuando quieras</Text>
+          <Text style={{ color: '#AAA6B9' }}>Podés cancelar cuando quieras</Text>
           <View style={style.line} />
           <RadioButton
             label={SubscriptionEnum.PREMIUM_MENSUAL}
@@ -79,7 +80,7 @@ const PaymentSection = () => {
               handleSubscriptionTypeChange('PREMIUM_MENSUAL')
             }
           />
-          <Text style={{color: '#AAA6B9'}}>Podés cancelar cuando quieras</Text>
+          <Text style={{ color: '#AAA6B9' }}>Podés cancelar cuando quieras</Text>
           <Button
             style={style.button}
             alignSelf="center"

@@ -1,18 +1,20 @@
-import {useMutation, useQuery} from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import {
   getDisplayName,
   getSubscriptionType,
+  getUrlApi,
   loginWithEmailAndPassword,
   signUpWithEmailAndPassword,
   updateDisplayName,
   updateSubscriptionType,
+  updateUrlApi,
 } from '../../services';
-import {ResponseType} from '../../contexts';
+import { ResponseType } from '../../contexts';
 
 export const useLoginWithEmailAndPassword = (props: ResponseType) => {
   return useMutation(
     'useLoginWithEmailAndPassword',
-    (data: {email: string; password: string}) =>
+    (data: { email: string; password: string }) =>
       loginWithEmailAndPassword({
         email: data.email,
         password: data.password,
@@ -27,7 +29,7 @@ export const useLoginWithEmailAndPassword = (props: ResponseType) => {
 export const useSignUpWithEmailAndPassword = (props: ResponseType) => {
   return useMutation(
     'useSignInWithEmailAndPassword',
-    (data: {email: string; password: string; nickName: string}) =>
+    (data: { email: string; password: string; nickName: string }) =>
       signUpWithEmailAndPassword({
         email: data.email,
         password: data.password,
@@ -40,10 +42,10 @@ export const useSignUpWithEmailAndPassword = (props: ResponseType) => {
   );
 };
 
-export const useUpdateDisplayName = (props: ResponseType & {uid: string}) => {
+export const useUpdateDisplayName = (props: ResponseType & { uid: string }) => {
   return useMutation(
     'useUpdateDisplayName',
-    (data: {nickName: string}) =>
+    (data: { nickName: string }) =>
       updateDisplayName({
         nickName: data.nickName,
         uid: props.uid,
@@ -55,19 +57,19 @@ export const useUpdateDisplayName = (props: ResponseType & {uid: string}) => {
   );
 };
 
-export const useGetNicknameByUser = (props: ResponseType & {uid: string}) => {
+export const useGetNicknameByUser = (props: ResponseType & { uid: string }) => {
   return useQuery({
     queryKey: `useGetNicknameByUser${props.uid}`,
-    queryFn: () => getDisplayName({uid: props.uid}),
+    queryFn: () => getDisplayName({ uid: props.uid }),
   });
 };
 
 export const useUpdateSubscriptionType = (
-  props: ResponseType & {uid: string},
+  props: ResponseType & { uid: string },
 ) => {
   return useMutation(
     'useUpdateSubscriptionType',
-    (data: {subscriptionType: string}) =>
+    (data: { subscriptionType: string }) =>
       updateSubscriptionType({
         subscriptionType: data.subscriptionType,
         uid: props.uid,
@@ -79,11 +81,38 @@ export const useUpdateSubscriptionType = (
   );
 };
 
+export const useUpdateUrlApi = (
+  props: ResponseType & { uid: string },
+) => {
+  return useMutation(
+    'useUpdateUrlApi',
+    (data: { urlApi: string }) =>
+      updateUrlApi({
+        urlApi: data.urlApi,
+        uid: props.uid,
+      }),
+    {
+      onSuccess: () => props.onSuccess && props.onSuccess(),
+      onError: () => props.onError && props.onError(),
+    },
+  );
+};
+
+export const useGetUrlApi = (
+  props: ResponseType & { uid: string },
+) => {
+  return useQuery({
+    queryKey: `useGetUrlApi${props.uid}`,
+    queryFn: () => getUrlApi({ uid: props.uid }),
+  });
+};
+
+
 export const useGetSubscriptionTypeByUser = (
-  props: ResponseType & {uid: string},
+  props: ResponseType & { uid: string },
 ) => {
   return useQuery({
     queryKey: `useGetSubscriptionTypeByUser${props.uid}`,
-    queryFn: () => getSubscriptionType({uid: props.uid}),
+    queryFn: () => getSubscriptionType({ uid: props.uid }),
   });
 };
