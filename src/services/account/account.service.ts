@@ -193,7 +193,7 @@ export const getUrlApi = async ({ uid }: { uid: string }): Promise<any> => {
   return getDoc(docRef)
     .then(docSnap => {
       let urlApi = 'https://many-sole-solely.ngrok-free.app/detect-emotion';
-      if (docSnap.exists()) {
+      if (docSnap.exists() && 'urlApi' in  docSnap.data() && docSnap.data().urlApi) {
         urlApi = docSnap.data().urlApi;
       }
       return urlApi;
