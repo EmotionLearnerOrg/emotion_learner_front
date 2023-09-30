@@ -7,4 +7,6 @@ export {
   loginWithEmailAndPassword,
   sendPassResetEmail,
   getSubscriptionType,
+  updateUrlApi,
+  getUrlApi,
 } from './account.service';

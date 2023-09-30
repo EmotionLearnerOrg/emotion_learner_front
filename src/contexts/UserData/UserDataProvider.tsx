@@ -6,7 +6,7 @@ import React, {
   useReducer,
   useMemo,
 } from 'react';
-import {InsigniasTypeNames, insigniasDefault, typeInsignias} from '../../types';
+import { InsigniasTypeNames, insigniasDefault, typeInsignias } from '../../types';
 import {
   useCreateInsigniaByUser,
   useGetInsigniasByUser,
@@ -15,11 +15,13 @@ import {
   useUpdateDisplayName,
   useUpdateSubscriptionType,
   useGetSubscriptionTypeByUser,
+  useUpdateUrlApi,
+  useGetUrlApiByUser,
 } from '../../hooks';
-import {IUserDataContext} from './UserData.model';
-import {DEFAULT_STATE_DATA, userInsigniasReducer} from './UserData.reducer';
-import {UserDataActionKind} from './UserData.actions';
-import {useUserAuth} from '../UserAuth';
+import { IUserDataContext } from './UserData.model';
+import { DEFAULT_STATE_DATA, userInsigniasReducer } from './UserData.reducer';
+import { UserDataActionKind } from './UserData.actions';
+import { useUserAuth } from '../UserAuth';
 
 type objectInsignias = {
   [key: string]: boolean;
@@ -34,34 +36,42 @@ const UserDataContext = createContext<IUserDataContext>({
   isLoadingUpdateNickname: false,
   isLoadingUpdateSubscriptionType: false,
   isLoadingPostInsignias: false,
+  isLoadingUrlApi: false,
   nickName: '',
   subscriptionType: 'PRUEBA',
+  urlApi: '',
   insignias: [],
-  initData: () => {},
-  clearData: () => {},
-  updateInsignias: () => {},
-  updateNickname: () => {},
-  updateSubscriptionType: () => {},
-  refetch: () => {},
+  initData: () => { },
+  clearData: () => { },
+  updateInsignias: () => { },
+  updateNickname: () => { },
+  updateSubscriptionType: () => { },
+  updateUrlApi: () => { },
+  refetch: () => { },
 });
 
-export const UserDataProvider: React.FC<any> = ({children}) => {
+export const UserDataProvider: React.FC<any> = ({ children }) => {
   const [state, dispatch] = useReducer(
     userInsigniasReducer,
     DEFAULT_STATE_DATA,
   );
 
-  const {uid} = useUserAuth();
+  const { uid } = useUserAuth();
 
   const {
     mutateAsync: mutateUpdateNickname,
     isLoading: isLoadingUpdateNickname,
-  } = useUpdateDisplayName({uid: uid});
+  } = useUpdateDisplayName({ uid: uid });
 
   const {
     mutateAsync: mutateUpdateSubscriptionType,
     isLoading: isLoadingUpdateSubscriptionType,
-  } = useUpdateSubscriptionType({uid: uid});
+  } = useUpdateSubscriptionType({ uid: uid });
+
+  const {
+    mutateAsync: mutateUpdateUrlApi,
+    isLoading: isLoadingUpdateUrlApi,
+  } = useUpdateUrlApi({ uid: uid });
 
   const {
     mutateAsync: mutateCreateInsignias,
@@ -82,19 +92,25 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
     isLoading,
     isRefetching,
     refetch,
-  } = useGetInsigniasByUser({uid: uid});
+  } = useGetInsigniasByUser({ uid: uid });
 
   const {
     data: dataNickname,
     isLoading: isLoadingGetNickname,
     isRefetching: isRefetchingGetNickname,
-  } = useGetNicknameByUser({uid: uid});
+  } = useGetNicknameByUser({ uid: uid });
 
   const {
     data: dataSubscriptionType,
     isLoading: isLoadingGetSubscriptionType,
     isRefetching: isRefetchingGetSubscriptionType,
-  } = useGetSubscriptionTypeByUser({uid: uid});
+  } = useGetSubscriptionTypeByUser({ uid: uid });
+
+  const {
+    data: dataUrlApi,
+    isLoading: isLoadingGetUrlApi,
+    isRefetching: isRefetchingGetUrlApi,
+  } = useGetUrlApiByUser({ uid: uid });
 
   useEffect(() => {
     if (!isLoadingGetNickname && dataNickname && !isRefetchingGetNickname) {
@@ -120,6 +136,23 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
     dataSubscriptionType,
     isLoadingGetSubscriptionType,
     isRefetchingGetSubscriptionType,
+  ]);
+
+  useEffect(() => {
+    if (
+      !isLoadingGetUrlApi &&
+      dataUrlApi &&
+      !isRefetchingGetUrlApi
+    ) {
+      dispatch({
+        type: UserDataActionKind.SET_URL_API,
+        urlApi: dataUrlApi,
+      });
+    }
+  }, [
+    dataUrlApi,
+    isLoadingGetUrlApi,
+    isRefetchingGetUrlApi,
   ]);
 
   useEffect(() => {
@@ -150,6 +183,15 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
   }, [isLoadingUpdateSubscriptionType]);
 
   useEffect(() => {
+    if (!isLoadingUpdateUrlApi) {
+      dispatch({
+        type: UserDataActionKind.SET_UPDATING_URL_API,
+        isLoadingUrlApi: false,
+      });
+    }
+  }, [isLoadingUpdateUrlApi]);
+
+  useEffect(() => {
     if (!isLoadingCreateInsignias && !isLoadingUpdateInsignias) {
       dispatch({
         type: UserDataActionKind.SET_UPDATING_INSIGNIAS,
@@ -165,12 +207,12 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
   };
 
   const updateNickname = useCallback(
-    async ({nickname}: {nickname: string}) => {
+    async ({ nickname }: { nickname: string }) => {
       dispatch({
         type: UserDataActionKind.SET_UPDATING_NICKNAME,
         isLoadingUpdateNickname: true,
       });
-      mutateUpdateNickname({nickName: nickname}).then(() => {
+      mutateUpdateNickname({ nickName: nickname }).then(() => {
         dispatch({
           type: UserDataActionKind.SET_NICKNAME,
           nickName: nickname,
@@ -181,12 +223,12 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
   );
 
   const updateSubscriptionType = useCallback(
-    async ({subscriptionType}: {subscriptionType: string}) => {
+    async ({ subscriptionType }: { subscriptionType: string }) => {
       dispatch({
         type: UserDataActionKind.SET_UPDATING_SUBSCRIPTION_TYPE,
         isLoadingUpdateSubscriptionType: true,
       });
-      mutateUpdateSubscriptionType({subscriptionType: subscriptionType}).then(
+      mutateUpdateSubscriptionType({ subscriptionType: subscriptionType }).then(
         () => {
           dispatch({
             type: UserDataActionKind.SET_SUBSCRIPTION_TYPE,
@@ -198,8 +240,26 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
     [mutateUpdateSubscriptionType],
   );
 
+  const updateUrlApi = useCallback(
+    async ({ urlApi }: { urlApi: string }) => {
+      dispatch({
+        type: UserDataActionKind.SET_UPDATING_URL_API,
+        isLoadingUrlApi: true,
+      });
+      mutateUpdateUrlApi({ urlApi: urlApi }).then(
+        () => {
+          dispatch({
+            type: UserDataActionKind.SET_URL_API,
+            urlApi: urlApi,
+          });
+        },
+      );
+    },
+    [mutateUpdateUrlApi],
+  );
+
   const updateInsignias = useCallback(
-    async ({idInsignia}: {idInsignia: InsigniasTypeNames}) => {
+    async ({ idInsignia }: { idInsignia: InsigniasTypeNames }) => {
       let nuevasInsignias: typeInsignias = state.insignias!.reduce(
         (obj: objectInsignias, [key, value]) => {
           obj[key] = value as boolean;
@@ -216,9 +276,9 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
         ///actualizar
         nuevasInsignias = {
           ...(nuevasInsignias as typeInsignias),
-          ...{[idInsignia]: true},
+          ...{ [idInsignia]: true },
         };
-        mutateUpdateInsignias({nuevasInsignias: nuevasInsignias}).then(() => {
+        mutateUpdateInsignias({ nuevasInsignias: nuevasInsignias }).then(() => {
           dispatch({
             type: UserDataActionKind.SET_INSIGNIAS,
             insignias: Object.entries(nuevasInsignias),
@@ -228,9 +288,9 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
         ///guardar
         nuevasInsignias = {
           ...insigniasDefault,
-          ...{[idInsignia]: true},
+          ...{ [idInsignia]: true },
         };
-        mutateCreateInsignias({nuevasInsignias: nuevasInsignias}).then(() => {
+        mutateCreateInsignias({ nuevasInsignias: nuevasInsignias }).then(() => {
           dispatch({
             type: UserDataActionKind.SET_INSIGNIAS,
             insignias: Object.entries(nuevasInsignias),
@@ -241,7 +301,7 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
     [mutateCreateInsignias, mutateUpdateInsignias, state.insignias],
   );
 
-  const initData = useCallback(async () => {}, []);
+  const initData = useCallback(async () => { }, []);
 
   const memoState = useMemo(
     () => ({
@@ -251,6 +311,7 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
       updateInsignias,
       updateNickname,
       updateSubscriptionType,
+      updateUrlApi,
       refetch,
     }),
     [
@@ -260,6 +321,7 @@ export const UserDataProvider: React.FC<any> = ({children}) => {
       updateInsignias,
       updateNickname,
       updateSubscriptionType,
+      updateUrlApi,
     ],
   );
 

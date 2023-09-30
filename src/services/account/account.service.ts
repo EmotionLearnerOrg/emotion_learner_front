@@ -28,10 +28,9 @@ export const loginWithEmailAndPassword = async ({
           throw new Error('Error not verified email');
         }
         const nickName = await getDisplayName({ uid: response.user.uid });
-        const subscriptionType = await getSubscriptionType({
-          uid: response.user.uid,
-        });
-        await savePreferenceData(nickName, subscriptionType, response.user.uid);
+        const subscriptionType = await getSubscriptionType({ uid: response.user.uid, });
+        const urlApi = await getUrlApi({ uid: response.user.uid, });
+        await savePreferenceData(nickName, subscriptionType, urlApi, response.user.uid);
         return response.user.uid;
       })
       .catch();
@@ -62,7 +61,7 @@ export const signUpWithEmailAndPassword = async ({
       nuevasInsignias: insigniasDefault,
     });
     await setInitialData(nickName, 'PRUEBA', response.user.uid!!);
-    await savePreferenceData(nickName, 'PRUEBA', response.user.uid);
+    await savePreferenceData(nickName, 'PRUEBA', 'https://many-sole-solely.ngrok-free.app/detect-emotion', response.user.uid);
     return response.user.uid;
   } catch (error) {
     throw new Error('Error signUpWithEmailAndPassword function: ' + error);
@@ -169,6 +168,39 @@ export const updateSubscriptionType = async ({
   } catch (error) {
     throw new Error('Error creating document: ' + error);
   }
+};
+
+export const updateUrlApi = async ({
+  urlApi,
+  uid,
+}: {
+  urlApi: string;
+  uid: string;
+}) => {
+  try {
+    await updateDoc(doc(db, 'users', uid!!), {
+      urlApi: urlApi,
+    })
+      .then()
+      .catch();
+  } catch (error) {
+    throw new Error('Error creating document: ' + error);
+  }
+};
+
+export const getUrlApi = async ({ uid }: { uid: string }): Promise<any> => {
+  const docRef = doc(db, 'users', uid!);
+  return getDoc(docRef)
+    .then(docSnap => {
+      let urlApi = 'https://many-sole-solely.ngrok-free.app/detect-emotion';
+      if (docSnap.exists() && 'urlApi' in  docSnap.data() && docSnap.data().urlApi) {
+        urlApi = docSnap.data().urlApi;
+      }
+      return urlApi;
+    })
+    .catch(error => {
+      throw error.parsedError;
+    });
 };
 
 export const logout = async () => {
