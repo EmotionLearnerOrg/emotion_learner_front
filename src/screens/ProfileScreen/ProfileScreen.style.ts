@@ -5,6 +5,7 @@ export const makeProfileScreenStyles = () =>
     containerView: {flex: 1},
     dialogTitle: {
       alignSelf: 'center',
+      color: '#524B6B',
     },
     cardProfile: {
       backgroundColor: '#rgba(117, 81, 255, 0.9)',
