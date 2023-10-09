@@ -13,7 +13,7 @@ const HeaderCommon = () => {
   return (
     <View style={style.headerContainer}>
       <TouchableOpacity onPress={() => navigation.navigate(HomeRoutes.HOME_S)}>
-        <Icon name="home" size={40} color={"#000000"}/>
+        <Icon name="home" size={40} color={'#000000'} />
       </TouchableOpacity>
     </View>
   );

@@ -42,6 +42,11 @@ const FeedbackView = ({
           })
         ) : type === 'Ruleta' || type === 'Mirror' ? (
           <Image source={emotion?.pathGuia} style={style.image} />
+        ) : type === 'Asociacion' ? (
+          <Image
+            source={require('./../../../assets/ilustraciones/again.png')}
+            style={{alignSelf: 'center', flex: 0.45, resizeMode: 'contain'}}
+          />
         ) : (
           <></>
         )}
@@ -50,12 +55,11 @@ const FeedbackView = ({
         alignSelf="center"
         bg="#FCCDCE"
         mx={10}
-        mb={10}
+        mb={30}
         rounded={16}
         style={style.button}
         onPress={() => goTo && goTo()}>
         <Text style={style.buttonText}>
-          {' '}
           {textButton ?? success
             ? 'Acceder a mis insignias'
             : 'Volver a intentar'}

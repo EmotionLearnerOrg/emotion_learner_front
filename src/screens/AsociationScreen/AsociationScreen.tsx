@@ -1,5 +1,5 @@
 import React, {FC, useCallback, useEffect, useState} from 'react';
-import {Image, View} from 'react-native';
+import {ActivityIndicator, Image, View} from 'react-native';
 import {makeAsociationScreenStyles} from './AsociationScreen.style';
 import {Text} from 'react-native-magnus';
 import {HomeRoutes, AsociationType} from '../../stacks/HomeParams';
@@ -126,7 +126,15 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
   );
 
   if (isLoading && type === 'Arcade') {
-    return <Text>cargando</Text>;
+    return (
+      <View style={{flex: 1, padding: 10}}>
+        <Text fontSize={30} textAlign="center" mt={20}>
+          Buen trabajo! ganaste la partida de Ruleta... Ahora continuaremos
+          jugando con Asociación de emociones
+        </Text>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
 
   const reload = (emotionSelected: emocionType) => {

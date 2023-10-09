@@ -5,6 +5,7 @@ export const makePerformEmotionScreenStyles = () =>
     containerView: {
       flex: 1,
       alignItems: 'center',
+      justifyContent: 'center',
     },
     containerButton: {
       flex: 1,

@@ -5,10 +5,19 @@ import {Button, Icon} from 'react-native-magnus';
 import {HomeRoutes, ProfileType} from '../../stacks/HomeParams';
 import {Dialog} from '@rneui/themed';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {HeaderCommon, PaymentSection} from '../../components';
+import {FormInput, HeaderCommon, PaymentSection} from '../../components';
 import {Input} from '@rneui/base';
 import {useUserAuth, useUserData} from '../../contexts';
 import {logout} from '../../services';
+import {validations} from '../../utils/formValidations/validations';
+import * as yup from 'yup';
+import {SchemaOf} from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {Control, FieldValues, useForm} from 'react-hook-form';
+
+export type EditNicknameForm = {
+  nickName: string;
+};
 
 const ProfileScreen: FC<ProfileType> = ({navigation}) => {
   const [visible, setVisible] = useState(false);
@@ -24,17 +33,18 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
     isLoadingUpdateNickname,
     isLoadingUrlApi,
   } = useUserData();
-  const [newNickname, setNewNickName] = useState(nickName);
+  // const [newNickname, setNewNickName] = useState(nickName);
   const [newUrlApi, setNewUrlApi] = useState('');
 
   const cleanData = () => {
-    setNewNickName('');
+    // setNewNickName('');
     setNewUrlApi('');
   };
 
   const handleNewNickname = () => {
-    updateNickname({nickname: newNickname!});
-    cleanData();
+    updateNickname({nickname: getValues('nickName')});
+    // cleanData();
+    // reset();
   };
 
   const handleNewUrlApi = () => {
@@ -66,6 +76,34 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
     navigation.replace(HomeRoutes.LOG_IN);
   };
 
+  const schema: SchemaOf<EditNicknameForm> = yup.object().shape({
+    nickName: validations()
+      .string.min(6, 'Debe tener al menos 6 caracteres')
+      .max(15, 'Debe tener como maximo 15 caracteres'),
+  });
+
+  const controlMsgErrors = (errMsg: string) => {
+    switch (errMsg) {
+      case 'nickName':
+        return errors.nickName;
+      default:
+        return undefined;
+    }
+  };
+
+  const {
+    control,
+    formState: {isValid, errors},
+    getValues,
+    reset,
+  } = useForm<EditNicknameForm>({
+    mode: 'onChange',
+    resolver: yupResolver(schema),
+    defaultValues: {
+      nickName: nickName,
+    },
+  });
+
   return (
     <ScrollView style={style.containerView}>
       <View style={style.cardProfile}>
@@ -75,35 +113,24 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
         </View>
         <Text style={style.subtitle}>Editá tu perfil</Text>
         <View style={style.cardEditProfile}>
-          <View style={style.cardProfileHeader}>
-            <Text
-              style={{
-                fontSize: 14,
-                color: 'white',
-                fontWeight: 'bold',
-                marginStart: 13,
-              }}>
-              Nombre y Apellido
-            </Text>
-          </View>
-          <Input
-            style={{marginTop: 10, color: 'white'}}
-            placeholder={nickName}
-            placeholderTextColor="#AEB6BF"
-            onChangeText={setNewNickName}
-            value={newNickname}
+          <FormInput
+            name={'nickName'}
+            control={control as unknown as Control<FieldValues>}
+            error={controlMsgErrors('nickName')}
+            placeholder="NickName"
+            label="NickName"
           />
           <Button
             loading={isLoadingUpdateNickname}
             style={style.button}
+            disabled={!isValid}
             alignSelf="center"
             bg="#FCCDCE"
             mx={10}
             mb={12}
+            mt={8}
             rounded={16}
-            onPress={() => {
-              handleNewNickname();
-            }}>
+            onPress={handleNewNickname}>
             <Text style={style.buttonText}>Guardar nuevo nickname</Text>
           </Button>
         </View>

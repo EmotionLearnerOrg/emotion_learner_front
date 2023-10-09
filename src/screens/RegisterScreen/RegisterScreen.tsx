@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
-import { View, Alert } from 'react-native';
-import { makeRegisterScreenStyle } from './RegisterScreen.style';
-import { LoginRoutes, RegisterType } from '../../stacks/LoginParams';
-import { Button, Text } from 'react-native-magnus';
-import { Control, FieldValues, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import React, {FC} from 'react';
+import {View, Alert} from 'react-native';
+import {makeRegisterScreenStyle} from './RegisterScreen.style';
+import {LoginRoutes, RegisterType} from '../../stacks/LoginParams';
+import {Button, Text} from 'react-native-magnus';
+import {Control, FieldValues, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { SchemaOf } from 'yup';
-import { validations } from '../../utils/formValidations/validations';
-import { FormInput } from '../../components';
-import { useSignUpWithEmailAndPassword } from '../../hooks';
+import {SchemaOf} from 'yup';
+import {validations} from '../../utils/formValidations/validations';
+import {FormInput} from '../../components';
+import {useSignUpWithEmailAndPassword} from '../../hooks';
 
 export type RegisterForm = {
   email: string;
@@ -17,9 +17,12 @@ export type RegisterForm = {
   nickName: string;
 };
 
-const RegisterScreen: FC<RegisterType> = ({ navigation }) => {
+const RegisterScreen: FC<RegisterType> = ({navigation}) => {
   const handleRegister = () => {
-    Alert.alert('Cuenta creada', 'Se ha creado la cuenta correctamente. Por favor, validar el correo para poder iniciar sesión.');
+    Alert.alert(
+      'Cuenta creada',
+      'Se ha creado la cuenta correctamente. Por favor, validar el correo para poder iniciar sesión.',
+    );
     reset();
     goToLogin();
   };
@@ -27,7 +30,7 @@ const RegisterScreen: FC<RegisterType> = ({ navigation }) => {
   const {
     mutateAsync: mutateSignUpWithEmailAndPassword,
     isLoading: isLoadingLoginWithEmailAndPassword,
-  } = useSignUpWithEmailAndPassword({ onSuccess: handleRegister });
+  } = useSignUpWithEmailAndPassword({onSuccess: handleRegister});
   const style = makeRegisterScreenStyle();
 
   const goToLogin = () => {
@@ -37,7 +40,9 @@ const RegisterScreen: FC<RegisterType> = ({ navigation }) => {
   const schema: SchemaOf<RegisterForm> = yup.object().shape({
     email: validations().email.required(),
     password: validations().string.required(),
-    nickName: validations().string.required(),
+    nickName: validations()
+      .string.min(6, 'Debe tener al menos 6 caracteres')
+      .max(15, 'Debe tener como maximo 15 caracteres'),
   });
 
   const controlMsgErrors = (errMsg: string) => {
@@ -55,7 +60,7 @@ const RegisterScreen: FC<RegisterType> = ({ navigation }) => {
 
   const {
     control,
-    formState: { isValid, errors },
+    formState: {isValid, errors},
     getValues,
     reset,
   } = useForm<RegisterForm>({
