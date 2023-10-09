@@ -75,7 +75,11 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
   const takePicture = useCallback(async () => {
     try {
       if (isAuthorized && cameraRef.current) {
-        const image = await cameraRef.current.takePhoto();
+        const image = await cameraRef.current.takeSnapshot({
+          quality: 30,
+          flash: 'off',
+          skipMetadata: true,
+        });
         if (image && image.path) {
           return image;
         } else {
@@ -106,6 +110,12 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
         });
         pathsImages.push(image.path);
       }
+      // 1 segundo de delay entre cada foto
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, 1000);
+      });
     }
     return formData;
   };
