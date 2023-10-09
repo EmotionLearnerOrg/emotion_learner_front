@@ -1,15 +1,15 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { makeSelectorGameSectionStyles } from './SelectorGameSection.style';
+import {TouchableOpacity, View} from 'react-native';
+import {makeSelectorGameSectionStyles} from './SelectorGameSection.style';
 import Card from './Card/Card';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Text } from 'react-native-magnus';
+import {Text} from 'react-native-magnus';
 
 const SelectorGameSection = ({
   goToMirror,
   goToAsociation,
   goToRuleta,
-  goToArcade
+  goToArcade,
 }: {
   goToMirror: () => void;
   goToRuleta: () => void;
@@ -21,7 +21,13 @@ const SelectorGameSection = ({
   return (
     <View style={style.selectorGameContainer}>
       <View style={style.titleContainer}>
-        <Text style={{ color: '#150B3D', fontWeight: "700", fontSize: 18, paddingTop: 15 }}>
+        <Text
+          style={{
+            color: '#150B3D',
+            fontWeight: '700',
+            fontSize: 18,
+            paddingTop: 15,
+          }}>
           ¡Elegí un juego!
         </Text>
       </View>
@@ -35,7 +41,7 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#AFECFE'}
               text={'Espejo Inteligente'}
-              icon={<Icon name="mirror" size={34} color={"#000000"} />}
+              icon={<Icon name="mirror" size={34} color={'#000000'} />}
             />
           </TouchableOpacity>
         </View>
@@ -48,7 +54,7 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#BEAFFE'}
               text={'Ruleta'}
-              icon={<Icon name="help" size={34} color={"#000000"} />}
+              icon={<Icon name="ship-wheel" size={34} color={'#000000'} />}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -59,7 +65,13 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#FFD6AD'}
               text={'Asociación de Emociones'}
-              icon={<Icon name="emoticon-tongue-outline" size={34} color={"#000000"} />}
+              icon={
+                <Icon
+                  name="emoticon-tongue-outline"
+                  size={34}
+                  color={'#000000'}
+                />
+              }
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -70,7 +82,13 @@ const SelectorGameSection = ({
               style={style.contFull}
               color={'#FFB8B8'}
               text={'Modo Arcade'}
-              icon={<Icon name="star-outline" size={34} color={"#000000"} />}
+              icon={
+                <Icon
+                  name="gamepad-square-outline"
+                  size={34}
+                  color={'#000000'}
+                />
+              }
             />
           </TouchableOpacity>
         </View>

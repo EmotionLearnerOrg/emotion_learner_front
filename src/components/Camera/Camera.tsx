@@ -1,11 +1,9 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import {StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native';
 import React, {
-  Dispatch,
   forwardRef,
   ForwardRefExoticComponent,
   ReactNode,
   RefAttributes,
-  SetStateAction,
   useEffect,
   useState,
 } from 'react';
@@ -16,9 +14,9 @@ import {
   useCameraDevices,
 } from 'react-native-vision-camera';
 import 'react-native-reanimated';
-import { makeCameraStyles } from './Camera.styles';
-import { Text } from 'react-native-magnus';
-import { emocionType } from '../RuletaContainer/emociones';
+import {makeCameraStyles} from './Camera.styles';
+import {Text} from 'react-native-magnus';
+import {emocionType} from '../RuletaContainer/emociones';
 
 type CameraProps = {
   cameraPosition?: CameraPosition;
@@ -32,7 +30,8 @@ type CameraProps = {
   isAuthorized?: boolean;
   requestCameraPermission?: any;
   emotion: emocionType;
-  setIsInitialized?: Dispatch<SetStateAction<boolean>>;
+  // setIsInitialized?: Dispatch<SetStateAction<boolean>>;
+  userReady: boolean;
 };
 
 /**
@@ -47,7 +46,8 @@ const CameraComponent: ForwardRefExoticComponent<
       isAuthorized,
       requestCameraPermission,
       emotion,
-      setIsInitialized,
+      // setIsInitialized,
+      userReady,
     },
     ref,
   ) => {
@@ -88,23 +88,42 @@ const CameraComponent: ForwardRefExoticComponent<
       }
     }, [isAuthorized, devices, cameraPosition]);
 
-    return currentDevice ? (
+    return (
       <>
-        <CameraBase
-          ref={ref}
-          style={StyleSheet.absoluteFill}
-          photo={true}
-          isActive={true}
-          device={currentDevice}
-          onInitialized={() => setIsInitialized?.(true)}
-        />
-        <Text style={{ textAlign: 'center', fontSize: 32, marginTop: 10 }}>Emoción: {emotion.displayname}</Text>
-        <Text style={{ textAlign: 'center', fontSize: 12, marginTop: 10 }}>Cuando estes listo, presioná el botón y realiza la expresión seleccionada</Text>
+        {currentDevice ? (
+          <>
+            <CameraBase
+              ref={ref}
+              style={StyleSheet.absoluteFill}
+              photo={true}
+              isActive={true}
+              device={currentDevice}
+              onInitialized={() => setIsInitialized?.(true)}
+            />
+            <Text style={{textAlign: 'center', fontSize: 32, marginTop: 10}}>
+              {emotion.displayname}
+            </Text>
+            {!userReady && (
+              <Text
+                opacity={0.5}
+                bg="#56CD54"
+                fontSize={18}
+                style={{textAlign: 'center', marginTop: 10}}>
+                Cuando estes listo, presioná el botón y realiza la expresión
+                seleccionada
+              </Text>
+            )}
+          </>
+        ) : isAuthorized ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={requestCameraPermission}>
+            <Text>Dale a los permisos</Text>
+          </TouchableOpacity>
+        )}
       </>
-    ) : (
-      <TouchableOpacity style={styles.button} onPress={requestCameraPermission}>
-        <Text>Dale a los permisos</Text>
-      </TouchableOpacity>
     );
   },
 );

@@ -1,15 +1,16 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-magnus';
-import { makePerformEmotionScreenStyles } from './PerformEmotionScreen.style';
-import { Camera } from 'react-native-vision-camera';
-import { useAuthorizedCamera, CameraComponent } from '../../components';
-import { HomeRoutes, PerformEmotionType } from '../../stacks/HomeParams';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {View} from 'react-native';
+import {Button, Text} from 'react-native-magnus';
+import {makePerformEmotionScreenStyles} from './PerformEmotionScreen.style';
+import {Camera} from 'react-native-vision-camera';
+import {useAuthorizedCamera, CameraComponent} from '../../components';
+import {HomeRoutes, PerformEmotionType} from '../../stacks/HomeParams';
 import RNFS from 'react-native-fs';
 import Countdown from './CountDown';
-import { useUserData } from '../../contexts';
-import { insigniasEnum } from '../../types';
+import {useUserData} from '../../contexts';
+import {insigniasEnum} from '../../types';
 import axios from 'axios';
+import SpinningEmotion from './SpinningEmotion';
 
 interface EmotionResponse {
   consecutive_recognition: number;
@@ -19,22 +20,22 @@ interface EmotionResponse {
   success: boolean;
 }
 
-const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => {
-  const { emotion: emotionParam, type } = route.params;
-  const { urlApi: urlApi, } = useUserData();
+const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
+  const {emotion: emotionParam, type} = route.params;
+  const {urlApi: urlApi} = useUserData();
   const style = makePerformEmotionScreenStyles();
   const cameraRef = useRef<Camera>(null);
-  const { isAuthorized, requestCameraPermission } = useAuthorizedCamera();
+  const {isAuthorized, requestCameraPermission} = useAuthorizedCamera();
   const [information, setInformation] = useState('');
   const [finishedCountDown, setFinishedCountDown] = useState(false);
   const [userReady, setUserReady] = useState(false);
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
-  const { updateInsignias } = useUserData();
+  const {updateInsignias} = useUserData();
   const percentage = '75'; // Porcentaje minimo de aciertos (Primer criterio de aceptacion)
   const consecutiveRecognitionSuccess = '2'; // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
   const numImagesToCapture = 3; // Cantidad de fotos para el muestreo
   let pathsImages = ['']; // Solo se usa para almacenar el path de la imagen para eliminarla despues del proceso
-
+  const [procesando, setProcesando] = useState(false);
   const navigateToFeedback = useCallback(
     (detection: boolean) => {
       if (detection) {
@@ -121,6 +122,10 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
 
   const detectEmotionsApi = async (formData: FormData) => {
     const url = urlApi!; // Reemplazar hardcodeado si no funcion al updateUrlApi
+    // const url = 'https://cod-proven-formally.ngrok-free.app/detect-emotion';
+    // const url = 'https://api-emotion-recognition-ia-dbcgar3efa-uc.a.run.app/detect-emotion';
+    // const url = 'https://many-sole-solely.ngrok-free.app/detect-emotion';
+    // const url = 'http://192.168.0.101:3001/detect-emotion';
     try {
       const response = await axios.post(url, formData, {
         headers: {
@@ -149,9 +154,11 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
   const startProcess = async () => {
     setInformation('Comienza el muestreo');
     const formData = await getFormData();
-    setInformation('Procesando...');
+    setProcesando(true);
+    setInformation('Procesando');
     let response = await detectEmotionsApi(formData);
     await deleteImagesInFormData(formData);
+    setProcesando(false);
     navigateToFeedback(response.success);
   };
 
@@ -177,6 +184,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
         cameraPosition={'front'}
         isAuthorized={isAuthorized}
         requestCameraPermission={requestCameraPermission}
+        userReady={userReady}
       />
       <View style={style.containerButton}>
         {!userReady ? (
@@ -187,7 +195,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
           //   rounded={16}
           //   onPress={() => navigateToFeedback(true)}>
           //   <Text color="black" fontSize={32}>
-          //     ¡Estoy listo!
+          //     ¡Harcodeamos el ok..!
           //   </Text>
           // </Button>
           <Button
@@ -213,11 +221,14 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({ route, navigation }) => 
           </Text>
         )}
       </View>
-      {information ? (
-        <Text fontSize={32} color="#ff00ff">
-          {JSON.stringify(information)}
-        </Text>
-      ) : null}
+      <>
+        {procesando && <SpinningEmotion emotionParam={emotionParam} />}
+        {information && (
+          <Text fontSize={32} color="#ff00ff">
+            {JSON.stringify(information)}
+          </Text>
+        )}
+      </>
     </View>
   );
 };

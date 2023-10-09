@@ -50,6 +50,8 @@ export const makeProfileScreenStyles = () =>
       marginBottom: 20,
       marginStart: 17,
       marginEnd: 17,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     buttonText: {
       color: '#524B6B',
