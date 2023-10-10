@@ -42,7 +42,7 @@ const FeedbackView = ({
           })
         ) : type === 'Ruleta' || type === 'Mirror' ? (
           <Image source={emotion?.pathGuia} style={style.image} />
-        ) : type === 'Asociacion' ? (
+        ) : type === 'Asociacion' || type === 'Arcade' ? (
           <Image
             source={require('./../../../assets/ilustraciones/again.png')}
             style={{alignSelf: 'center', flex: 0.45, resizeMode: 'contain'}}
