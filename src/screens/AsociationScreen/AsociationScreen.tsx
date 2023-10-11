@@ -59,7 +59,8 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
   );
 
   const generateRandomOpcionYGuardarEnUsadas = useCallback(() => {
-    const resultado = [0, 1, 2, 3, 4].filter(
+    // Cantidad de imagenes por emocion (en caso de subir imagenes mas imagenes que todas tengan la misma cantidad)
+    const resultado = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].filter(
       item => !indicesDeOpcionesUsadas.includes(item),
     );
 
@@ -155,7 +156,7 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
   const seleccionarOpcion = (emotionSelected: emocionType) => {
     let respuestasCorrectas = correctAnswers;
     let respuestas = answers + 1;
-    if (emotionSelected.name === group3Emotions[0].name) {
+    if (group3Emotions && emotionSelected.name === group3Emotions[0].name) {
       respuestasCorrectas++;
       setCorrectAnswers(correctAnswers + 1);
     }
@@ -222,7 +223,6 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
                   indicesDeOpcionesUsadas[indicesDeOpcionesUsadas.length - 1]
                 ]
               }
-              texto={group3Emotions[indicesRandomsOpciones[0]].displayname}
             />
             <OptionItem
               onPress={() =>
@@ -233,7 +233,6 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
                   indicesDeOpcionesUsadas[indicesDeOpcionesUsadas.length - 1]
                 ]
               }
-              texto={group3Emotions[indicesRandomsOpciones[1]].displayname}
             />
             <OptionItem
               onPress={() =>
@@ -244,7 +243,6 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
                   indicesDeOpcionesUsadas[indicesDeOpcionesUsadas.length - 1]
                 ]
               }
-              texto={group3Emotions[indicesRandomsOpciones[2]].displayname}
             />
           </View>
         </>
