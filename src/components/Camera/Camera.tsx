@@ -98,7 +98,6 @@ const CameraComponent: ForwardRefExoticComponent<
               photo={true}
               isActive={true}
               device={currentDevice}
-              onInitialized={() => setIsInitialized?.(true)}
             />
             <Text style={{textAlign: 'center', fontSize: 32, marginTop: 10}}>
               {emotion.displayname}

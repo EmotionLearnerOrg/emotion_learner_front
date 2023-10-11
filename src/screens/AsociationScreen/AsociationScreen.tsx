@@ -24,8 +24,12 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
   //indica el orden en que las opciones de emociones van a aparecer
   const [used, setUsed] = useState<number[]>([]);
   //usado para guardar y no repetir emociones en asociacion normal,tambien usado para no repetir opcion correcta de la emocion arcade
-  const [optionRandom, setOptionRandom] = useState<number>();
-  //usado para saber cual opcion de manera random mostrar como correcta en asociacion
+  const [indicesDeOpcionesUsadas, setIndicesDeOpcionesUsadas] = useState<
+    number[]
+  >([]);
+  //usado para guardar y no repetir opciones usadas
+  // const [optionRandom, setOptionRandom] = useState<number>();
+  // //usado para saber cual opcion de manera random mostrar como correcta en asociacion
 
   useEffect(() => {
     setTimeout(() => {
@@ -53,6 +57,21 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
     },
     [],
   );
+
+  const generateRandomOpcionYGuardarEnUsadas = useCallback(() => {
+    const resultado = [0, 1, 2, 3, 4].filter(
+      item => !indicesDeOpcionesUsadas.includes(item),
+    );
+
+    const indiceAleatorio = Math.floor(Math.random() * resultado.length);
+
+    const arrayDeOpcionesUsadas = [
+      ...indicesDeOpcionesUsadas,
+      resultado[indiceAleatorio],
+    ];
+    setIndicesDeOpcionesUsadas(arrayDeOpcionesUsadas);
+  }, [indicesDeOpcionesUsadas]);
+
   const generateRandomFirst = useCallback((): number => {
     const resultado = [0, 1, 2, 3, 4].filter(item => !used.includes(item));
 
@@ -62,10 +81,11 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
 
   const generateIndicesYOptionsRandomsEmocionesMerge = useCallback(() => {
     const esArcade = type === 'Arcade';
-    if (esArcade) {
-      const randomOptionArcade = generateRandomFirst();
-      setOptionRandom(randomOptionArcade);
-    }
+    generateRandomOpcionYGuardarEnUsadas();
+    // if (esArcade) {
+    //   const randomOptionArcade = generateRandomFirst();
+    //   // setOptionRandom(randomOptionArcade);
+    // }
     const randomEmotion1 = esArcade
       ? emotions.findIndex(
           emocion => emocion.displayname === emotion?.displayname,
@@ -101,18 +121,13 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
       emotions[randomEmotion2],
       emotions[randomEmotion3],
     ]);
-    setIndicesRandomsOpciones([randomOption1, randomOption2, randomOption3]);
-    setGroup3Emotions([
-      emotions[randomEmotion1],
-      emotions[randomEmotion2],
-      emotions[randomEmotion3],
-    ]);
     setUsed(arrayToCheck);
   }, [
     emotion?.displayname,
     emotions,
     generateRandom,
     generateRandomFirst,
+    generateRandomOpcionYGuardarEnUsadas,
     type,
     used,
   ]);
@@ -137,7 +152,7 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
     );
   }
 
-  const reload = (emotionSelected: emocionType) => {
+  const seleccionarOpcion = (emotionSelected: emocionType) => {
     let respuestasCorrectas = correctAnswers;
     let respuestas = answers + 1;
     if (emotionSelected.name === group3Emotions[0].name) {
@@ -185,7 +200,6 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
 
     setAnswers(answers + 1);
   };
-  const randomNumber = optionRandom ?? 0;
 
   return (
     <View style={style.containerView}>
@@ -200,28 +214,37 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
           </Text>
           <View style={style.containerOptions}>
             <OptionItem
-              onPress={() => reload(group3Emotions[indicesRandomsOpciones[0]])}
+              onPress={() =>
+                seleccionarOpcion(group3Emotions[indicesRandomsOpciones[0]])
+              }
               source={
                 group3Emotions[indicesRandomsOpciones[0]].pathOpciones[
-                  randomNumber
+                  indicesDeOpcionesUsadas[indicesDeOpcionesUsadas.length - 1]
                 ]
               }
+              texto={group3Emotions[indicesRandomsOpciones[0]].displayname}
             />
             <OptionItem
-              onPress={() => reload(group3Emotions[indicesRandomsOpciones[1]])}
+              onPress={() =>
+                seleccionarOpcion(group3Emotions[indicesRandomsOpciones[1]])
+              }
               source={
                 group3Emotions[indicesRandomsOpciones[1]].pathOpciones[
-                  randomNumber
+                  indicesDeOpcionesUsadas[indicesDeOpcionesUsadas.length - 1]
                 ]
               }
+              texto={group3Emotions[indicesRandomsOpciones[1]].displayname}
             />
             <OptionItem
-              onPress={() => reload(group3Emotions[indicesRandomsOpciones[2]])}
+              onPress={() =>
+                seleccionarOpcion(group3Emotions[indicesRandomsOpciones[2]])
+              }
               source={
                 group3Emotions[indicesRandomsOpciones[2]].pathOpciones[
-                  randomNumber
+                  indicesDeOpcionesUsadas[indicesDeOpcionesUsadas.length - 1]
                 ]
               }
+              texto={group3Emotions[indicesRandomsOpciones[2]].displayname}
             />
           </View>
         </>
