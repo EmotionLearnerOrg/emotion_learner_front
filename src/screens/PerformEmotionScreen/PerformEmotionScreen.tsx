@@ -111,7 +111,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
         pathsImages.push(image.path);
       }
       // 1 segundo de delay entre cada foto
-      await new Promise<void>((resolve) => {
+      await new Promise<void>(resolve => {
         setTimeout(() => {
           resolve();
         }, 1000);
