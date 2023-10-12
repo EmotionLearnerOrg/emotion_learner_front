@@ -7,15 +7,15 @@ const ArcadeView = ({goToRuleta}: {goToRuleta?: () => void}) => {
   const style = makeFeedbackViewStyles();
   return (
     <View style={style.containerView}>
-      <Image
+      {/* <Image
         source={require('../../../assets/ilustraciones/monster_default_5.png')}
         style={style.image}
-      />
+      /> */}
       <View style={style.tarjetablanca}>
         <Text style={style.heading}>¡Bienvenido al modo Arcade!</Text>
         <Text style={style.subtitle}>Dos etapas llenas de diversión</Text>
         <Text style={style.italic}>Ruleta</Text>
-        <Text style={style.arrow}>{'\u2193'}</Text>
+        <Text style={style.arrow}>↓</Text>
         <Text style={style.italic}>Asociación de emociones</Text>
         <Button
           onPress={() => goToRuleta && goToRuleta()}
