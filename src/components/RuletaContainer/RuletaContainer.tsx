@@ -1,5 +1,12 @@
 import React, {useState, useRef} from 'react';
-import {View, Text, TouchableOpacity, Animated, Easing} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Animated,
+  Easing,
+  Image,
+} from 'react-native';
 import {Ruleta} from './Ruleta';
 import {Knop} from '../../../assets';
 import {EmocionesTypeNames, emocionType, emociones} from './emociones';
@@ -65,33 +72,39 @@ const RuletaContainer = ({
 
   return (
     <View style={style.container}>
-      <Animated.View style={[style.wheel, {transform: [{rotate: spin}]}]}>
-        <Ruleta radius={130} />
-      </Animated.View>
-      <Knop style={style.knop} width={70} height={70} />
-      <TouchableOpacity style={style.button} onPress={startSpin}>
-        <Text style={style.buttonText}>
-          {isSpinning ? 'Girando...' : 'Girar'}
-        </Text>
-      </TouchableOpacity>
-      <Dialog isVisible={visible} onBackdropPress={() => setVisible(false)}>
-        <Dialog.Title
-          titleStyle={style.dialogTitle}
-          title={`Emoción ganadora: ¡${emocion?.displayname}!`}
-        />
-        <Button
-          block
-          m={12}
-          bg="#FCCDCE"
-          alignSelf="center"
-          rounded={16}
-          onPress={() => {
-            setVisible(false);
-            goToPerformEmotion(emocion!);
-          }}>
-          <Text style={style.buttonText}>Realizar emoción</Text>
-        </Button>
-      </Dialog>
+      <View style={style.container}>
+        <Animated.View style={[style.wheel, {transform: [{rotate: spin}]}]}>
+          <Ruleta radius={130} />
+        </Animated.View>
+        <Knop style={style.knop} width={70} height={70} />
+        <TouchableOpacity style={style.button} onPress={startSpin}>
+          <Text style={style.buttonText}>
+            {isSpinning ? 'Girando...' : 'Girar'}
+          </Text>
+        </TouchableOpacity>
+        <Dialog isVisible={visible} onBackdropPress={() => setVisible(false)}>
+          <Dialog.Title
+            titleStyle={style.dialogTitle}
+            title={`Emoción ganadora: ¡${emocion?.displayname}!`}
+          />
+          <Button
+            block
+            m={12}
+            bg="#FCCDCE"
+            alignSelf="center"
+            rounded={16}
+            onPress={() => {
+              setVisible(false);
+              goToPerformEmotion(emocion!);
+            }}>
+            <Text style={style.buttonText}>Realizar emoción</Text>
+          </Button>
+        </Dialog>
+      </View>
+      <Image
+        source={require('../../../assets/ilustraciones/monster_default.png')}
+        style={{resizeMode: 'contain', flex: 0.7}}
+      />
     </View>
   );
 };

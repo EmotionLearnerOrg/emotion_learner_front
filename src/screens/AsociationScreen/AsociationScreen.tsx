@@ -210,7 +210,7 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
             source={group3Emotions[0].pathMonstruo}
             style={style.OptionImageStyle}
           />
-          <Text fontSize={18} textAlign="center" flex={1}>
+          <Text fontSize={18} textAlign="center" flex={1} fontWeight="bold">
             {`¿Cual de estos personajes refleja ${group3Emotions[0].name}?`}
           </Text>
           <View style={style.containerOptions}>

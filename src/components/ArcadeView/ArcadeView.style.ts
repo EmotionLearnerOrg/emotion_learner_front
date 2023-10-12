@@ -14,6 +14,7 @@ export const makeFeedbackViewStyles = () =>
       elevation: 5,
       borderRadius: 8,
       backgroundColor: 'white',
+      alignItems: 'center',
     },
     buttonContainer: {
       margin: 10,
@@ -34,7 +35,25 @@ export const makeFeedbackViewStyles = () =>
       width: 120,
     },
     image: {
-      // alignSelf: 'center',
-      flex: 1,
+      resizeMode: 'contain',
+      flex: 0.7,
+    },
+    heading: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      marginTop: 20,
+    },
+    subtitle: {
+      fontSize: 22,
+      marginBottom: 10,
+    },
+    arrow: {
+      fontSize: 35,
+      fontWeight: 'bold',
+    },
+    italic: {
+      fontSize: 19,
+      fontStyle: 'italic',
     },
   });

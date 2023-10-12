@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Image, View} from 'react-native';
 import {makeFeedbackViewStyles} from './ArcadeView.style';
 import {Button, Text} from 'react-native-magnus';
 
@@ -7,15 +7,16 @@ const ArcadeView = ({goToRuleta}: {goToRuleta?: () => void}) => {
   const style = makeFeedbackViewStyles();
   return (
     <View style={style.containerView}>
+      <Image
+        source={require('../../../assets/ilustraciones/monster_default_5.png')}
+        style={style.image}
+      />
       <View style={style.tarjetablanca}>
-        <Text fontSize={18} textAlign="center" mt={20}>
-          {'¡Bienvenido al modo Arcade!'}
-        </Text>
-        <Text fontSize={18} textAlign="left" mt={20}>
-          {`  Este juego consiste en 2 etapas :
-    1 -> Ruleta
-    2 -> Asociacion de emociones`}
-        </Text>
+        <Text style={style.heading}>¡Bienvenido al modo Arcade!</Text>
+        <Text style={style.subtitle}>Dos etapas llenas de diversión</Text>
+        <Text style={style.italic}>Ruleta</Text>
+        <Text style={style.arrow}>{'\u2193'}</Text>
+        <Text style={style.italic}>Asociación de emociones</Text>
         <Button
           onPress={() => goToRuleta && goToRuleta()}
           bg="#FCCDCE"
@@ -29,6 +30,10 @@ const ArcadeView = ({goToRuleta}: {goToRuleta?: () => void}) => {
           </Text>
         </Button>
       </View>
+      <Image
+        source={require('../../../assets/ilustraciones/monster_default_4.png')}
+        style={style.image}
+      />
     </View>
   );
 };
