@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
-import { FeedbackPosArcadeType, HomeRoutes } from '../../stacks/HomeParams';
-import { FeedbackView } from '../../components';
+import React, {FC} from 'react';
+import {FeedbackPosArcadeType, HomeRoutes} from '../../stacks/HomeParams';
+import {FeedbackView} from '../../components';
 
 const FeedbackPosArcadeScreen: FC<FeedbackPosArcadeType> = ({
   route,
   navigation,
 }) => {
-  const { emotion, type } = route.params;
+  const {emotion, type} = route.params;
 
   return (
     <FeedbackView
@@ -16,8 +16,8 @@ const FeedbackPosArcadeScreen: FC<FeedbackPosArcadeType> = ({
       goTo={() => {
         navigation.navigate(HomeRoutes.INSIGNIAS);
       }}
-      title={`Superaste el arcade de ${emotion?.name}`}
-      description="Ganaste una medalla!"
+      title="¡Increíble trabajo!"
+      description={`Superaste el arcade de ${emotion?.name}\n¡Ganaste una insignia!`}
     />
   );
 };

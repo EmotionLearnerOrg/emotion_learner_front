@@ -26,10 +26,10 @@ const FeedbackView = ({
 
   return (
     <View style={style.containerView}>
-      <Text fontWeight="700" fontSize={20} textAlign="center" mt={20}>
+      <Text fontWeight="bold" fontSize={20} textAlign="center" mt={20}>
         {title}
       </Text>
-      <Text fontWeight="400" fontSize={18} textAlign="center" mt={20}>
+      <Text fontWeight="400" fontSize={20} textAlign="center" mt={20}>
         {description}
       </Text>
       <View style={style.containerImage}>

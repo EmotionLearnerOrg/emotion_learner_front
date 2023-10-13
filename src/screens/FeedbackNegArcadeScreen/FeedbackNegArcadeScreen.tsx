@@ -15,8 +15,8 @@ const FeedbackNegArcadeScreen: FC<FeedbackNegArcadeType> = ({
       goTo={() => {
         navigation.navigate(HomeRoutes.ARCADE);
       }}
-      title={`No pudiste completar el modo arcade :(`}
-      description="Queres volver a intentar?"
+      title={`¡Inténtalo otra vez!`}
+      description={`No se pudo completar el modo Arcade`}
     />
   );
 };
