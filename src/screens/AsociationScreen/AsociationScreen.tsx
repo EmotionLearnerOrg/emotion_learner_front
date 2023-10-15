@@ -211,7 +211,7 @@ const AsociationScreen: FC<AsociationType> = ({route, navigation}) => {
             style={style.OptionImageStyle}
           />
           <Text fontSize={18} textAlign="center" flex={1} fontWeight="bold">
-            {`¿Cual de estos personajes refleja ${group3Emotions[0].name}?`}
+            {`¿Cual de estos personajes refleja ${group3Emotions[0].displayname}?`}
           </Text>
           <View style={style.containerOptions}>
             <OptionItem
