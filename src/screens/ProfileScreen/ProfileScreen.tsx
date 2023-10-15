@@ -119,6 +119,7 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
             error={controlMsgErrors('nickName')}
             placeholder="NickName"
             label="NickName"
+            labelColor='white'
           />
           <Button
             loading={isLoadingUpdateNickname}
@@ -128,10 +129,9 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
             bg="#FCCDCE"
             mx={10}
             mb={12}
-            mt={8}
             rounded={16}
             onPress={handleNewNickname}>
-            <Text style={style.buttonText}>Guardar nuevo nickname</Text>
+            <Text style={style.buttonText}>Guardar NickName</Text>
           </Button>
         </View>
       </View>
@@ -151,7 +151,7 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
       <Dialog isVisible={visible}>
         <Dialog.Title
           titleStyle={style.dialogTitle}
-          title={'Seguro que deseas cerrar sesion?'}
+          title={'¿Seguro que deseas cerrar sesión?'}
         />
         <Button
           style={style.button}
@@ -188,7 +188,7 @@ const ProfileScreen: FC<ProfileType> = ({navigation}) => {
         }}>
         <Icon
           name="cog"
-          color="white"
+          color="#rgba(255, 255, 255, 0.3)"
           fontSize={30}
           right={4}
           fontFamily="FontAwesome"
