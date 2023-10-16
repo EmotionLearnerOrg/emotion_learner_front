@@ -106,11 +106,9 @@ const CameraComponent: ForwardRefExoticComponent<
             {!userReady && (
               <Text
                 opacity={0.5}
-                bg="#56CD54"
-                fontSize={18}
+                fontSize={20}
                 style={{textAlign: 'center', marginTop: 10}}>
-                Cuando estes listo, presioná el botón y realiza la expresión
-                seleccionada
+                Cuando estes listo presioná el botón y realiza la expresión
               </Text>
             )}
           </>
