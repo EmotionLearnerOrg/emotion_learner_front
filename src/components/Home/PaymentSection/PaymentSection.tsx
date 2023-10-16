@@ -100,7 +100,6 @@ const PaymentSection = () => {
             style={{
               color: '#150B3D',
               fontSize: 16,
-              marginBottom: 20,
               fontWeight: 'bold',
             }}>
             ¿Queres cancelar tu subscripción?

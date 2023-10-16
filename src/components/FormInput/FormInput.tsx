@@ -13,6 +13,7 @@ export interface FormInputProps {
   required?: boolean;
   error?: FieldError;
   passwordInput?: boolean;
+  labelColor?: string;
 }
 
 const FormInput: FC<FormInputProps> = ({
@@ -22,6 +23,7 @@ const FormInput: FC<FormInputProps> = ({
   control,
   error,
   passwordInput = false,
+  labelColor = 'black'
 }) => {
   const style = makeFormInputStyle();
 
@@ -32,7 +34,7 @@ const FormInput: FC<FormInputProps> = ({
       render={({field: {onChange, value}}) => {
         return (
           <>
-            <InputLabel title={label} />
+            <InputLabel title={label} color={labelColor}/>
             {!passwordInput ? (
               <Input
                 style={style.input}
@@ -44,7 +46,7 @@ const FormInput: FC<FormInputProps> = ({
             ) : (
               <InputPassword setPassword={onChange} password={value} />
             )}
-            <Text color="red">{error?.message}</Text>
+            <Text mt={-20} mb={10} color="red">{error?.message}</Text>
           </>
         );
       }}

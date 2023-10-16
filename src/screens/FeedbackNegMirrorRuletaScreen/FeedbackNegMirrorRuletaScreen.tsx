@@ -17,7 +17,7 @@ const FeedbackNegMirrorRuletaScreen: FC<FeedbackNegMirrorRuletaType> = ({
         navigation.navigate(HomeRoutes.PERFORM_EMOTION, {...route.params});
       }}
       title={`No pudimos reconocer tu expresión\n¿Te gustaría intentarlo de nuevo?`}
-      description={`Sugerencias para expresar ${emotion.name}`}
+      description={`Sugerencias para expresar ${emotion.displayname}`}
     />
   );
 };

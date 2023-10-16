@@ -4,11 +4,12 @@ export const makeProfileScreenStyles = () =>
   StyleSheet.create({
     containerView: {flex: 1},
     dialogTitle: {
+      textAlign: 'center',
       alignSelf: 'center',
       color: '#524B6B',
     },
     cardProfile: {
-      backgroundColor: '#rgba(117, 81, 255, 0.9)',
+      backgroundColor: '#A48AFF',
       borderBottomLeftRadius: 20,
       borderBottomRightRadius: 20,
       marginBottom: 20,

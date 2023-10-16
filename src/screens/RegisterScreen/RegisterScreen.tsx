@@ -42,7 +42,7 @@ const RegisterScreen: FC<RegisterType> = ({navigation}) => {
     password: validations().string.required(),
     nickName: validations()
       .string.min(6, 'Debe tener al menos 6 caracteres')
-      .max(15, 'Debe tener como maximo 15 caracteres'),
+      .max(15, 'Debe tener como máximo 15 caracteres'),
   });
 
   const controlMsgErrors = (errMsg: string) => {

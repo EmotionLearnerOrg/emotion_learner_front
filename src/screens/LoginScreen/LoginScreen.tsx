@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {View} from 'react-native';
+import {View, Alert} from 'react-native';
 import {makeLoginScreenStyle} from './LoginScreen.style';
 import {HomeLoginType, LoginRoutes} from '../../stacks/LoginParams';
 import {useUserAuth} from '../../contexts';
@@ -23,15 +23,31 @@ const LoginScreen: FC<HomeLoginType> = ({navigation}) => {
   const cleanData = () => {
     reset();
   };
+
   const handleLogin = async () => {
     await initData();
     cleanData();
     goToHome();
   };
+
+  const handleFailedLogin = async (error: string) => {
+    let message = 'Ha ocurrido un error al iniciar sesión. Por favor, inténtalo nuevamente mas tarde';
+    if (error === 'auth/email-not-validated') {
+      message = 'Tu correo electrónico no ha sido validado. Por favor, valida tu correo electrónico.';
+    } else if (error === 'auth/wrong-password') {
+      message = 'Contraseña incorrecta. Por favor, verifica la contraseña ingresada.';
+    } else if (error === 'auth/user-not-found') {
+      message = 'Usuario inexistente. Por favor, verifica el correo ingresado.';
+    } else if (error === 'auth/too-many-requests') {
+      message = 'Ha intentado demasiadas veces. Por favor, inténtalo nuevamente mas tarde.';
+    }
+    Alert.alert('Error', message);
+  };
+
   const {
     mutateAsync: mutateLoginWithEmailAndPassword,
     isLoading: isLoadingLoginWithEmailAndPassword,
-  } = useLoginWithEmailAndPassword({onSuccess: handleLogin});
+  } = useLoginWithEmailAndPassword({onSuccess: handleLogin, onError: handleFailedLogin});
 
   const schema: SchemaOf<LoginForm> = yup.object().shape({
     email: validations().email.required(),

@@ -17,7 +17,7 @@ const FeedbackPosArcadeScreen: FC<FeedbackPosArcadeType> = ({
         navigation.navigate(HomeRoutes.INSIGNIAS);
       }}
       title="¡Increíble trabajo!"
-      description={`Superaste el arcade de ${emotion?.name}\n¡Ganaste una insignia!`}
+      description={`Superaste el arcade de ${emotion?.displayname}\n¡Ganaste una insignia!`}
     />
   );
 };
