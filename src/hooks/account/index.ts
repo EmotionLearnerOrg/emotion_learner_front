@@ -21,7 +21,9 @@ export const useLoginWithEmailAndPassword = (props: ResponseType) => {
       }),
     {
       onSuccess: () => props.onSuccess && props.onSuccess(),
-      onError: () => props.onError && props.onError(),
+      onError: (error) => {
+        props.onError && props.onError(error);
+      },
     },
   );
 };
