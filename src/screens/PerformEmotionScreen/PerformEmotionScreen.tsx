@@ -188,16 +188,6 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
       />
       <View style={style.containerButton}>
         {!userReady ? (
-          // <Button
-          //   style={style.button}
-          //   opacity={0.5}
-          //   bg="#56CD54"
-          //   rounded={16}
-          //   onPress={() => navigateToFeedback(true)}>
-          //   <Text color="black" fontSize={32}>
-          //     ¡Harcodeamos el ok..!
-          //   </Text>
-          // </Button>
           <Button
             style={style.button}
             opacity={0.5}
@@ -212,22 +202,17 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
           <Countdown
             duration={3}
             size={40}
-            color="#ff00ff"
+            color="#FF00FF"
             onFinished={() => setFinishedCountDown(true)}
           />
-        ) : (
-          <Text fontSize={32} color="#ff00ff">
-            Ya!
-          </Text>
+        ) : procesando ? null : (
+          <Text style={style.text}>¡Ya!</Text>
         )}
       </View>
       <>
+        {procesando && <View style={style.processingOverlay} />}
         {procesando && <SpinningEmotion emotionParam={emotionParam} />}
-        {information && (
-          <Text fontSize={32} color="#ff00ff">
-            {JSON.stringify(information)}
-          </Text>
-        )}
+        {information && <Text style={style.text}>{information}</Text>}
       </>
     </View>
   );
