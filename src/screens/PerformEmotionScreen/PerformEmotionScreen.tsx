@@ -212,7 +212,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
       <>
         {procesando && <View style={style.processingOverlay} />}
         {procesando && <SpinningEmotion emotionParam={emotionParam} />}
-        {information && <Text style={style.text}>{information}</Text>}
+        {/* {information && <Text style={style.text}>{information}</Text>} */}
       </>
     </View>
   );

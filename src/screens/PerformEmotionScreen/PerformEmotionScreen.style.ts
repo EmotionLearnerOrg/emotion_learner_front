@@ -26,7 +26,7 @@ export const makePerformEmotionScreenStyles = () =>
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(192, 192, 192, 0.85)',
+      backgroundColor: 'rgb(242, 242, 242)',
       justifyContent: 'center',
       alignItems: 'center',
     },

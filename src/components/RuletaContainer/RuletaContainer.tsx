@@ -82,7 +82,7 @@ const RuletaContainer = ({
             {isSpinning ? 'Girando...' : 'Girar'}
           </Text>
         </TouchableOpacity>
-        <Dialog isVisible={visible} onBackdropPress={() => setVisible(false)}>
+        <Dialog isVisible={visible}>
           <Dialog.Title
             titleStyle={style.dialogTitle}
             title={`Emoción ganadora: ¡${emocion?.displayname}!`}
