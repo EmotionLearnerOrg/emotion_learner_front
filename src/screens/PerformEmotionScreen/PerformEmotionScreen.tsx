@@ -31,9 +31,9 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
   const [userReady, setUserReady] = useState(false);
   const [startDetectionEmotion, setStartDetectionEmotion] = useState(false);
   const {updateInsignias} = useUserData();
-  const percentage = '75'; // Porcentaje minimo de aciertos (Primer criterio de aceptacion)
-  const consecutiveRecognitionSuccess = '2'; // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
-  const numImagesToCapture = 3; // Cantidad de fotos para el muestreo
+  const percentage = '49'; // Porcentaje minimo de aciertos (Primer criterio de aceptacion)
+  const consecutiveRecognitionSuccess = '1'; // Cantidad de aciertos consecutivos (Segundo criterio de aceptacion)
+  const numImagesToCapture = 2; // Cantidad de fotos para el muestreo
   let pathsImages = ['']; // Solo se usa para almacenar el path de la imagen para eliminarla despues del proceso
   const [procesando, setProcesando] = useState(false);
   const navigateToFeedback = useCallback(
@@ -200,7 +200,7 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
           </Button>
         ) : !finishedCountDown ? (
           <Countdown
-            duration={3}
+            duration={0}
             size={40}
             color="#FF00FF"
             onFinished={() => setFinishedCountDown(true)}
