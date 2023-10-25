@@ -186,6 +186,20 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
         requestCameraPermission={requestCameraPermission}
         userReady={userReady}
       />
+      {userReady && !finishedCountDown && (
+        <View
+          style={{
+            position: 'absolute',
+            alignItems: 'center',
+          }}>
+          <Countdown
+            duration={3}
+            size={230}
+            color="#56CD54"
+            onFinished={() => setFinishedCountDown(true)}
+          />
+        </View>
+      )}
       <View style={style.containerButton}>
         {!userReady ? (
           <Button
@@ -198,21 +212,18 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
               ¡Estoy listo!
             </Text>
           </Button>
-        ) : !finishedCountDown ? (
-          <Countdown
-            duration={0}
-            size={40}
-            color="#FF00FF"
-            onFinished={() => setFinishedCountDown(true)}
-          />
-        ) : procesando ? null : (
+        ) : !finishedCountDown || procesando ? null : (
           <Text style={style.text}>¡Ya!</Text>
         )}
       </View>
       <>
-        {procesando && <View style={style.processingOverlay} />}
-        {procesando && <SpinningEmotion emotionParam={emotionParam} />}
-        {/* {information && <Text style={style.text}>{information}</Text>} */}
+        {/* {procesando && <View style={style.processingOverlay} />} */}
+        {procesando && (
+          <>
+            <View style={style.processingOverlay} />
+            <SpinningEmotion emotionParam={emotionParam} />
+          </>
+        )}
       </>
     </View>
   );

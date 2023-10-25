@@ -100,14 +100,23 @@ const CameraComponent: ForwardRefExoticComponent<
               device={currentDevice}
               // onInitialized={() => setIsInitialized?.(true)}
             />
-            <Text style={{textAlign: 'center', fontSize: 32, marginTop: 10}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 32,
+                marginTop: 10,
+                color: '#FF00FF',
+              }}>
               {emotion.displayname}
             </Text>
             {!userReady && (
               <Text
-                opacity={0.5}
                 fontSize={20}
-                style={{textAlign: 'center', marginTop: 10}}>
+                style={{
+                  textAlign: 'center',
+                  marginTop: 10,
+                  color: '#FF00FF',
+                }}>
                 Cuando estes listo presioná el botón y realiza la expresión
               </Text>
             )}

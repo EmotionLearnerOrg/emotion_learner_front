@@ -17,7 +17,7 @@ export const makePerformEmotionScreenStyles = () =>
       width: '100%',
     },
     text: {
-      fontSize: 40,
+      fontSize: 66,
       color: '#FF00FF',
     },
     processingOverlay: {

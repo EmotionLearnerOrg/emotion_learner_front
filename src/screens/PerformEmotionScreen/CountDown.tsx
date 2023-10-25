@@ -44,8 +44,9 @@ const Countdown = ({
     <View
       style={{
         alignItems: 'center',
+        justifyContent: 'center',
       }}>
-      <Text fontSize={size} color={color} opacity={0}>
+      <Text fontSize={size} color={color}>
         {formatTime(remainingTime)}
       </Text>
     </View>
