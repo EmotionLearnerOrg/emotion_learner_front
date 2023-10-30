@@ -135,8 +135,14 @@ const PerformEmotionScreen: FC<PerformEmotionType> = ({route, navigation}) => {
       const data: EmotionResponse = response.data;
       return data;
     } catch (error) {
-      console.error('Error al enviar la imagen: ' + error);
-      throw error;
+      const errorResponse: EmotionResponse = {
+        consecutive_recognition: 0,
+        emotion_prediction: '',
+        reliability: 0,
+        results: {},
+        success: false,
+      };
+      return errorResponse;
     }
   };
 
